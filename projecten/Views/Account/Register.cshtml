@@ -1,0 +1,74 @@
+﻿@model projecten.Models.RegisterModel
+@{
+    ViewBag.Title = "Registreer";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title.</h1>
+    <h2>Create a new account.</h2>
+</hgroup>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+
+    <fieldset>
+        <legend>Registration Form</legend>
+        <ol>
+            <li>
+                @Html.LabelFor(m => m.BedrijfsNaam)
+                @Html.TextBoxFor(m => m.BedrijfsNaam)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Adres)
+                @Html.TextBoxFor(m => m.Adres)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Url)
+                @Html.TextBoxFor(m => m.Url)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.email)
+                @Html.TextBoxFor(m => m.email)
+            </li>
+                <li>
+                @Html.LabelFor(m => m.Telefoon)
+                @Html.TextBoxFor(m => m.Telefoon)
+            </li>
+                <li>
+
+                @Html.LabelFor(m => m.Bereikbaarheid)
+                @Html.DropDownListFor(model => model.Bereikbaarheid, new SelectList(
+                  new List<Object>{ 
+                       new { value = 0 , text = "wagen"  },
+                       new { value = 1 , text = "openbaar vervoer" },
+                       new { value = 2 , text = "georganiseerd vervoer"}
+                    },
+                  "value",
+                  "text",
+                   2))
+                
+            </li>
+                <li>
+                @Html.LabelFor(m => m.BedrijfsActiviteit)
+               @Html.DropDownListFor(model => model.BedrijfsActiviteit, new SelectList(
+                  new List<Object>{ 
+                       new { value = 0 , text = "bank"  },
+                       new { value = 1 , text = "software ontwikkelaar" },
+                       new { value = 2 , text = "openbare diensten"}
+                    },
+                  "value",
+                  "text",
+                   2))
+            </li>
+
+
+
+        </ol>
+        <input type="submit" value="Registreer" />
+    </fieldset>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
