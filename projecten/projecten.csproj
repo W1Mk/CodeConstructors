@@ -189,6 +189,14 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\DAL\BedrijfContext.cs" />
+    <Compile Include="Models\DAL\BedrijfInitializer.cs" />
+    <Compile Include="Models\DAL\BedrijfRepository.cs" />
+    <Compile Include="Models\DAL\Mapper\BedrijfMapper.cs" />
+    <Compile Include="Models\Domain\Bedrijf.cs" />
+    <Compile Include="Models\Domain\StageBegeleider.cs" />
+    <Compile Include="Models\Domain\StageOpdracht.cs" />
+    <Compile Include="Models\Domain\Student.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -248,6 +256,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Models\Domain\Domain.cd" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />

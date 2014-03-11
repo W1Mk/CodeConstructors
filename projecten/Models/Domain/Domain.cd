@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="projecten.Models.Domain.Bedrijf">
+    <Position X="2" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAAAgAAAAACAAAAQIAgAIAAAAAACAAgA=</HashCode>
+      <FileName>Models\Domain\Bedrijf.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="stageOpdracht" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="projecten.Models.Domain.StageBegeleider">
+    <Position X="3.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAAAAAAAAAAAQAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Models\Domain\StageBegeleider.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="student" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="projecten.Models.Domain.StageOpdracht">
+    <Position X="6" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAAAAAAAAAAAQAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Models\Domain\StageOpdracht.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="student" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="projecten.Models.Domain.Student">
+    <Position X="6.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Models\Domain\Student.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
