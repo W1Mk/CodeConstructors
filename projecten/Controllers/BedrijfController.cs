@@ -19,6 +19,11 @@ namespace projecten.Controllers
             this.bedrijfRepository = bedrijfRepository;
         }
 
+        public BedrijfController()
+        {
+            
+        }
+
         public ActionResult Index()
         {
             ViewBag.Message = "testing";
