@@ -14,18 +14,27 @@ namespace projecten.Models.DAL
         {
             try
             {
+              /*  StageOpdracht opdracht = new StageOpdracht("test","1");
+                StageOpdracht opdracht1 = new StageOpdracht("test2","2");
+                List<StageOpdracht> stageOpdrachten =
+                   (new StageOpdracht[] { opdracht, opdracht1 }).ToList();
+                stageOpdrachten.ForEach(c => context.StageOpdrachten.Add(c));
                 Bedrijf denul = new Bedrijf();
                 denul.Naam = "Jan De Nul";
                 denul.Telefoon = "0123456789";
-                denul.Email = "denul@hotmail.com";
+                denul.Email = "depauwniel@hotmail.com";
                 denul.Adres = "baggerlaan 4";
                 denul.Url = "www.denul.be";
                 denul.Bedrijfsactiviteit = "Bedrijf";
                 denul.Bereikbaarheid = "schip";
                 denul.Paswoord = "denul";
-                denul.AddStageOpdracht(new StageOpdracht());
+                denul.AddStageOpdracht(opdracht);
+                denul.AddStageOpdracht(opdracht1);
 
-                context.SaveChanges();
+                
+
+                context.Bedrijven.Add(denul);
+                context.SaveChanges();*/
             }
             catch (DbEntityValidationException e)
             {

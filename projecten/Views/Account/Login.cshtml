@@ -1,15 +1,15 @@
 ﻿@model projecten.Models.LoginModel
 
 @{
-    ViewBag.Title = "Log in";
+    ViewBag.Title = "Login";
 }
 
 <hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
+    <h1>@ViewBag.Title</h1>
 </hgroup>
 
 <section id="loginForm">
-<h2>Use a local account to log in.</h2>
+<h2>log in als bedrijf</h2>
 @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl })) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
@@ -35,7 +35,7 @@
         <input type="submit" value="Log in" />
     </fieldset>
     <p>
-        @Html.ActionLink("Register", "Register") if you don't have an account.
+        @Html.ActionLink("Register", "Register") als je geen account hebt.
     </p>
 }
 </section>

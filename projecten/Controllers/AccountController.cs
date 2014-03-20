@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Security.AccessControl;
 using System.Transactions;
 using System.Web;
 using System.Web.Mvc;
@@ -11,6 +13,9 @@ using WebMatrix.WebData;
 using projecten.Filters;
 using projecten.Models;
 using System.Net.Mail;
+using WebMatrix.Data;
+using System.Data.SqlClient;
+using System.Configuration;
 
 namespace projecten.Controllers
 {
@@ -36,11 +41,26 @@ namespace projecten.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model, string returnUrl)
         {
-            if (ModelState.IsValid && WebSecurity.Login(model.Email, model.Wachtwoord, persistCookie: model.RememberMe))
+            SqlConnection Conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+            SqlCommand Comm1 = new SqlCommand("SELECT UserName,Wachtwoord from UserProfile", Conn);
+            Conn.Open();
+            SqlDataReader DR1 = Comm1.ExecuteReader();
+            var email ="";
+            var wachtwoord="";
+            while(DR1.Read()){
+           
+                email = DR1.GetValue(0).ToString();
+                wachtwoord = DR1.GetValue(1).ToString();
+                System.Diagnostics.Debug.WriteLine(email,wachtwoord);
+            
+           
+            if (ModelState.IsValid && model.Email == email && model.Wachtwoord == wachtwoord)
             {
+                FormsAuthentication.SetAuthCookie(model.Email, false);
                 return RedirectToLocal(returnUrl);
             }
-
+            }
+            Conn.Close();
             // If we got this far, something failed, redisplay form
             ModelState.AddModelError("", "The user name or password provided is incorrect.");
             return View(model);
@@ -73,7 +93,7 @@ namespace projecten.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(RegisterModel model)
+        public ActionResult Register(RegisterModel model,UserProfile userprofile)
         {
             if (ModelState.IsValid)
             {
@@ -83,18 +103,32 @@ namespace projecten.Controllers
                     String RandomWachtwoord;
                     RandomWachtwoord = CreateRandomPassword(6);
                     MailMessage message = new MailMessage();
-                    message.From = new MailAddress("voetballer.laurens@telenet.be");
-                    message.To.Add(new MailAddress("voetballer.laurens@telenet.be"));
+                    message.From = new MailAddress(model.email);                   
+                    message.To.Add(model.email);
                     message.Subject = "Wachtwoord";
                     message.Body = "jouw wachtwoord: " + RandomWachtwoord;
                     model.Wachtwoord = RandomWachtwoord;
-                    WebSecurity.CreateUserAndAccount(model.email, model.Wachtwoord);
-                   // WebSecurity.Login(model.email, model.Wachtwoord);
-                    SmtpClient client = new SmtpClient();
-                    client.UseDefaultCredentials = true;
-                    client.DeliveryMethod = SmtpDeliveryMethod.Network;
-                    client.EnableSsl = true;
-                   // client.Send(message);
+                    
+                    //WebSecurity.CreateUserAndAccount(model.email, model.Wachtwoord);
+                    var db = Database.Open("DefaultConnection");
+                    var insertCommand1 = "SET IDENTITY_INSERT UserProfile ON";
+                    var insertCommand2 = "INSERT INTO UserProfile (UserId,UserName, Wachtwoord,TypePersoon) VALUES(@0, @1, @2,@3)";
+                    var insertCommand3 = db.QueryValue("SELECT COUNT(*) FROM UserProfile");
+                    
+;                    db.Execute(insertCommand1);
+                    db.Execute(insertCommand2, insertCommand3 +1, model.email, model.Wachtwoord, "Bedrijf");
+
+                    
+                    
+                    var client = new SmtpClient("smtp.gmail.com", 587)
+                    {
+                        Credentials = new NetworkCredential("nielsdepauw94@gmail.com", "Yankee12"),
+                        EnableSsl = true
+                        
+                    };
+                    
+                    client.Send(message.From.ToString(), message.To.ToString(), message.Subject, message.Body);
+                   
                     System.Diagnostics.Debug.WriteLine(RandomWachtwoord);
                     
                     return RedirectToAction("Index", "Home");
@@ -186,7 +220,7 @@ namespace projecten.Controllers
                     bool changePasswordSucceeded;
                     try
                     {
-                        changePasswordSucceeded = WebSecurity.ChangePassword(User.Identity.Name, model.OldPassword, model.NewPassword);
+                        changePasswordSucceeded = WebSecurity.ChangePassword(User.Identity.Name, "iTtjfd", model.NewPassword);
                     }
                     catch (Exception)
                     {
@@ -363,7 +397,137 @@ namespace projecten.Controllers
         {
             return View();
         }
+        [AllowAnonymous]
+        public ActionResult SelectAccount(string returnUrl)
+        {
+            ViewBag.Message = "SelectAccount";
+            return View();
+        }
+        [AllowAnonymous]
+        public ActionResult RegistreerSelectAccount(string returnUrl)
+        {
+            ViewBag.Message = "SelectAccount";
+            return View();
+        }
+        [AllowAnonymous]
+        public ActionResult RegistreerStudent()
+        {
+            ViewBag.Message = "RegistreerStudent";
+            return View();
 
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult RegistreerStudent(RegistreerStudentModel model, string returnUrl)
+        {
+
+            SqlConnection Conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+            SqlCommand Comm1 = new SqlCommand("SELECT UserName from UserProfile", Conn);
+            Conn.Open();
+            SqlDataReader DR1 = Comm1.ExecuteReader();
+            var email = "";
+            
+            if (DR1.Read())
+            {
+                email = DR1.GetValue(0).ToString();
+                System.Diagnostics.Debug.WriteLine(email);
+            }
+            Conn.Close();
+
+            // WebSecurity.InitializeDatabaseConnection("DefaultConnection", "Student", "Id", "Email","Wachtwoord", autoCreateTables: true);
+            if (model.Email == email)
+            {
+               
+                FormsAuthentication.SetAuthCookie(model.Email, false);
+                WebSecurity.ConfirmAccount(model.Email);
+                return RedirectToAction("WachtwoordVeranderen", "Account");
+
+            }
+            else
+            {
+
+                return RedirectToAction("Indexfout", "Home");
+
+            }
+            
+
+        }
+        
+       
+        [AllowAnonymous]
+        public ActionResult LoginStudent()
+        {
+            ViewBag.Message = "LoginStudent";
+            return View();
+
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult LoginStudent(LoginStudentModel model, string returnUrl)
+        {
+            SqlConnection Conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+            SqlCommand Comm1 = new SqlCommand("SELECT UserName,Wachtwoord from UserProfile", Conn);
+            Conn.Open();
+            SqlDataReader DR1 = Comm1.ExecuteReader();
+            var email = "";
+            var wachtwoord ="";
+            if (DR1.Read())
+            {
+                email = DR1.GetValue(0).ToString();
+                wachtwoord = DR1.GetValue(1).ToString();
+                System.Diagnostics.Debug.WriteLine(email);
+            }
+            Conn.Close();
+            if (ModelState.IsValid && model.Email == email && model.Wachtwoord == wachtwoord)
+            {
+                FormsAuthentication.SetAuthCookie(model.Email, false);
+                return RedirectToLocal(returnUrl);
+            }
+
+            // If we got this far, something failed, redisplay form
+            ModelState.AddModelError("", "The user name or password provided is incorrect.");
+            return View(model);
+        }
+        [AllowAnonymous]
+        public ActionResult WachtwoordVeranderen()
+        {
+            return View();
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult WachtwoordVeranderen(WachtwoordVeranderenModel model)
+        {
+            var db = Database.Open("DefaultConnection");
+            var insertCommand1 = "SET IDENTITY_INSERT UserProfile ON";
+            var insertCommand2 = "UPDATE UserProfile SET wachtwoord =(FROM UserProfile WHERE UserName = @0)";
+            
+         
+
+            SqlConnection Conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+            SqlCommand Comm1 = new SqlCommand("SELECT UserName,Wachtwoord from UserProfile", Conn);
+            Conn.Open();
+            SqlDataReader DR1 = Comm1.ExecuteReader();
+            var email = "";
+            var wachtwoord ="";
+            DR1.Read();
+                email = DR1.GetValue(0).ToString();
+                wachtwoord = DR1.GetValue(1).ToString();
+                System.Diagnostics.Debug.WriteLine(email);
+
+                
+                    db.Execute(insertCommand1);
+                    db.Execute(insertCommand2,model.NewPassword);
+
+                    FormsAuthentication.SetAuthCookie(model.Email, false);
+                    return RedirectToAction("Index", "Home");
+                
+            
+            Conn.Close();
+            return RedirectToAction("Indexfout", "Home");
+        }
         #region Helpers
         private ActionResult RedirectToLocal(string returnUrl)
         {
@@ -408,16 +572,16 @@ namespace projecten.Controllers
             switch (createStatus)
             {
                 case MembershipCreateStatus.DuplicateUserName:
-                    return "User name already exists. Please enter a different user name.";
+                    return "Deze gebruikersnaam bestaat al.Gelieve een nieuwe gebruikersnaam te kiezen.";
 
                 case MembershipCreateStatus.DuplicateEmail:
-                    return "A user name for that e-mail address already exists. Please enter a different e-mail address.";
+                    return "Er is al iemand geregistreerd met dit Email adres.Gebruik een ander Email adres";
 
                 case MembershipCreateStatus.InvalidPassword:
-                    return "The password provided is invalid. Please enter a valid password value.";
+                    return "Dit wachtwoord is niet correct.";
 
                 case MembershipCreateStatus.InvalidEmail:
-                    return "The e-mail address provided is invalid. Please check the value and try again.";
+                    return "Dit Email adres is niet correct";
 
                 case MembershipCreateStatus.InvalidAnswer:
                     return "The password retrieval answer provided is invalid. Please check the value and try again.";

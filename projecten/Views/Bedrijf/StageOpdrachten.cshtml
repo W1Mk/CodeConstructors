@@ -1,0 +1,52 @@
+﻿@model IEnumerable<projecten.Models.Domain.StageOpdracht>
+@{
+    ViewBag.Title = "Stage Opdrachten";
+    
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title</h1>
+</hgroup>
+@Html.ActionLink("Voeg stageopdracht toe", "StageOpdrachtToevoegen", "Bedrijf")
+@*@section featured{
+    <section class="lists">*@
+        <table>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Naam)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Omschrijving)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Semester)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Specialisatie)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AantalStudenten)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StageMentor)
+                </th>
+                <th></th>
+            </tr>
+    
+          @*  @foreach(var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Naam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Semester)
+            </td>
+        </tr>
+    }*@
+
+        </table>
+    @*</section>
+}*@
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

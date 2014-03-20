@@ -14,15 +14,17 @@ namespace projecten.Models.DAL
         public BedrijfContext()
             : base("Bedrijf")
         {
-
+             
         }
 
         public DbSet<Bedrijf> Bedrijven { get; set; }
-
+        public DbSet<StageOpdracht> StageOpdrachten { get; set; }
+        
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Configurations.Add(new BedrijfMapper());
+            modelBuilder.Configurations.Add((new StageOpdrachtMapper()));
         }
     }
 }

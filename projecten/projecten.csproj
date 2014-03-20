@@ -40,6 +40,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Ninject">
+      <HintPath>..\packages\Ninject.3.0.1.10\lib\net45-full\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.Common">
+      <HintPath>..\packages\Ninject.Web.Common.3.0.0.7\lib\net45-full\Ninject.Web.Common.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
@@ -114,6 +120,9 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="WebActivator">
+      <HintPath>..\packages\WebActivator.1.5.3\lib\net40\WebActivator.dll</HintPath>
+    </Reference>
     <Reference Include="WebMatrix.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.Data.2.0.20710.0\lib\net40\WebMatrix.Data.dll</HintPath>
@@ -179,11 +188,13 @@
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BedrijfController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -193,6 +204,8 @@
     <Compile Include="Models\DAL\BedrijfInitializer.cs" />
     <Compile Include="Models\DAL\BedrijfRepository.cs" />
     <Compile Include="Models\DAL\Mapper\BedrijfMapper.cs" />
+    <Compile Include="Models\DAL\Mapper\StageOpdrachtMapper.cs" />
+    <Compile Include="Models\DAL\StageOpdrachtRepository.cs" />
     <Compile Include="Models\Domain\Bedrijf.cs" />
     <Compile Include="Models\Domain\StageBegeleider.cs" />
     <Compile Include="Models\Domain\StageOpdracht.cs" />
@@ -256,6 +269,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Images\logo.png" />
     <Content Include="Models\Domain\Domain.cd" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
@@ -315,6 +329,18 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\Bedrijf\Index.cshtml" />
     <Content Include="Views\Account\StageOpdrachten.cshtml" />
+    <Content Include="Views\Account\SelectAccount.cshtml" />
+    <Content Include="Views\Bedrijf\StageOpdrachtToevoegen.cshtml" />
+    <Content Include="Views\Bedrijf\StageOpdrachten.cshtml" />
+    <Content Include="Views\Account\LoginStudent.cshtml" />
+    <Content Include="Views\Student\WachtwoordVeranderen.cshtml" />
+    <Content Include="Views\Account\RegistreerStudent.cshtml" />
+    <Content Include="Views\Account\RegistreerSelectAccount.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial2.cshtml" />
+    <Content Include="Views\Shared\_Layout2.cshtml" />
+    <Content Include="Views\Account\WachtwoordVeranderen.cshtml">
+      <SubType>Code</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

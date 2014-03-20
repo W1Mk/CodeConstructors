@@ -9,10 +9,14 @@ namespace projecten.Models.Domain
     {
         private int id;
         private string naam { get; set; }
+        private string email { get; set; }
+
 
         public Student()
         {
-            naam = "**";
+            id = 1;
+            naam = "Laurens";
+            email = "voetballer.laurens@telenet.be";
         }
     }
 }

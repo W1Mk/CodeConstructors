@@ -1,0 +1,57 @@
+﻿@model projecten.Models.StageOpdrachtToevoegenModel
+@{
+    ViewBag.Title = "StageOpdrachtToevoegen";
+}
+
+<h2>StageOpdrachtToevoegen</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+
+    <fieldset>
+        <legend>Registration Form</legend>
+        <ol>
+            <li>
+                @Html.LabelFor(m => m.StageNaam)
+                @Html.TextBoxFor(m => m.StageNaam)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Specialisatie)
+                 @Html.DropDownListFor(model => model.Specialisatie, new SelectList(
+                  new List<Object>{ 
+                       new { value = 0 , text = "Programmeren"  },
+                       new { value = 1 , text = "Webontwikkeling" },
+                       new { value = 2 , text = "Mainframe"},
+                       new { value = 3 , text = "E-bussiness"},
+                       new { value = 4, text = "Mobile"},
+                       new { value = 5, text = "Systeembeheer"}
+                    },
+                  "value",
+                  "text",
+                   5))
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Omschrijving)
+                @Html.TextAreaFor(m => m.Omschrijving)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Semester)
+                @Html.RadioButtonFor(m => m.Semester, "1")
+                @Html.RadioButtonFor(m => m.Semester, "2")
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Aantal)
+                @Html.TextBoxFor(m => m.Aantal)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.StageMentor)
+                @Html.TextBoxFor(m => m.StageMentor)
+            </li>
+        </ol>
+        <input type="submit" value="Voeg toe" />
+    </fieldset>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
