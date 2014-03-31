@@ -11,8 +11,7 @@ namespace projecten.Models.DAL
 {
     public class BedrijfContext : DbContext
     {
-        public BedrijfContext()
-            : base("Bedrijf")
+        public BedrijfContext() : base("localhost")
         {
              
         }

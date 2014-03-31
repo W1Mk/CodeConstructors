@@ -1,4 +1,8 @@
-﻿@model IEnumerable<projecten.Models.Domain.StageOpdracht>
+﻿@using System.Collections.ObjectModel
+@using System.Configuration
+@using Microsoft.Ajax.Utilities
+@using MySql.Data.MySqlClient
+@model projecten.Models.StageOpdrachtenModel
 @{
     ViewBag.Title = "Stage Opdrachten";
     
@@ -7,46 +11,105 @@
 <hgroup class="title">
     <h1>@ViewBag.Title</h1>
 </hgroup>
-@Html.ActionLink("Voeg stageopdracht toe", "StageOpdrachtToevoegen", "Bedrijf")
-@*@section featured{
-    <section class="lists">*@
-        <table>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Naam)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Omschrijving)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Semester)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Specialisatie)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.AantalStudenten)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.StageMentor)
-                </th>
-                <th></th>
-            </tr>
-    
-          @*  @foreach(var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Naam)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Semester)
-            </td>
-        </tr>
-    }*@
+@*@Html.ActionLink("Voeg stageopdracht toe", "StageOpdrachtToevoegen", "Bedrijf")*@
 
-        </table>
-    @*</section>
-}*@
+@* var QueryOmschrijving = "SELECT gsm FROM student WHERE email='" + User.Identity.Name + "'";*@
+    
+@*var Omschrijving = db.QueryValue(QueryOmschrijving);*@
+@using (Html.BeginForm("Index", "Home"))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+    var db = Database.Open("localhost");
+var QueryStagenaam = "SELECT s.naam FROM stageopdrachten s JOIN bedrijf b ON s.email = b.email WHERE b.email='" + User.Identity.Name + "'";
+var QueryOmschrijving = "SELECT s.omschrijving FROM stageopdrachten s JOIN bedrijf b ON s.email = b.email WHERE b.email='" + User.Identity.Name + "'";
+var QuerySemester = "SELECT s.semester FROM stageopdrachten s JOIN bedrijf b ON s.email = b.email WHERE b.email='" + User.Identity.Name + "'";
+var QuerySpecialisatie = "SELECT s.specialisatie FROM stageopdrachten s JOIN bedrijf b ON s.email = b.email WHERE b.email='" + User.Identity.Name + "'";
+var QueryAantal = "SELECT s.aantalStudenten FROM stageopdrachten s JOIN bedrijf b ON s.email = b.email WHERE b.email='" + User.Identity.Name + "'";
+var QueryStageMentor = "SELECT s.naam FROM stageopdrachten s JOIN bedrijf b ON s.email = b.email WHERE b.email='" + User.Identity.Name + "'";
+@*Collection<Var> StageNaam = db.QueryValue(QueryStagenaam).ToString();*@
+var omschrijving = db.QueryValue(QueryOmschrijving);
+var semester = db.QueryValue(QuerySemester);
+var specialisatie = db.QueryValue(QuerySpecialisatie);
+var aantal = db.QueryValue(QueryAantal);
+var stageMentor = db.QueryValue(QueryStageMentor);
+    var conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["localhost"].ConnectionString);
+    conn.Open();
+    var dr1 = new MySqlCommand(QueryStagenaam, conn);
+    var dr2 = dr1.ExecuteReader();
+ 
+while (dr2.Read())
+{
+
+   @* StageNaam = dr2.GetValue(0).ToString();*@
+    omschrijving = db.QueryValue(QueryOmschrijving);
+    semester = db.QueryValue(QuerySemester);
+    specialisatie = db.QueryValue(QuerySpecialisatie);
+    aantal = db.QueryValue(QueryAantal);
+    stageMentor = db.QueryValue(QueryStageMentor);
+ }
+conn.Close();
+
+
+    <table>
+        <tr>
+        <th>
+            @Html.DisplayNameFor(m => m.StageNaam)
+            
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Omschrijving)
+            
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Semester)
+            
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Specialisatie)
+           
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Aantal)
+            
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StageMentor)
+            
+        </th>
+        <th></th>
+    </tr>
+    </table>
+<table>
+        <ol>
+            <li>
+                @foreach (var item in StageNaam)
+                {
+                    @StageNaam
+                }
+            </li>
+            <li>
+                @omschrijving
+            </li>
+            <li>
+                @semester
+            </li>
+            <li>
+                @specialisatie
+            </li>
+            <li>
+                @aantal
+            </li>
+            <li>
+                @stageMentor
+            </li>
+        </ol>
+    
+</table>
+}
+            
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

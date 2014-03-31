@@ -31,11 +31,8 @@ namespace projecten.Models.Domain
             bereikbaarheid = "wagen";
             stageOpdracht = null;
         }
-        public int Id
-        {
-            get { return Id; }
-            private set { Id = value; }
-        }
+        public int Id { get; set; }
+       
 
         public string Naam { get; set; }
         public string Email { get; set; }

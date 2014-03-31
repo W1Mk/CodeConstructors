@@ -40,15 +40,6 @@ namespace projecten.Models
 
     }
 
-    public class RegisterExternalLoginModel
-    {
-        [Required]
-        [Display(Name = "bedrijfsnaam")]
-        public string Bedrijfsnaam { get; set; }
-
-        public string ExternalLoginData { get; set; }
-    }
-
     public class LocalPasswordModel
     {
         
@@ -131,8 +122,30 @@ namespace projecten.Models
 
     public class StageOpdrachtenModel
     {
-        [Display(Name = "StageOpdrachten")]
-        public String StageOpdracht { get; set; }
+        [Required]
+        [Display(Name = "StageNaam")]
+        public string StageNaam { get; set; }
+
+        [Required]
+        [Display(Name = "Omschrijving")]
+        public string Omschrijving { get; set; }
+
+        [Required]
+        [Display(Name = "Specialisatie")]
+        public string Specialisatie { get; set; }
+
+        [Required]
+        [Display(Name = "Semester")]
+        public String Semester { get; set; }
+
+        [Required]
+        [Display(Name = "Aantal Studenten")]
+        public String Aantal { get; set; }
+
+        [Required]
+        [Display(Name = "StageMentor")]
+        public String StageMentor { get; set; }
+    }
     }
 
     public class StageOpdrachtToevoegenModel
@@ -140,8 +153,6 @@ namespace projecten.Models
         [Required]
         [Display(Name = "StageNaam")]
         public String StageNaam { get; set; }
-
-
 
         [Required]
         [Display(Name = "Omschrijving")]
@@ -166,11 +177,12 @@ namespace projecten.Models
 
     public class LoginStudentModel
     {
-         [Required]
+        [Required]
         [Display(Name = "Email")]
         [DataType(DataType.EmailAddress)]
         public String Email { get; set; }
-         [Required]
+
+        [Required]
         [Display(Name = "Wachtwoord")]
         [DataType(DataType.Password)]
         public String Wachtwoord { get; set; }
@@ -187,18 +199,22 @@ namespace projecten.Models
     }
     public class WachtwoordVeranderenModel
     {
-
+        [Display(Name = "Email")]
         public string Email { get; set; }
+
+        [Display(Name = "huidig wachtwoord")]
         public string CurrentWachtwoord { get; set; }
+
         [Required]
         [StringLength(100, ErrorMessage = "het {0} moet minstens {2} caracters lang zijn.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "nieuw wachtwoord")]
         public string NewPassword { get; set; }
 
+        [Required]
         [DataType(DataType.Password)]
         [Display(Name = "bevestig nieuw wachtwoord")]
-        [Compare("nieuw wachtwoord", ErrorMessage = "Het nieuwe wachtwoord komt niet overeen met het bevestigingswachtwoord.")]
+        [Compare("NewPassword", ErrorMessage = "Het nieuwe wachtwoord komt niet overeen met het bevestigingswachtwoord.")]
         public string ConfirmPassword { get; set; }
 
     }
@@ -208,4 +224,4 @@ namespace projecten.Models
         public string ProviderDisplayName { get; set; }
         public string ProviderUserId { get; set; }
     }
-}
+
