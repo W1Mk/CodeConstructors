@@ -9,12 +9,11 @@ namespace projecten.Models.Domain
     {
         private int id;
         private string naam { get; set; }
-        private Student student { get; set; }
 
         public StageBegeleider()
         {
             naam = "**";
-            student = null;
+           // student = null;
         }
     }
 }

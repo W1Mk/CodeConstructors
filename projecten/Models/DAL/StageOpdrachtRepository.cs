@@ -9,13 +9,13 @@ namespace projecten.Models.DAL
 {
     public class StageOpdrachtRepository
     {
-        private BedrijfContext context;
+      /*  private BedrijfContext context;
         private DbSet<StageOpdracht> stageOpdrachten;
 
         public StageOpdrachtRepository(BedrijfContext context)
         {
             this.context = context;
-            stageOpdrachten = context.StageOpdrachten;
+            //stageOpdrachten = context.StageOpdrachten;
         }
 
         public void Add(StageOpdracht stage)
@@ -37,6 +37,6 @@ namespace projecten.Models.DAL
         public void SaveChanges()
         {
             context.SaveChanges();
-        }
+        }*/
     }
 }

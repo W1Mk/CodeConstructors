@@ -5,15 +5,26 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
 using projecten.Models.Domain;
+using WebMatrix.WebData;
+using System.Web.Security;
 
 namespace projecten.Models.DAL
 {
     public class BedrijfInitializer : DropCreateDatabaseAlways<BedrijfContext>
     {
+       
         protected override void Seed(BedrijfContext context)
         {
+        
             try
             {
+               
+                Bedrijf ikke = new Bedrijf {Bedrijf_idBedrijf=1, Bedrijfsnaam = "ikke", adres = "test", url = "test", Email = "test@test.be", telefoon = "053" };              
+                context.Bedrijven.Add(ikke);
+                SeedMembership();
+                context.SaveChanges();
+                System.Diagnostics.Debug.WriteLine("zou het gelukt zijn?");
+     
               /*  StageOpdracht opdracht = new StageOpdracht("test","1");
                 StageOpdracht opdracht1 = new StageOpdracht("test2","2");
                 List<StageOpdracht> stageOpdrachten =
@@ -30,7 +41,7 @@ namespace projecten.Models.DAL
                 denul.Paswoord = "denul";
                 denul.AddStageOpdracht(opdracht);
                 denul.AddStageOpdracht(opdracht1);
-
+                
                 
 
                 context.Bedrijven.Add(denul);
@@ -52,6 +63,26 @@ namespace projecten.Models.DAL
                 throw new Exception(s);
             }
 
+        }
+
+     
+              private void SeedMembership()
+        {
+            WebSecurity.InitializeDatabaseConnection("localhost", "bedrijf", "Bedrijf_idBedrijf", "Bedrijfsnaam", autoCreateTables: true);
+            
+            SimpleMembershipProvider membership = (SimpleMembershipProvider)Membership.Provider;
+            SimpleRoleProvider roles = (SimpleRoleProvider)Roles.Provider;
+
+            membership.CreateUserAndAccount("bedrijf", "bedrijf");
+           // membership.CreateUserAndAccount("docent", "docent");
+
+            roles.CreateRole("test");
+           // roles.CreateRole("student");
+
+            roles.AddUsersToRoles(new string[] { "bedrijf" }, new string[] { "bedrijf" });
+         //   roles.AddUsersToRoles(new string[] { "docent" }, new string[] { "admin" });
+
+        
         }
     }
 }

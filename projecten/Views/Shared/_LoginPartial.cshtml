@@ -1,6 +1,17 @@
-﻿@if (Request.IsAuthenticated )
+﻿@if (Request.IsAuthenticated && User.Identity.Name.Contains("hogent.be") )
 {
     <text>
+        Hallo, @Html.ActionLink(User.Identity.Name, "Manage", "Account", routeValues: null, htmlAttributes: new { @class = "username", title = "Manage" })!
+        @Html.ActionLink("Student", "Profiel", "Student", routeValues: null, htmlAttributes: new {})
+        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" })) {
+            @Html.AntiForgeryToken()
+            <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+        }
+    </text>
+}
+else if (Request.IsAuthenticated)
+{
+         <text>
         Hallo, @Html.ActionLink(User.Identity.Name, "Manage", "Account", routeValues: null, htmlAttributes: new { @class = "username", title = "Manage" })!
         @Html.ActionLink("Mijn stageopdrachten", "StageOpdrachten", "Bedrijf", routeValues: null, htmlAttributes: new {})
         @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" })) {
@@ -8,6 +19,7 @@
             <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
         }
     </text>
+    
 } else {
     <ul>
         <li>@Html.ActionLink("Registreer", "RegistreerSelectAccount", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>

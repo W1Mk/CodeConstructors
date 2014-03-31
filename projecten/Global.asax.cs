@@ -20,13 +20,17 @@ namespace projecten
         {
             AreaRegistration.RegisterAllAreas();
 
-            WebApiConfig.Register(GlobalConfiguration.Configuration);
+            GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
-
-            //Database.SetInitializer<BedrijfContext>(new BedrijfInitializer());
+            
+            Database.SetInitializer<BedrijfContext>(new BedrijfInitializer());
+            
+          //  new BedrijfContext().Bedrijven.ToList();
+          //  Context.Database.Initialize(false);
+          
         }
     }
 }
