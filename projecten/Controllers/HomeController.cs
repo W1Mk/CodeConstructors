@@ -1,8 +1,12 @@
-﻿using System;
+﻿
+using projecten.Models.DAL;
+using projecten.Models.Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace projecten.Controllers
 {
@@ -12,6 +16,13 @@ namespace projecten.Controllers
         {
             ViewBag.Message = "Index";
             
+            
+            BedrijfContext context = new BedrijfContext();
+            
+            BedrijfRepository rep = new BedrijfRepository(context);
+            Bedrijf bedrijf = new Bedrijf();
+           rep.Add(bedrijf);
+      
             return View();
         }
 
