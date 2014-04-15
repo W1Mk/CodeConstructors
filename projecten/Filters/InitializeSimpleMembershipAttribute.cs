@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Threading;
 using System.Web.Mvc;
+using projecten.Models.DAL;
 using WebMatrix.WebData;
 using projecten.Models;
 
@@ -25,11 +26,11 @@ namespace projecten.Filters
         {
             public SimpleMembershipInitializer()
             {
-                Database.SetInitializer<UsersContext>(null);
+                Database.SetInitializer<BedrijfContext>(null);
 
                 try
                 {
-                    using (var context = new UsersContext())
+                    using (var context = new BedrijfContext())
                     {
                         if (!context.Database.Exists())
                         {

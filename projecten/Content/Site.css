@@ -23,8 +23,11 @@ a {
 }
 
     a:link, a:visited,
-    a:active, a:hover {
+    a:active{
         color: #333;
+    }
+    a:hover {
+        color: #ffffff;
     }
 
     a:hover {
@@ -105,17 +108,18 @@ h5, h6 {
 }
 
     .main-content {
-        background: url("../Images/accent.png") no-repeat;
+        
         padding-left: 10px;
         padding-top: 30px;
     }
 
     .featured + .main-content {
-        background: url("../Images/heroAccent.png") no-repeat;
+        
     }
 
 header .content-wrapper {
     padding-top: 20px; 
+    background: url("../Images/logo.png") no-repeat;
 }
 
 footer {
@@ -153,7 +157,7 @@ footer {
 }
 
     #login a {
-        background-color: #d3dce0;
+        background-color: #1e90ff;
         margin-left: 10px;
         margin-right: 3px;
         padding: 2px 3px;
@@ -213,12 +217,12 @@ ul#menu {
 }
 
     .featured .content-wrapper {
-        background-color: #7ac0da;
-        background-image: -ms-linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
-        background-image: -o-linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
-        background-image: -webkit-gradient(linear, left top, right top, color-stop(0, #7ac0da), color-stop(1, #a4d4e6));
-        background-image: -webkit-linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
-        background-image: linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
+        background-color: #1e90ff;
+        background-image: -ms-linear-gradient(left, #1e90ff 0%, #1e90ff 100%);
+        background-image: -o-linear-gradient(left, #1e90ff 0%, #1e90ff 100%);
+        background-image: -webkit-gradient(linear, left top, right top, color-stop(0, #1e90ff), color-stop(1, #1e90ff));
+        background-image: -webkit-linear-gradient(left, #1e90ff 0%, #1e90ff 100%);
+        background-image: linear-gradient(left, #1e90ff 0%, #1e90ff 100%);
         color: #3e5667;
         padding: 20px 40px 30px 40px;
     }
@@ -626,7 +630,7 @@ tr.pager td {
 
         #login a {
             background: none;
-            color: #999;
+            color: #1e90ff;
             font-weight: 600;
             margin: 2px;
             padding: 0;
@@ -754,3 +758,4 @@ tr.pager td {
             margin: 0;
         }
 }
+

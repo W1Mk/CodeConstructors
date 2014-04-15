@@ -16,19 +16,29 @@ using System.Net.Mail;
 using WebMatrix.Data;
 using System.Data.SqlClient;
 using System.Configuration;
+using MySql.Data.MySqlClient;
+using projecten.Models;
+using projecten.Models.DAL;
+using projecten.Models.Domain;
 
 namespace projecten.Controllers
 {
     [Authorize]
-    [InitializeSimpleMembership]
+    //[InitializeSimpleMembership]
     public class AccountController : Controller
     {
+      private static  projecten.Models.DAL.BedrijfContext context = new projecten.Models.DAL.BedrijfContext();
+      private BedrijfRepository BedrijfRep = new BedrijfRepository(context);
+      private StudentRepository StudentRep = new StudentRepository(context);
+      private StageOpdrachtRepository StageRep = new StageOpdrachtRepository(context);
+      public string username;
         //
         // GET: /Account/Login
 
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+           
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -41,26 +51,18 @@ namespace projecten.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model, string returnUrl)
         {
-            SqlConnection Conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
-            SqlCommand Comm1 = new SqlCommand("SELECT UserName,Wachtwoord from UserProfile", Conn);
-            Conn.Open();
-            SqlDataReader DR1 = Comm1.ExecuteReader();
-            var email ="";
-            var wachtwoord="";
-            while(DR1.Read()){
-           
-                email = DR1.GetValue(0).ToString();
-                wachtwoord = DR1.GetValue(1).ToString();
-                System.Diagnostics.Debug.WriteLine(email,wachtwoord);
+
+            username = model.Email;
+            var Wachtwoord = BedrijfRep.FindBy(model.Email).Wachtwoord;
             
-           
-            if (ModelState.IsValid && model.Email == email && model.Wachtwoord == wachtwoord)
+            if (ModelState.IsValid && model.Wachtwoord == Wachtwoord)
             {
                 FormsAuthentication.SetAuthCookie(model.Email, false);
+
                 return RedirectToLocal(returnUrl);
             }
-            }
-            Conn.Close();
+            
+            
             // If we got this far, something failed, redisplay form
             ModelState.AddModelError("", "The user name or password provided is incorrect.");
             return View(model);
@@ -73,8 +75,8 @@ namespace projecten.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
-            WebSecurity.Logout();
 
+            FormsAuthentication.SignOut();
             return RedirectToAction("Index", "Home");
         }
 
@@ -93,13 +95,15 @@ namespace projecten.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(RegisterModel model,UserProfile userprofile)
+        public ActionResult Register(RegisterModel model)
         {
             if (ModelState.IsValid)
             {
                 // Attempt to register the user
                 try
                 {
+                
+                    
                     String RandomWachtwoord;
                     RandomWachtwoord = CreateRandomPassword(6);
                     MailMessage message = new MailMessage();
@@ -108,26 +112,28 @@ namespace projecten.Controllers
                     message.Subject = "Wachtwoord";
                     message.Body = "jouw wachtwoord: " + RandomWachtwoord;
                     model.Wachtwoord = RandomWachtwoord;
-                    
-                    //WebSecurity.CreateUserAndAccount(model.email, model.Wachtwoord);
-                    var db = Database.Open("DefaultConnection");
-                    var insertCommand1 = "SET IDENTITY_INSERT UserProfile ON";
-                    var insertCommand2 = "INSERT INTO UserProfile (UserId,UserName, Wachtwoord,TypePersoon) VALUES(@0, @1, @2,@3)";
-                    var insertCommand3 = db.QueryValue("SELECT COUNT(*) FROM UserProfile");
-                    
-;                    db.Execute(insertCommand1);
-                    db.Execute(insertCommand2, insertCommand3 +1, model.email, model.Wachtwoord, "Bedrijf");
 
-                    
+                    Bedrijf bedrijf = new Bedrijf { Bedrijfsnaam = model.BedrijfsNaam, adres = model.Adres, url = model.Url, Email = model.email, telefoon = model.Telefoon, Wachtwoord = model.Wachtwoord, bedrijfsactiviteit = model.BedrijfsActiviteit, bereikbaarheid = model.Bereikbaarheid};
+                    if (!BedrijfRep.FindEqual(model.email))
+                    {
+                        
+                        BedrijfRep.Add(bedrijf);
+                    }
+                    else
+                    {
+                        System.Diagnostics.Debug.WriteLine("email already exists");
+                    }
+                    BedrijfRep.SaveChanges();
                     
                     var client = new SmtpClient("smtp.gmail.com", 587)
                     {
-                        Credentials = new NetworkCredential("nielsdepauw94@gmail.com", "Yankee12"),
+                        UseDefaultCredentials = false,
+                        Credentials = new NetworkCredential("nielsdepauw94@gmail.com", " qsraqfdnmtbefoih "),
                         EnableSsl = true
                         
                     };
                     
-                    client.Send(message.From.ToString(), message.To.ToString(), message.Subject, message.Body);
+                    client.Send("nielsdepauw94@gmail.com", message.To.ToString(), message.Subject, message.Body);
                    
                     System.Diagnostics.Debug.WriteLine(RandomWachtwoord);
                     
@@ -279,82 +285,11 @@ namespace projecten.Controllers
         //
         // GET: /Account/ExternalLoginCallback
 
-        [AllowAnonymous]
-        public ActionResult ExternalLoginCallback(string returnUrl)
-        {
-            AuthenticationResult result = OAuthWebSecurity.VerifyAuthentication(Url.Action("ExternalLoginCallback", new { ReturnUrl = returnUrl }));
-            if (!result.IsSuccessful)
-            {
-                return RedirectToAction("ExternalLoginFailure");
-            }
-
-            if (OAuthWebSecurity.Login(result.Provider, result.ProviderUserId, createPersistentCookie: false))
-            {
-                return RedirectToLocal(returnUrl);
-            }
-
-            if (User.Identity.IsAuthenticated)
-            {
-                // If the current user is logged in add the new account
-                OAuthWebSecurity.CreateOrUpdateAccount(result.Provider, result.ProviderUserId, User.Identity.Name);
-                return RedirectToLocal(returnUrl);
-            }
-            else
-            {
-                // User is new, ask for their desired membership name
-                string loginData = OAuthWebSecurity.SerializeProviderUserId(result.Provider, result.ProviderUserId);
-                ViewBag.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(result.Provider).DisplayName;
-                ViewBag.ReturnUrl = returnUrl;
-                return View("ExternalLoginConfirmation", new RegisterExternalLoginModel { Bedrijfsnaam = result.UserName, ExternalLoginData = loginData });
-            }
-        }
-
+       
         //
         // POST: /Account/ExternalLoginConfirmation
 
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public ActionResult ExternalLoginConfirmation(RegisterExternalLoginModel model, string returnUrl)
-        {
-            string provider = null;
-            string providerUserId = null;
-
-            if (User.Identity.IsAuthenticated || !OAuthWebSecurity.TryDeserializeProviderUserId(model.ExternalLoginData, out provider, out providerUserId))
-            {
-                return RedirectToAction("Manage");
-            }
-
-            if (ModelState.IsValid)
-            {
-                // Insert a new user into the database
-                using (UsersContext db = new UsersContext())
-                {
-                    UserProfile user = db.UserProfiles.FirstOrDefault(u => u.UserName.ToLower() == model.Bedrijfsnaam.ToLower());
-                    // Check if user already exists
-                    if (user == null)
-                    {
-                        // Insert name into the profile table
-                        db.UserProfiles.Add(new UserProfile { UserName = model.Bedrijfsnaam });
-                        db.SaveChanges();
-
-                        OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.Bedrijfsnaam);
-                        OAuthWebSecurity.Login(provider, providerUserId, createPersistentCookie: false);
-
-                        return RedirectToLocal(returnUrl);
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("UserName", "User name already exists. Please enter a different user name.");
-                    }
-                }
-            }
-
-            ViewBag.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(provider).DisplayName;
-            ViewBag.ReturnUrl = returnUrl;
-            return View(model);
-        }
-
+       
         //
         // GET: /Account/ExternalLoginFailure
 
@@ -397,6 +332,7 @@ namespace projecten.Controllers
         {
             return View();
         }
+        
         [AllowAnonymous]
         public ActionResult SelectAccount(string returnUrl)
         {
@@ -422,16 +358,16 @@ namespace projecten.Controllers
         public ActionResult RegistreerStudent(RegistreerStudentModel model, string returnUrl)
         {
 
-            SqlConnection Conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
-            SqlCommand Comm1 = new SqlCommand("SELECT UserName from UserProfile", Conn);
+            MySqlConnection Conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["localhost"].ConnectionString);
+            MySqlCommand Comm1 = new MySqlCommand("SELECT Email from student", Conn);
             Conn.Open();
-            SqlDataReader DR1 = Comm1.ExecuteReader();
+            MySqlDataReader DR1 = Comm1.ExecuteReader();
             var email = "";
             
             if (DR1.Read())
             {
                 email = DR1.GetValue(0).ToString();
-                System.Diagnostics.Debug.WriteLine(email);
+                System.Diagnostics.Debug.WriteLine(model.Email);
             }
             Conn.Close();
 
@@ -440,7 +376,6 @@ namespace projecten.Controllers
             {
                
                 FormsAuthentication.SetAuthCookie(model.Email, false);
-                WebSecurity.ConfirmAccount(model.Email);
                 return RedirectToAction("WachtwoordVeranderen", "Account");
 
             }
@@ -458,6 +393,7 @@ namespace projecten.Controllers
         [AllowAnonymous]
         public ActionResult LoginStudent()
         {
+        
             ViewBag.Message = "LoginStudent";
             return View();
 
@@ -467,12 +403,17 @@ namespace projecten.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LoginStudent(LoginStudentModel model, string returnUrl)
         {
-            SqlConnection Conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
-            SqlCommand Comm1 = new SqlCommand("SELECT UserName,Wachtwoord from UserProfile", Conn);
+
+            var db = Database.Open("localhost");
+           // db.Database.ExecuteSqlCommand("Select Email FROM student WHERE Email = peremans.laurens@hogent.be");
+            
+            MySqlConnection Conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["localhost"].ConnectionString);
+            MySqlCommand Comm1 = new MySqlCommand("SELECT Email,Wachtwoord from student", Conn);
             Conn.Open();
-            SqlDataReader DR1 = Comm1.ExecuteReader();
+            MySqlDataReader DR1 = Comm1.ExecuteReader();
             var email = "";
             var wachtwoord ="";
+            
             if (DR1.Read())
             {
                 email = DR1.GetValue(0).ToString();
@@ -483,7 +424,7 @@ namespace projecten.Controllers
             if (ModelState.IsValid && model.Email == email && model.Wachtwoord == wachtwoord)
             {
                 FormsAuthentication.SetAuthCookie(model.Email, false);
-                return RedirectToLocal(returnUrl);
+                return View(returnUrl);
             }
 
             // If we got this far, something failed, redisplay form
@@ -500,34 +441,19 @@ namespace projecten.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult WachtwoordVeranderen(WachtwoordVeranderenModel model)
         {
-            var db = Database.Open("DefaultConnection");
-            var insertCommand1 = "SET IDENTITY_INSERT UserProfile ON";
-            var insertCommand2 = "UPDATE UserProfile SET wachtwoord =(FROM UserProfile WHERE UserName = @0)";
-            
-         
-
-            SqlConnection Conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
-            SqlCommand Comm1 = new SqlCommand("SELECT UserName,Wachtwoord from UserProfile", Conn);
-            Conn.Open();
-            SqlDataReader DR1 = Comm1.ExecuteReader();
-            var email = "";
-            var wachtwoord ="";
-            DR1.Read();
-                email = DR1.GetValue(0).ToString();
-                wachtwoord = DR1.GetValue(1).ToString();
-                System.Diagnostics.Debug.WriteLine(email);
-
-                
+          
+                var db = Database.Open("localhost");
+               
+                var insertCommand1 = "UPDATE student SET wachtwoord ='" + model.ConfirmPassword + "'WHERE Email ='" +User.Identity.Name+ "'";
                     db.Execute(insertCommand1);
-                    db.Execute(insertCommand2,model.NewPassword);
 
-                    FormsAuthentication.SetAuthCookie(model.Email, false);
-                    return RedirectToAction("Index", "Home");
-                
+                    FormsAuthentication.SetAuthCookie(User.Identity.Name, false);
+                   
+                    return RedirectToAction("Profiel", "Student");
+
             
-            Conn.Close();
-            return RedirectToAction("Indexfout", "Home");
         }
+      
         #region Helpers
         private ActionResult RedirectToLocal(string returnUrl)
         {

@@ -1,52 +1,88 @@
-﻿@model IEnumerable<projecten.Models.Domain.StageOpdracht>
+﻿@using System.Collections
+@using System.Collections.ObjectModel
+@using System.Configuration
+@using Microsoft.Ajax.Utilities
+@using MySql.Data.MySqlClient
+@using projecten.Models.DAL
+@model IEnumerable<projecten.Models.StageOpdrachtenModel>
 @{
     ViewBag.Title = "Stage Opdrachten";
+    BedrijfContext context = new BedrijfContext();
+    StageOpdrachtRepository repository = new StageOpdrachtRepository(context);
+    BedrijfRepository rep = new BedrijfRepository(context);
+    
+    var opdrachten = repository.FindAll(rep.FindId(User.Identity.Name));
     
 }
 
 <hgroup class="title">
     <h1>@ViewBag.Title</h1>
 </hgroup>
-@Html.ActionLink("Voeg stageopdracht toe", "StageOpdrachtToevoegen", "Bedrijf")
-@*@section featured{
-    <section class="lists">*@
-        <table>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Naam)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Omschrijving)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Semester)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Specialisatie)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.AantalStudenten)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.StageMentor)
-                </th>
-                <th></th>
-            </tr>
-    
-          @*  @foreach(var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Naam)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Semester)
-            </td>
-        </tr>
-    }*@
 
-        </table>
-    @*</section>
-}*@
+    <table>
+        <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.StageNaam)
+            
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Omschrijving)
+            
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Semester)
+            
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Specialisatie)
+           
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Aantal)
+            
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StageMentor)
+            
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in opdrachten)
+{
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Naam)
+    </td>  
+    <td>
+        @Html.DisplayFor(modelItem => item.Omschrijving)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Semester)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Specialisatie)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.AantalStudenten)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Status)
+    </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StageMentor)
+        </td>
+</tr>
+}
+       
+</table>
+
+@Html.ActionLink("Voeg een opdracht toe", "StageOpdrachtToevoegen")            
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

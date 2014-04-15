@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -7,49 +9,48 @@ namespace projecten.Models.Domain
 {
     public class Bedrijf
     {
-        private int id { get; set; }
-        private string naam { get; set; } 
-        private string email { get; set; }
-        private string url { get; set; }
-        private string telefoon { get; set; }
-        private string paswoord { get; set; }
-        private string adres { get; set; }
-        private string bedrijfsactiviteit { get; set; }
-        private string bereikbaarheid { get; set; }
-        private StageOpdracht stageOpdracht { get; set; }
-
-    
-        public Bedrijf()
-        {
-            naam ="*";
-            email = "*@*.*";
-            url = "*..*";
-            telefoon = "0000000000";
-            paswoord = "paswoord";
-            adres = "**";
-            bedrijfsactiviteit = "Bedrijf";
-            bereikbaarheid = "wagen";
-            stageOpdracht = null;
-        }
-        public int Id
-        {
-            get { return Id; }
-            private set { Id = value; }
-        }
-
-        public string Naam { get; set; }
+        //[Key]
+        public int BedrijfId { get; set; }
+        //[Required, MaxLength(50)]
+        public string Bedrijfsnaam { get; set; }
+       // [Required, MaxLength(50)]
         public string Email { get; set; }
-        public string Telefoon { get; set; }
-        public string Adres { get; set; }
-        public string Url { get; set; }
-        public string Paswoord { get; set; }
-        public string Bedrijfsactiviteit { get; set; }
-        public string Bereikbaarheid { get; set; }
-        public virtual ICollection<StageOpdracht> stages { get; set; }
+       // [MaxLength(20)]
+        public string telefoon { get; set; }
+       // [Required, MaxLength(50)]
+        public string adres { get; set; }
+       // [MaxLength(50)]
+        public string url { get; set; }
+       // [Required, MaxLength(20)]
+        public string Wachtwoord { get; set; }
+       // [Required, MaxLength(20)]
+        public string bedrijfsactiviteit { get; set; }
+       // [Required, MaxLength(20)]
+        public string bereikbaarheid { get; set; }
+        //public virtual ICollection<StageOpdracht> stages { get; set; }
+        //public StageOpdracht StageOpdracht;
+        
+        
 
+         public Bedrijf()
+        {
+            //stages = new Collection<StageOpdracht>();
+        }
+
+        public Bedrijf(string bedrijfsnaam):this()
+        {
+            Bedrijfsnaam = bedrijfsnaam;
+        }
+         public Bedrijf(string Bedrijfsnaam,string Email,string Wachtwoord)
+            : this(Bedrijfsnaam)
+        {
+            this.Email = Email;
+            this.Wachtwoord = Wachtwoord;
+        }
         public void AddStageOpdracht(StageOpdracht stage)
         {
-            stages.Add(stage);
+             //stages.Add(stage);
         }
+        
     }
 }

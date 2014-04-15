@@ -5,15 +5,36 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
 using projecten.Models.Domain;
+using WebMatrix.WebData;
+using System.Web.Security;
 
 namespace projecten.Models.DAL
 {
-    public class BedrijfInitializer : DropCreateDatabaseAlways<BedrijfContext>
+    public class BedrijfInitializer : DropCreateDatabaseIfModelChanges<BedrijfContext>
     {
+       
         protected override void Seed(BedrijfContext context)
-        {
+        {      
             try
             {
+               
+                Bedrijf ikke = new Bedrijf {Bedrijfsnaam = "ikke", adres = "test", url = "test", Email = "test@test.be", telefoon = "053", Wachtwoord = "yep" };
+                StageOpdracht ikkeOpdracht = new StageOpdracht
+                {
+                    Naam = "ikkeOpdracht",
+                    Omschrijving = "tis een opdracht",
+                    Semester = "2",
+                    Specialisatie = "programmeren",
+                    AantalStudenten = "2",
+                    StageMentor = "mevr. opdracht"
+                };
+                //ikke.stages.Add(ikkeOpdracht);
+                Student ikke2 = new Student { naam = "ikke", adres = "teststraat", gsm = "0478836695", Email = "peremans.laurens@hogent.be",  wachtwoord= "testen" };      
+                context.Bedrijven.Add(ikke);
+                //SeedMembership();
+                context.SaveChanges();
+                //System.Diagnostics.Debug.WriteLine("zou het gelukt zijn?");
+     
               /*  StageOpdracht opdracht = new StageOpdracht("test","1");
                 StageOpdracht opdracht1 = new StageOpdracht("test2","2");
                 List<StageOpdracht> stageOpdrachten =
@@ -30,7 +51,7 @@ namespace projecten.Models.DAL
                 denul.Paswoord = "denul";
                 denul.AddStageOpdracht(opdracht);
                 denul.AddStageOpdracht(opdracht1);
-
+                
                 
 
                 context.Bedrijven.Add(denul);
@@ -53,5 +74,8 @@ namespace projecten.Models.DAL
             }
 
         }
+
+     
+             
     }
 }

@@ -12,20 +12,30 @@ namespace projecten.Models.DAL.Mapper
     {
         public StageOpdrachtMapper()
         {
-            //properties
-            Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-            Property(t => t.Naam).IsRequired().HasMaxLength(100);
-            Property(t => t.Semester).IsRequired();
-
             //Table
             ToTable("StageOpdracht");
+            //HasKey(t => t.StageOpdrachtId);
+
+            //properties                      
+            Property(t => t.Naam).IsRequired().HasMaxLength(100);
+            Property(t => t.Omschrijving).IsRequired().HasMaxLength(500);
+            Property(t => t.Semester).IsRequired();
+            Property(t => t.Specialisatie).IsRequired();
+            Property(t => t.AantalStudenten).IsRequired();
+            Property(t => t.StageMentor).IsRequired();
+            Property(t => t.Status).IsRequired();
+            Property(t => t.Email).IsRequired();
+            //Property(t => t.Bedrijf).IsRequired();
 
             //Relationships
-            /*HasMany(t => t.Bieren)
-                .WithRequired()
-                .Map(m => m.MapKey("BrouwerId"))
-                .WillCascadeOnDelete(false);
-             HasOptional(t => t.Gemeente)
+           /* HasRequired(t => t.Bedrijf)
+                .WithRequiredDependent()
+                .WillCascadeOnDelete(false);*/
+           /* HasRequired(t => t.bedrijf)
+                .WithMany()
+                .HasForeignKey(t => t.
+                .WillCascadeOnDelete(true);*/
+            /* HasOptional(t => t.Gemeente)
                 .WithMany()
                 .Map(m => m.MapKey("Postcode"))
                 .WillCascadeOnDelete(false);*/
