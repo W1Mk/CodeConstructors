@@ -24,8 +24,8 @@ namespace projecten.Models.DAL.Mapper
             Property(t => t.AantalStudenten).IsRequired();
             Property(t => t.StageMentor).IsRequired();
             Property(t => t.Status).IsRequired();
-            Property(t => t.Email).IsRequired();
-            //Property(t => t.Bedrijf).IsRequired();
+            //Property(t => t.Email).IsRequired();
+            //Property(t => t.Bedrijf.BedrijfId).IsRequired();
 
             //Relationships
            /* HasRequired(t => t.Bedrijf)

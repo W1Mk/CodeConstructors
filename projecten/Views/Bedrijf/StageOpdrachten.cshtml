@@ -10,8 +10,8 @@
     BedrijfContext context = new BedrijfContext();
     StageOpdrachtRepository repository = new StageOpdrachtRepository(context);
     BedrijfRepository rep = new BedrijfRepository(context);
-    
-    var opdrachten = repository.FindAll(rep.FindId(User.Identity.Name));
+    var bedrijf = rep.FindBy(User.Identity.Name);
+    var opdrachten = repository.FindAll(bedrijf.BedrijfId);
     
 }
 

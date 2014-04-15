@@ -18,9 +18,10 @@ namespace projecten.Models.Domain
         public string AantalStudenten { get; set; }
         public string StageMentor { get; set; }
         public Bedrijf Bedrijf { get; set; }
+        //public int Bedrijf_BedrijfId { get; set; }
         public string Status { get; set; }
         private string[] status { get; set; }
-        public string Email { get; set; }
+       // public string Email { get; set; }
         //public virtual ICollection<StageOpdracht> StageOpdrachten { get; private set; }
 
         public StageOpdracht()

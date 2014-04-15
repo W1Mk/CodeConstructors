@@ -29,6 +29,8 @@ namespace projecten
            Database.SetInitializer<BedrijfContext>(new BedrijfInitializer());
             
            new BedrijfContext().Bedrijven.ToList();
+
+
           //  Context.Database.Initialize(false);
           
         }

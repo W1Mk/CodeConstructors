@@ -38,7 +38,7 @@ namespace projecten.Controllers
         [AllowAnonymous]
         public ActionResult StageOpdrachtToevoegen(StageOpdrachtToevoegenModel model)
         {
-            username = controller.username;
+            //username = controller.username;
             
             if (ModelState.IsValid)
             {
@@ -52,10 +52,12 @@ namespace projecten.Controllers
                     Specialisatie = model.Specialisatie,
                     AantalStudenten = model.Aantal,
                     StageMentor = model.StageMentor,
-                    Status = "wachten"
-
+                    Status = "wachten",
+                   
                 };
-                opdracht.Bedrijf.BedrijfId = BedrijfRep.FindId(username);
+                opdracht.Bedrijf = new Bedrijf();
+
+               opdracht.Bedrijf = BedrijfRep.FindBy(User.Identity.Name);
                 StageRep.Add(opdracht);
                 StageRep.SaveChanges();
                 return RedirectToAction("StageOpdrachten", "Bedrijf");

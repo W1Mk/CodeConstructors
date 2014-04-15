@@ -37,7 +37,7 @@ namespace projecten.Models.DAL
         public StageOpdracht FindBy(String naam)
         {
             //System.Diagnostics.Debug.WriteLine(FindBy(naam).Naam);
-            return stageOpdrachten.FirstOrDefault(b => b.Email == naam);
+            return stageOpdrachten.FirstOrDefault(b => b.Naam == naam);
         }
                     
         public IQueryable<StageOpdracht> FindAll(int id)
