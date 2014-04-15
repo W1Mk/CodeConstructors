@@ -1,0 +1,25 @@
+﻿@model projecten.Models.ProfielModel  
+@using (Html.BeginForm("ProfielWachtwoord","Student")) {
+<h3>Wachtwoord</h3>
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()   
+    <fieldset>
+        <legend>Profiel</legend>
+        <ol>
+            <li>
+                @Html.LabelFor(m => m.OudWachtwoord)
+                @Html.PasswordFor(m => m.OudWachtwoord)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.NieuwWachtwoord)
+                 @Html.PasswordFor(m => m.NieuwWachtwoord)
+                
+            </li>
+             <li>
+                @Html.LabelFor(m => m.BevestigWachtwoord)
+                 @Html.PasswordFor(m => m.BevestigWachtwoord)
+            </li>
+        </ol>
+         <input type="submit" value="verander wachtwoord" />
+</fieldset>
+}

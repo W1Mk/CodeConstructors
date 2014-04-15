@@ -1,0 +1,43 @@
+﻿@model projecten.Models.ProfielModel
+
+
+
+
+@using (Html.BeginForm("Profiel", "Student"))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+    var db = Database.Open("localhost");
+    var QueryAdres = "SELECT adres FROM student WHERE Email='" + User.Identity.Name + "'";
+    var QueryGsm = "SELECT gsm FROM student WHERE Email='" + User.Identity.Name + "'";
+    var adres = db.QueryValue(QueryAdres);
+    var gsm = db.QueryValue(QueryGsm);
+    <div style="float: left;">
+        <fieldset>
+            <h3>Profiel</h3>
+            <legend>Profiel</legend>
+            <ol>
+                <li>
+                    @Html.LabelFor(m => m.adres)
+                    @adres
+                </li>
+                <li>
+                    @Html.LabelFor(m => m.gsm)
+                    @gsm
+
+                </li>
+            </ol>
+            <input type="submit" value="verander profiel" />
+        </fieldset>
+    </div>
+    <div style="float: right;">
+        @Html.Partial("ProfielWachtwoord")
+
+
+    </div>
+
+
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
