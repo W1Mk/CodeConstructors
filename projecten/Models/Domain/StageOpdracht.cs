@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -7,7 +8,7 @@ namespace projecten.Models.Domain
 {
     public class StageOpdracht
     {
-        private int id;
+      /* private int id;
         private string naam { get; set; }
         // private Student student { get; set; }
         private string semester { get; set; }
@@ -35,6 +36,8 @@ namespace projecten.Models.Domain
         public string Omschrijving { get; set; }
         public string Specialisatie { get; set; }
         public string AantalStudenten { get; set; }
-        public string StageMentor { get; set; }
+        public string StageMentor { get; set; }*/
+        [Key]
+        public int Id { get; set; }
     }
 }

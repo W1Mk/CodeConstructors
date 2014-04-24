@@ -20,7 +20,8 @@ namespace projecten.Models.DAL
 
         public void Add(Bedrijf bedrijf)
         {
-            bedrijven.Add(bedrijf);
+          //  bedrijven.Add(bedrijf);
+            
         }
         public void Delete(Bedrijf bedrijf)
         {
@@ -33,6 +34,12 @@ namespace projecten.Models.DAL
         public void SaveChanges()
         {
             context.SaveChanges();
+        }
+        public List<Bedrijf> lijst()
+        {
+            List<Bedrijf> bedrijfslijst = new List<Bedrijf>();
+            bedrijfslijst.Add(new Bedrijf());
+            return bedrijfslijst;
         }
     }
 }

@@ -28,13 +28,14 @@ a {
     }
 
     a:hover {
-        background-color: #c7d1d6;
+        background-color: #32ACE2;        
     }
 
 header, footer, hgroup,
 nav, section {
     display: block;
 }
+
 
 mark {
     background-color: #a6dbed;
@@ -45,7 +46,6 @@ mark {
 .float-left {
     float: left;
 }
-
 .float-right {
     float: right;
 }
@@ -153,11 +153,15 @@ footer {
 }
 
     #login a {
-        background-color: #d3dce0;
+        background-color: #7ac0da;
         margin-left: 10px;
         margin-right: 3px;
         padding: 2px 3px;
         text-decoration: none;
+    }
+
+    #login a:hover {
+        background-color: #a4d4e6;
     }
 
     #login a.username {
@@ -180,11 +184,14 @@ footer {
 /* menu
 ----------------------------------------------------------*/
 ul#menu {
-    font-size: 1.3em;
+    font-size: 1.5em;
     font-weight: 600;
-    margin: 0 0 5px;
-    padding: 0;
-    text-align: right;
+    margin-left: 0;
+    padding-top: 10px;
+    height: 54px;
+    width: 920px;
+    display: block;
+    background: url(../images/bg_nav.jpg) repeat-x 0 0;
 }
 
     ul#menu li {
@@ -195,15 +202,14 @@ ul#menu {
 
         ul#menu li a {
             background: none;
-            color: #999;
+            color: #fff;
             text-decoration: none;
         }
 
         ul#menu li a:hover {
-            color: #333;
+            color: #000;
             text-decoration: none;
         }
-
 
 /* page elements
 ----------------------------------------------------------*/
@@ -632,10 +638,6 @@ tr.pager td {
             padding: 0;
         }
 
-        #login a:hover {
-            color: #333;
-        }
-
     /* menu */
     nav {
         margin-bottom: 5px;
@@ -754,3 +756,4 @@ tr.pager td {
             margin: 0;
         }
 }
+

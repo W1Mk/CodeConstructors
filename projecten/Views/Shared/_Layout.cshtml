@@ -5,31 +5,35 @@
         <title>@ViewBag.Title - Code Constructors</title>
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <meta name="viewport" content="width=device-width" />
-        @Styles.Render("~/Content/css")
+        @Styles.Render("~/Content/Site.css")
         @Scripts.Render("~/bundles/modernizr")
     </head>
     <body>
         <header>
+            
             <div class="content-wrapper">
                 <div class="float-left">
-                   <img id="img_logo" alt="Logo" src="@Url.Content("~/Images/logo.png")" />
+                    <img id="img_logo" alt="GroupLogo" src="@Url.Content("~/Images/nieuw klein logo.png")" />
                 </div>
+
                 <div class="float-right">
                     <section id="login">
                         
                         @Html.Partial("_LoginPartial")
+
                     </section>
-                    <nav>
-                        <ul id="menu">
-                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                            <li>@Html.ActionLink("About", "About", "Home")</li>
-                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                        </ul>
-                    </nav>
                 </div>
+                <nav>
+                    <ul id="menu">
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Over", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    </ul>
+                </nav>
             </div>
         </header>
         <div id="body">
+            
             @RenderSection("featured", required: false)
             <section class="content-wrapper main-content clear-fix">
                 @RenderBody()
@@ -37,8 +41,9 @@
         </div>
         <footer>
             <div class="content-wrapper">
+
                 <div class="float-left">
-                    <p>&copy; @DateTime.Now.Year -Code Constructors</p>
+                    <p>&copy; @DateTime.Now.Year | Code Constructors</p>
                 </div>
             </div>
         </footer>

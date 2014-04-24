@@ -8,15 +8,16 @@ using System.Web.Security;
 
 namespace projecten.Models
 {
-    public class UsersContext : DbContext
+    public class BedrijfContext : DbContext
     {
-        public UsersContext()
-            : base("DefaultConnection")
+        public BedrijfContext()
+            : base("localhost")
         {
         }
 
         public DbSet<UserProfile> UserProfiles { get; set; }
-        public DbSet<Student> Student { get; set; }
+        public DbSet<bedrijf> Student { get; set; }
+        public DbSet<bedrijf> Bedrijf { get; set; }
     }
 
     [Table("UserProfile")]
@@ -30,7 +31,7 @@ namespace projecten.Models
         public string TypePersoon { get; set; }
     }
     [Table("Student")]
-    public class Student
+    public class student
     {
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
@@ -39,14 +40,15 @@ namespace projecten.Models
         public string Wachtwoord { get; set; }
 
     }
-
-    public class RegisterExternalLoginModel
+    [Table("bedrijf")]
+    public class bedrijf
     {
-        [Required]
-        [Display(Name = "bedrijfsnaam")]
-        public string Bedrijfsnaam { get; set; }
-
-        public string ExternalLoginData { get; set; }
+        [Key]
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        public int UserId { get; set; }
+        public string Email { get; set; }
+        public string Wachtwoord { get; set; }
+        
     }
 
     public class LocalPasswordModel
@@ -166,11 +168,12 @@ namespace projecten.Models
 
     public class LoginStudentModel
     {
-         [Required]
+        [Required]
         [Display(Name = "Email")]
         [DataType(DataType.EmailAddress)]
         public String Email { get; set; }
-         [Required]
+
+        [Required]
         [Display(Name = "Wachtwoord")]
         [DataType(DataType.Password)]
         public String Wachtwoord { get; set; }
@@ -187,18 +190,22 @@ namespace projecten.Models
     }
     public class WachtwoordVeranderenModel
     {
-
+        [Display(Name = "Email")]
         public string Email { get; set; }
+
+        [Display(Name = "huidig wachtwoord")]
         public string CurrentWachtwoord { get; set; }
+
         [Required]
         [StringLength(100, ErrorMessage = "het {0} moet minstens {2} caracters lang zijn.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "nieuw wachtwoord")]
         public string NewPassword { get; set; }
 
+        [Required]
         [DataType(DataType.Password)]
         [Display(Name = "bevestig nieuw wachtwoord")]
-        [Compare("nieuw wachtwoord", ErrorMessage = "Het nieuwe wachtwoord komt niet overeen met het bevestigingswachtwoord.")]
+        [Compare("NewPassword", ErrorMessage = "Het nieuwe wachtwoord komt niet overeen met het bevestigingswachtwoord.")]
         public string ConfirmPassword { get; set; }
 
     }

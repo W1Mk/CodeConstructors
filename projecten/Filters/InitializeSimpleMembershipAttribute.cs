@@ -25,11 +25,11 @@ namespace projecten.Filters
         {
             public SimpleMembershipInitializer()
             {
-                Database.SetInitializer<UsersContext>(null);
+                Database.SetInitializer<BedrijfContext>(null);
 
                 try
                 {
-                    using (var context = new UsersContext())
+                    using (var context = new BedrijfContext())
                     {
                         if (!context.Database.Exists())
                         {

@@ -8,17 +8,18 @@ using projecten.Models.Domain;
 
 namespace projecten.Models.DAL.Mapper
 {
-    public class StageOpdrachtMapper : EntityTypeConfiguration<StageOpdracht>
+    public class StageOpdrachtMapper 
     {
         public StageOpdrachtMapper()
         {
             //properties
-            Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+           
+          /*  Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             Property(t => t.Naam).IsRequired().HasMaxLength(100);
             Property(t => t.Semester).IsRequired();
 
             //Table
-            ToTable("StageOpdracht");
+            ToTable("StageOpdracht");*/
 
             //Relationships
             /*HasMany(t => t.Bieren)
