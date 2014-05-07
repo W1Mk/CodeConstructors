@@ -1,0 +1,46 @@
+﻿@model IEnumerable<projecten.Models.Domain.StageOpdracht>
+
+<script type="text/javascript">
+    function Bekijk() {
+        //get xmlhttprequest object
+        var xhr = getXmlHttpRequest();
+
+        //setup request
+        xhr.open("GET", "/Student/Bekijk", true);
+
+        //setup callback function
+        xhr.onreadystatechange = function () {
+            //readyState 4 : received answer from server
+            if (xhr.readyState == 4 && xhr.status == 200)
+                //add result to page
+                $('#result').text(xhr.responseText);
+        };
+
+        //fire  request
+        xhr.send(null);
+    }
+</script>
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<h2>Stages</h2>
+@using (Html.BeginForm("Stages", "Student"))
+{
+    
+   <div id="buttons">naam:<input type="text" name="naam" style="width: 150px;" /> semester: <input type="number" name="semester" style="width: 30px;" />specialisatie: <input type="text" name="specialisatie" style="width: 150px;" />gemeente:  <input type="text" name="gemeente" style="width:150px;"/><input type="submit" value="Filter" /></div>
+  
+}
+
+<span id="message" style="float: right; margin-right: 20px; background-color: #333; color: #eee;"></span>
+
+<div id="StagesList">
+    @Html.Partial("StagesList", Model)
+   
+</div>
+
+<p>
+</p>
+
+

@@ -1,0 +1,57 @@
+﻿@model projecten.Models.Domain.Bedrijf
+@Html.AntiForgeryToken()
+
+
+
+
+<div style="float: none;">
+    <fieldset>
+        <h3>Profiel</h3>
+        <legend>Profiel</legend>
+        <ol>
+            <li>
+                @Html.Label("bedrijfsnaam:")
+                @Html.DisplayFor(m => m.bedrijfsactiviteit)
+            </li>
+            <li>
+                @Html.Label("omschrijving:")
+                @Html.DisplayFor(m => m.Bedrijfsnaam)
+
+            </li>
+            <li>
+                @Html.Label("semester:")
+                @Html.DisplayFor(m => m.bereikbaarheid)
+
+            </li>
+            <li>
+                @Html.Label("specialisatie:")
+                @Html.DisplayFor(m => m.Email)
+
+            </li>
+            <li>
+                @Html.Label("stagementor:")
+                @Html.DisplayFor(m => m.url)
+
+            </li>
+
+            <li>
+                @Html.Label("aantal studenten nodig:")
+                @Html.DisplayFor(m => m.telefoon)
+
+            </li>
+        </ol>
+        @using (Html.BeginForm("Bekijk", "Student", FormMethod.Post))
+        {
+            var item = Model;
+            <input type="hidden" id="@item.StageOpdrachtid" value="@item.StageOpdrachtid" name="id" />
+            <input type="submit" value="stage innemen" />
+        }
+    </fieldset>
+</div>
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

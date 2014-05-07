@@ -1,0 +1,114 @@
+﻿@model projecten.Models.ProfielModel
+
+
+
+@using (Html.BeginForm("Profiel", "Student", FormMethod.Post, new {enctype="multipart/form-data"})){
+
+    @Html.AntiForgeryToken()
+   
+    
+    var adres = Model.adres;
+    var gsm = Model.gsm;
+    var keuzevak = Model.keuzevak;
+    var naam = Model.naam;
+    var tweedeEmail = Model.tweedeEmail;
+    var foto = Model.foto;
+   
+    <script>
+        function textboxButton()
+        {
+            if (document.getElementById("t1").style.visibility == "visible") {
+                document.getElementById("t1").style.visibility = "hidden";
+            }
+            else {
+                document.getElementById("t1").style.visibility = "visible";
+            }
+                
+        }
+        function textboxButton2() {
+            if (document.getElementById("t2").style.visibility == "visible") {
+                document.getElementById("t2").style.visibility = "hidden";
+            }
+            else {
+                document.getElementById("t2").style.visibility = "visible";
+            }
+        }
+        function textboxButton3() {
+            if (document.getElementById("t3").style.visibility == "visible") {
+                document.getElementById("t3").style.visibility = "hidden";
+            }
+            else {
+                document.getElementById("t3").style.visibility = "visible";
+            }
+        }
+        function textboxButton4() {
+            if (document.getElementById("t4").style.visibility == "visible") {
+                document.getElementById("t4").style.visibility = "hidden";
+            }
+            else {
+                document.getElementById("t4").style.visibility = "visible";
+            }
+        }
+        function textboxButton5() {
+            if (document.getElementById("t5").style.visibility == "visible") {
+                document.getElementById("t5").style.visibility = "hidden";
+            }
+            else {
+                document.getElementById("t5").style.visibility = "visible";
+            }
+        }
+        
+    </script>
+
+    <div style="float: left;">
+        <fieldset>
+            <h3>Profiel</h3>
+            <legend>Profiel</legend>
+            <ol>
+                <li>
+                    @Html.Label("adres:")
+                    @adres  <input type="Button" style="background-image: url('../Images/refresh-button.png');background-size:cover;border-radius:20px;" onclick ="textboxButton()" value="     " /><div id="t1" style="visibility:hidden">@Html.TextBoxFor(m=>m.adres)</div>
+                </li>
+                <li>
+                    @Html.Label("gsm:")
+                    @gsm  <input type="Button" style="background-image: url('../Images/refresh-button.png'); background-size: cover; border-radius: 20px;" onclick="textboxButton2()" value="     " /><div id="t2" style="visibility:hidden">@Html.TextBoxFor(m => m.gsm)</div>
+
+                </li>
+                <li>
+                    @Html.Label("keuzevak:")
+                    @keuzevak  <input type="Button" style="background-image: url('../Images/refresh-button.png'); background-size: cover; border-radius: 20px;" onclick="textboxButton3()" value="     " /><div id="t3" style="visibility:hidden">@Html.TextBoxFor(m => m.keuzevak)</div>
+
+                </li>
+                <li>
+                    @Html.Label("naam:")
+                    @naam  <input type="Button" style="background-image: url('../Images/refresh-button.png'); background-size: cover; border-radius: 20px;" onclick="textboxButton4()" value="     " /><div id="t4" style="visibility:hidden">@Html.TextBoxFor(m => m.naam)</div>
+
+                </li>
+                <li>
+                    @Html.Label("thuis Email:")
+                    @tweedeEmail  <input type="Button" style="background-image: url('../Images/refresh-button.png'); background-size: cover; border-radius: 20px;" onclick="textboxButton5()" value="     " /><div id="t5" style="visibility:hidden">@Html.TextBoxFor(m => m.tweedeEmail)</div>
+
+                </li>
+
+                <li>
+                    @Html.Label("foto:")
+                    <img alt="" width="300" height="200" src="data:image/jpeg;base64,@foto" /> <input type="file" name="image" />
+                   
+                </li>
+            </ol>
+            <input type="submit" value="verander profiel"/>
+
+        </fieldset>
+    </div>
+    
+    <div style="float: right;">
+        @Html.Partial("ProfielWachtwoord")
+
+
+    </div>
+
+
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
