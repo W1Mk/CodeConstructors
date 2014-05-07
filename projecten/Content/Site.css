@@ -6,7 +6,7 @@
 
 body {
     background-color: #fff;
-    border-top: solid 10px #000;
+    border-top: solid 2px #000;
     color: #333;
     font-size: .85em;
     font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
@@ -23,18 +23,20 @@ a {
 }
 
     a:link, a:visited,
-    a:active, a:hover {
+    a:active{
         color: #333;
     }
-
     a:hover {
-        background-color: #c7d1d6;
+        color: #ffffff;
+        background-color: #32ACE2; 
     }
+
 
 header, footer, hgroup,
 nav, section {
     display: block;
 }
+
 
 mark {
     background-color: #a6dbed;
@@ -44,6 +46,22 @@ mark {
 
 .float-left {
     float: left;
+}
+
+.h3 {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+.subheader {
+    margin: auto;  
+} 
+.linkbutton {
+    margin: auto;
+    border: solid 1px;
+    background-color: rgb(189, 216, 224);
+    text-align: center;
+    
+    text-decoration: none;
 }
 
 .float-right {
@@ -99,19 +117,17 @@ h5, h6 {
 }
 
 #body {
-    background-color: #efeeef;
+    background: linear-gradient(to bottom, #efeeef 20%,#f6f6f6 75%);
     clear: both;
     padding-bottom: 35px;
 }
 
     .main-content {
-        background: url("../Images/accent.png") no-repeat;
         padding-left: 10px;
         padding-top: 30px;
     }
 
     .featured + .main-content {
-        background: url("../Images/heroAccent.png") no-repeat;
     }
 
 header .content-wrapper {
@@ -120,9 +136,9 @@ header .content-wrapper {
 
 footer {
     clear: both;
+    height: 100px;
     background-color: #e2e2e2;
     font-size: .8em;
-    height: 100px;
 }
 
 
@@ -153,11 +169,15 @@ footer {
 }
 
     #login a {
-        background-color: #d3dce0;
+        background-color: #7ac0da;
         margin-left: 10px;
         margin-right: 3px;
         padding: 2px 3px;
         text-decoration: none;
+    }
+
+    #login a:hover {
+        background-color: #a4d4e6;
     }
 
     #login a.username {
@@ -180,11 +200,14 @@ footer {
 /* menu
 ----------------------------------------------------------*/
 ul#menu {
-    font-size: 1.3em;
+    font-size: 1.5em;
     font-weight: 600;
-    margin: 0 0 5px;
-    padding: 0;
-    text-align: right;
+    margin-left: 0;
+    padding-top: 10px;
+    height: 54px;
+    width: 920px;
+    display: block;
+    background: linear-gradient(to bottom, #2989d8, #6bb0e5);
 }
 
     ul#menu li {
@@ -195,15 +218,14 @@ ul#menu {
 
         ul#menu li a {
             background: none;
-            color: #999;
+            color: #fff;
             text-decoration: none;
         }
 
         ul#menu li a:hover {
-            color: #333;
+            color: #000;
             text-decoration: none;
         }
-
 
 /* page elements
 ----------------------------------------------------------*/
@@ -632,10 +654,6 @@ tr.pager td {
             padding: 0;
         }
 
-        #login a:hover {
-            color: #333;
-        }
-
     /* menu */
     nav {
         margin-bottom: 5px;
@@ -754,3 +772,4 @@ tr.pager td {
             margin: 0;
         }
 }
+

@@ -1,15 +1,12 @@
 ﻿@model projecten.Models.WachtwoordVeranderenModel
 
-    
-    
-<h3>Verander wachtwoord</h3>
 
-@using (Html.BeginForm("Index","Home")) {
+@using (Html.BeginForm("WachtwoordVeranderen", "Account")) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary()
-
+  
     <fieldset>
-        <legend>Change Password Form</legend>
+        <legend>Set Password Form</legend>
         <ol>
             <li>
                 @Html.LabelFor(m => m.NewPassword)
@@ -20,9 +17,18 @@
                 @Html.PasswordFor(m => m.ConfirmPassword)
             </li>
         </ol>
-        <input type="submit" value="verander wachtwoord" />
+        <input type="submit" value="Verander wachtwoord" />
+        <div id="modal">
+
+            <p>testing</p>
+        </div>
     </fieldset>
 }
+
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Content/css")
+<link href="~/content/themes/base/jquery-ui.css" rel="stylesheet" />
+    @Scripts.Render("~/bundles/jquery")
+<script src="~/scripts/jquery-ui-1.8.24.min.js"></script>
+    @Scripts.Render("~/bundles/modernizr")
 }

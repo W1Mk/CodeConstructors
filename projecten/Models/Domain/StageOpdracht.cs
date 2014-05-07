@@ -1,40 +1,66 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Windows.Forms;
 
 namespace projecten.Models.Domain
 {
     public class StageOpdracht
     {
-        private int id;
-        private string naam { get; set; }
-        // private Student student { get; set; }
-        private string semester { get; set; }
-        private string omschrijving { get; set; }
-        private string specialisatie { get; set; }
-        private string aantalStudenten { get; set; }
-        private string stageMentor { get; set; }
+        public int StageOpdrachtid { get; set; }
+        public string Naam { get; set; }
+        public int Semester { get; set; }
+        public string Omschrijving { get; set; }
+        public string Specialisatie { get; set; }
+        public int AantalStudenten { get; set; }
+        public string StageMentor { get; set; }
+        /*public Bedrijf Bedrijf { get; set; }
+        public int Bedrijfid { get; set; }*/
+        public string Status { get; set; }
+        private string[] status { get; set; }
+        public virtual ICollection<Student> studenten { get; set; }
+        public virtual ICollection<StageBegeleider> begeleiders { get; set; }
+        public virtual ICollection<StageBegeleider> voorkeurbegeleiders { get; set; }
 
         public StageOpdracht()
         {
-            //StageOpdrachten = new List<StageOpdracht>();
-            naam = naam;
-            // student = student;
+            status = new string[] { "wachten", "goedgekeurd", "afgekeurd" };
+            Status = status[0];
+            studenten = new List<Student>();
+            begeleiders = new List<StageBegeleider>();
+            voorkeurbegeleiders = new List<StageBegeleider>();
         }
 
-        public StageOpdracht(String naam, String semester)
+        public StageOpdracht(StageOpdrachtToevoegenModel model)
         {
-            this.naam = naam;
-            this.semester = semester;
+            Naam = model.StageNaam;
+            Semester = model.Semester;
+            Omschrijving = model.Omschrijving;
+            Specialisatie = model.Specialisatie;
+            AantalStudenten = model.Aantal;
+            StageMentor = model.StageMentor;
         }
-        public virtual ICollection<StageOpdracht> StageOpdrachten { get; private set; }
-        public int Id { get; set; }
-        public string Naam { get; set; }
-        public string Semester { get; set; }
-        public string Omschrijving { get; set; }
-        public string Specialisatie { get; set; }
-        public string AantalStudenten { get; set; }
-        public string StageMentor { get; set; }
+        public void setUpdates(StageOpdrachtToevoegenModel stage)
+        {
+            Naam = stage.StageNaam;
+            Semester = stage.Semester;
+            Omschrijving = stage.Omschrijving;
+            Specialisatie = stage.Specialisatie;
+            AantalStudenten = stage.Aantal;
+            StageMentor = stage.StageMentor;
+        }
+
+        public void setUpdates(IngenomenOpdrachtenModel stage)
+        {
+            Naam = stage.StageNaam;
+            Semester = stage.Semester;
+            Omschrijving = stage.Omschrijving;
+            Specialisatie = stage.Specialisatie;
+            AantalStudenten = stage.Aantal;
+        }
+
+
     }
 }

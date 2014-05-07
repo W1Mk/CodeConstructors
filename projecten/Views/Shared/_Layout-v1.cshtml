@@ -1,0 +1,70 @@
+﻿@using projecten.Models.DAL
+@{   
+    BedrijfContext context = new BedrijfContext();
+    StudentRepository rep = new StudentRepository(context);
+StageBegeleiderRepository begRep = new StageBegeleiderRepository(context);
+}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title - Code Constructors</title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <meta name="viewport" content="width=device-width" />
+        @Styles.Render("~/Content/css")
+        @Styles.Render("~/Content/themes/base/css")
+        @Scripts.Render("~/bundles/jquery")
+        
+    </head>
+    <body>
+        <header>
+            <div class="content-wrapper">
+                <div class="float-left">
+                   <img id="img_logo" alt="Logo" src="@Url.Content("~/Images/logo.png")" />
+                </div>
+                <div class="float-right">
+                    <section id="login">
+                        
+                        @Html.Partial("_LoginPartial")
+
+                    </section>
+                    <nav>
+                        <ul id="menu">
+                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                            <li>@Html.ActionLink("About", "About", "Home")</li>
+                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+@if (Request.IsAuthenticated && User.Identity.Name.Contains("hogent.be") && rep.FindBy(User.Identity.Name) != null) { 
+                            <li>@Html.ActionLink("Stages", "Stages", "Student")</li>
+                            <li>@Html.ActionLink("Jouw Stages", "IngenomenStages", "Student")</li>
+}
+@if (Request.IsAuthenticated && User.Identity.Name.Contains("hogent.be") && begRep.FindBy(User.Identity.Name) != null)
+{
+    <li>@Html.ActionLink("Voorkeurstages", "VoorkeurStages", "Begeleider")</li>
+    <li>@Html.ActionLink("De Bedrijven", "Bedrijven", "Begeleider")</li> 
+    <li>@Html.ActionLink("Ingenomen stages", "IngenomenOpdrachten", "Begeleider")</li> 
+}
+                            
+                        </ul>
+                       
+                    </nav>
+                </div>
+            </div>
+        </header>
+        <div id="body">
+            @RenderSection("featured", required: false)
+            <section class="content-wrapper main-content clear-fix">
+                @RenderBody()
+            </section>
+        </div>
+        <footer>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p>&copy; @DateTime.Now.Year -Code Constructors</p>
+                </div>
+            </div>
+        </footer>
+
+        @Scripts.Render("~/bundles/jquery")
+        @RenderSection("scripts", required: false)
+    </body>
+</html>

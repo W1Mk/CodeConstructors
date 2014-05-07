@@ -1,0 +1,91 @@
+﻿@using System.Collections
+@using System.Collections.ObjectModel
+@using System.Configuration
+@using Microsoft.Ajax.Utilities
+@using MySql.Data.MySqlClient
+@using projecten.Models.DAL
+@model projecten.Models.Domain.StageBegeleider
+@{
+    ViewBag.Title = "Stagebegeleider";
+    var foto = Model.Foto;
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title</h1>
+</hgroup>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+    <div style="float: left;">
+        <fieldset>
+            <legend>Profiel</legend>
+            <ol>
+                <li class="h3">
+                    @Html.DisplayNameFor(model => model.Naam)
+
+                </li>
+                <li>
+                    @Html.DisplayFor(model => model.Naam)
+
+                </li>
+                <li>
+
+                </li>
+                <li class="h3">
+                    @Html.DisplayNameFor(model => model.VoorNaam)
+                </li>
+                <li>
+                    @Html.DisplayFor(model => model.VoorNaam)
+                </li>
+                <li>
+
+                </li>
+                <li class="h3">
+                    @Html.DisplayNameFor(model => model.Email)
+                </li>
+                <li>
+                    @Html.DisplayFor(model => model.Email)
+                </li>
+                <li>
+
+                </li>
+                <li class="h3">
+                    @Html.DisplayNameFor(model => model.Adres)
+                </li>
+                <li>
+                    @Html.DisplayFor(model => model.Adres)
+                </li>
+                <li>
+
+                </li>
+                <li class="h3">
+                    @Html.DisplayNameFor(model => model.Gsm)
+                </li>
+                <li>
+                    @Html.DisplayFor(model => model.Gsm)
+                </li>
+                <li>
+
+                </li>
+                <li class="h3">
+                    @Html.DisplayNameFor(model => model.Telefoon)
+                </li>
+                <li>
+                    @Html.DisplayFor(model => model.Telefoon)
+                </li>
+                <li class="h3">
+                    @Html.DisplayNameFor(model => model.Foto)
+                </li>
+                <li>
+                    <img alt="" width="300" height="200" src="data:image/jpeg;base64,@foto" /> <input type="file" name="image" />
+                </li>   
+                    
+            </ol>
+            @Html.ActionLink("Wijzig", "ProfielWijzigen", Model, new {@class = "linkbutton"}) 
+        </fieldset>
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

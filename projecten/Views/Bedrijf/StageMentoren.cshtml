@@ -1,0 +1,63 @@
+﻿@using System.Collections
+@using System.Collections.ObjectModel
+@using System.Configuration
+@using Microsoft.Ajax.Utilities
+@using MySql.Data.MySqlClient
+@using projecten.Models.DAL
+@model projecten.Models.StageMentorModel
+@{
+    ViewBag.Title = "Stage Mentor";
+    BedrijfContext context = new BedrijfContext();
+    StageMentorRepository repository = new StageMentorRepository(context);
+    BedrijfRepository rep = new BedrijfRepository(context);
+    var bedrijf = rep.FindBy(User.Identity.Name);
+    var mentoren = rep.FindAllMentors(bedrijf);
+
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title</h1>
+</hgroup>
+
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Naam)
+
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Voornaam)
+
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Functie)
+
+        </th>
+    </tr>
+
+    @foreach (var item in mentoren)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item.Naam, "ProfielMentor", new { id = item.StageMentorId })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Voornaam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Functie)
+            </td>
+            <td>
+                @Html.ActionLink("Verwijderen", "DeleteMentor", new { id = item.StageMentorId })
+            </td>
+        </tr>
+    }
+
+</table>
+
+@Html.ActionLink("Voeg een mentor toe", "StageMentorToevoegen")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

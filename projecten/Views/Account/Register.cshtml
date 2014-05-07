@@ -40,9 +40,10 @@
                 @Html.LabelFor(m => m.Bereikbaarheid)
                 @Html.DropDownListFor(model => model.Bereikbaarheid, new SelectList(
                   new List<Object>{ 
-                       new { value = 0 , text = "wagen"  },
-                       new { value = 1 , text = "openbaar vervoer" },
-                       new { value = 2 , text = "georganiseerd vervoer"}
+                       new { value = "wagen" , text = "wagen"  },
+                       new { value = "openbaar vervoer" , text = "openbaar vervoer" },
+                       new { value = "georganiseerd vervoer" , text = "georganiseerd vervoer"},
+                       new { value = "andere" , text = "andere"}
                     },
                   "value",
                   "text",
@@ -53,9 +54,10 @@
                 @Html.LabelFor(m => m.BedrijfsActiviteit)
                @Html.DropDownListFor(model => model.BedrijfsActiviteit, new SelectList(
                   new List<Object>{ 
-                       new { value = 0 , text = "bank"  },
-                       new { value = 1 , text = "software ontwikkelaar" },
-                       new { value = 2 , text = "openbare diensten"}
+                       new { value = "bank" , text = "bank"  },
+                       new { value = "software ontwikkelaar" , text = "software ontwikkelaar" },
+                       new { value = "openbare diensten" , text = "openbare diensten"},
+                       new { value = "andere" , text = "andere"}
                     },
                   "value",
                   "text",

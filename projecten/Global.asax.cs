@@ -8,6 +8,8 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using projecten.Models.DAL;
+using System.Web.Security;
+using System.Security.Principal;
 
 namespace projecten
 {
@@ -20,13 +22,28 @@ namespace projecten
         {
             AreaRegistration.RegisterAllAreas();
 
-            WebApiConfig.Register(GlobalConfiguration.Configuration);
+            GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
-
-            //Database.SetInitializer<BedrijfContext>(new BedrijfInitializer());
+            
+            //Database.SetInitializer(new BedrijfInitializer());
+            //Database.SetInitializer(new DropCreateDatabaseAlways<BedrijfContext>());
+            //new BedrijfContext().Bedrijven.ToList();
+            //Context.Database.Initialize(false);
+            
+        }
+        protected void Application_PostAuthenticateRequest(Object sender,EventArgs e)
+        {
+            HttpCookie authCookie = Context.Request.Cookies[FormsAuthentication.FormsCookieName];
+            if(authCookie != null)
+            {
+                FormsAuthenticationTicket authTicket = FormsAuthentication.Decrypt(authCookie.Value);
+                string[] roles = authTicket.UserData.Split(new Char[] { ',' });
+                GenericPrincipal userPrincipal = new GenericPrincipal(new GenericIdentity(authTicket.Name), roles);
+                Context.User = userPrincipal;
+            }
         }
     }
 }

@@ -1,0 +1,34 @@
+﻿@using projecten.Models.DAL
+@model projecten.Models.Domain.StageOpdracht
+
+@{
+    ViewBag.Title = "Voorkeur instellen";
+BedrijfContext context = new BedrijfContext();
+StageBegeleiderRepository begrep = new StageBegeleiderRepository(context);
+    @*var value = begrep.VoorkeurCheck(Model);*@
+}
+
+<h2>@ViewBag.Title</h2>
+
+@*@if (value)
+{*@
+    <h3>Geeft u de voorkeur aan opdracht @Model.Naam ?</h3>
+
+@using (Html.BeginForm())
+ {
+     <p>
+         <input type="submit" value="Ja" /> |
+         @Html.ActionLink("Terug naar lijst", "StageOpdrachten")
+     </p>
+ }
+@*}
+else
+{
+using (Html.BeginForm())
+  {
+      <p>
+         Deze opdracht is al door iemand gekozen.
+          @Html.ActionLink("Terug naar lijst", "StageOpdrachten")
+      </p>
+  }
+}*@

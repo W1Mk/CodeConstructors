@@ -1,0 +1,65 @@
+﻿@using System.Collections
+@using System.Collections.ObjectModel
+@using System.Configuration
+@using Microsoft.Ajax.Utilities
+@using MySql.Data.MySqlClient
+@using projecten.Models.DAL
+@model projecten.Models.IngenomenOpdrachtenModel
+@{
+    ViewBag.Title = "StageOpdracht wijzigen";
+    BedrijfContext context = new BedrijfContext();
+   
+
+}
+
+<h2>StageOpdracht Toevoegen</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+
+    <fieldset>
+        <legend>Registration Form</legend>
+        <ol>
+            <li>
+                @Html.LabelFor(m => m.StageNaam)
+                @Html.TextBoxFor(m => m.StageNaam)
+
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Specialisatie)
+                @Html.DropDownListFor(model => model.Specialisatie, new SelectList(
+                  new List<Object>{
+                       new { value ="Programmeren" , text = "Programmeren"  },
+                       new { value = "Webontwikkeling" , text = "Webontwikkeling" },
+                       new { value = "Mainframe" , text = "Mainframe"},
+                       new { value = "E-bussiness" , text = "E-bussiness"},
+                       new { value = "Mobile", text = "Mobile"},
+                       new { value = "Systeembeheer", text = "Systeembeheer"}
+                    },
+                  "value",
+                  "text",
+                   5))
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Omschrijving)
+                @Html.TextAreaFor(m => m.Omschrijving)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Semester)
+                @Html.RadioButtonFor(m => m.Semester, "1")1
+                @Html.RadioButtonFor(m => m.Semester, "2")2
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Aantal)
+                @Html.TextBoxFor(m => m.Aantal)
+            </li>
+            
+        </ol>
+        <input type="submit" value="Wijzig" />
+    </fieldset>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

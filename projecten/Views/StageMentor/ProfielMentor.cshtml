@@ -1,0 +1,88 @@
+﻿@using System.Collections
+@using System.Collections.ObjectModel
+@using System.Configuration
+@using Microsoft.Ajax.Utilities
+@using MySql.Data.MySqlClient
+@using projecten.Models.DAL
+@model projecten.Models.StageMentorModel
+@{
+    ViewBag.Title = "Stage Mentor";
+    
+    
+    
+
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title</h1>
+</hgroup>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+    <div style="float: left;">
+        <fieldset>
+            <legend>Profiel</legend>
+            <ol>
+                <li class="h3">
+                    @Html.DisplayNameFor(model => model.Naam)
+
+                </li>
+                <li>
+                    @Html.DisplayFor(model => model.Naam)
+
+                </li>
+                <li>
+
+                </li>
+                <li class="h3">
+                    @Html.DisplayNameFor(model => model.Voornaam)
+                </li>
+                <li>
+                    @Html.DisplayFor(model => model.Voornaam)
+                </li>
+                <li>
+
+                </li>
+                <li class="h3">
+                    @Html.DisplayNameFor(model => model.Functie)
+                </li>
+                <li>
+                    @Html.DisplayFor(model => model.Functie)
+                </li>
+                <li>
+
+                </li>
+                <li class="h3">
+                    @Html.DisplayNameFor(model => model.Email)
+                </li>
+                <li>
+                    @Html.DisplayFor(model => model.Email)
+                </li>
+                <li>
+
+                </li>
+                <li class="h3">
+                    @Html.DisplayNameFor(model => model.Gsm)
+                </li>
+                <li>
+                    @Html.DisplayFor(model => model.Gsm)
+                </li>
+                <li>
+
+                </li>
+                <li class="h3">
+                    @Html.DisplayNameFor(model => model.Aanspreektitel)
+                </li>
+                <li>
+                    @Html.DisplayFor(model => model.Aanspreektitel)
+                </li>
+
+            </ol>
+            <input type="submit" value="Wijzig" /> @Html.ActionLink("Terug naar lijst", "Stagementoren", "Bedrijf")
+        </fieldset>
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -13,6 +13,8 @@
             <li>
                 @Html.LabelFor(m => m.Email)
                 @Html.TextBoxFor(m => m.Email)
+                @Html.LabelFor(m=> m.Wachtwoord)
+                @Html.PasswordFor(m => m.Wachtwoord)
                 @Html.ValidationMessageFor(m => m.Email)
                 
             </li>

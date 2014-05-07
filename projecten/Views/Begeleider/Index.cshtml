@@ -1,0 +1,22 @@
+﻿@using System.Collections
+@using System.Collections.ObjectModel
+@using System.Configuration
+@using Microsoft.Ajax.Utilities
+@using MySql.Data.MySqlClient
+@using projecten.Models.DAL
+@{
+    ViewBag.Title = "Welkom";
+    
+}
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@ViewBag.Title</h1>
+
+            </hgroup>
+        </div>
+
+    </section>
+Bekijk de beschikbare @Html.ActionLink("stageopdrachten", "StageOpdrachten") of ga naar de @Html.ActionLink("studenten","Studenten")
+}

@@ -1,0 +1,90 @@
+﻿@using System.Collections
+@using System.Collections.ObjectModel
+@using System.Configuration
+@using Microsoft.Ajax.Utilities
+@using MySql.Data.MySqlClient
+@using projecten.Models.DAL
+@model projecten.Models.Domain.Bedrijf
+@{
+    ViewBag.Title = "Stagebegeleider";
+    
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title</h1>
+</hgroup>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+    <div style="float: left;">
+        <fieldset>
+            <legend>Profiel</legend>
+            <ol>
+                <li class="h3">
+                    @Html.DisplayNameFor(model => model.Bedrijfsnaam)
+
+                </li>
+                <li>
+                    @Html.DisplayFor(model => model.Bedrijfsnaam)
+
+                </li>
+                <li>
+
+                </li>
+                <li class="h3">
+                    @Html.DisplayNameFor(model => model.Email)
+                </li>
+                <li>
+                    @Html.DisplayFor(model => model.Email)
+                </li>
+                <li>
+
+                </li>
+                <li class="h3">
+                    @Html.DisplayNameFor(model => model.telefoon)
+                </li>
+                <li>
+                    @Html.DisplayFor(model => model.telefoon)
+                </li>
+                <li>
+
+                </li>
+                <li class="h3">
+                    @Html.DisplayNameFor(model => model.adres)
+                </li>
+                <li>
+                    @Html.DisplayFor(model => model.adres)
+                </li>
+                <li>
+
+                </li>
+                <li class="h3">
+                    @Html.DisplayNameFor(model => model.url)
+                </li>
+                <li>
+                    @Html.DisplayFor(model => model.url)
+                </li>
+                <li>
+
+                </li>
+                <li class="h3">
+                    @Html.DisplayNameFor(model => model.bedrijfsactiviteit)
+                </li>
+                <li>
+                    @Html.DisplayFor(model => model.bedrijfsactiviteit)
+                </li>
+                <li class="h3">
+                    @Html.DisplayNameFor(model => model.bereikbaarheid)
+                </li>
+                <li>
+                    @Html.DisplayFor(model => model.bereikbaarheid)
+                </li>
+            </ol>
+            @Html.ActionLink("Terug naar lijst", "Bedrijven", null, new {@class = "linkbutton"})
+        </fieldset>
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

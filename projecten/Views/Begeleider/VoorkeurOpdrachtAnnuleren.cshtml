@@ -1,0 +1,17 @@
+﻿@model projecten.Models.Domain.StageOpdracht
+
+@{
+    ViewBag.Title = "Verwijderen StageOpdracht";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<h3>Wilt u de voorkeur op opdracht @Model.Naam annuleren?</h3>
+
+@using (Html.BeginForm())
+{
+    <p>
+        <input type="submit" value="Ja" /> |
+        @Html.ActionLink("Terug naar lijst", "StageOpdrachten")
+    </p>
+}

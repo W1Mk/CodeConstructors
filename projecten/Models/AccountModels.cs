@@ -5,49 +5,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Globalization;
 using System.Web.Security;
+using System.Windows.Forms;
+using projecten.Models.Domain;
+using CheckBox = System.Web.UI.WebControls.CheckBox;
 
 namespace projecten.Models
 {
-    public class UsersContext : DbContext
-    {
-        public UsersContext()
-            : base("DefaultConnection")
-        {
-        }
-
-        public DbSet<UserProfile> UserProfiles { get; set; }
-        public DbSet<Student> Student { get; set; }
-    }
-
-    [Table("UserProfile")]
-    public class UserProfile
-    {
-        [Key]
-        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public int UserId { get; set; }
-        public string UserName { get; set; }
-        public string Wachtwoord { get; set; }
-        public string TypePersoon { get; set; }
-    }
-    [Table("Student")]
-    public class Student
-    {
-        [Key]
-        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public int UserId { get; set; }
-        public string Email { get; set; }
-        public string Wachtwoord { get; set; }
-
-    }
-
-    public class RegisterExternalLoginModel
-    {
-        [Required]
-        [Display(Name = "bedrijfsnaam")]
-        public string Bedrijfsnaam { get; set; }
-
-        public string ExternalLoginData { get; set; }
-    }
+   
+       
 
     public class LocalPasswordModel
     {
@@ -128,22 +93,66 @@ namespace projecten.Models
         [Display(Name = "bedrijfsactiviteit")]
         public string BedrijfsActiviteit { get; set; }
     }
+    public class DeleteOpdracht
+    {
+        [Display(Name = "Naam")]
+        public String Naam { get; set; }
+    }
+    public class StageMentorModel
+    {
+        public StageMentorModel(StageMentor mentor)
+        {
+            Naam = mentor.Naam;
+            Voornaam = mentor.Voornaam;
+            Email = mentor.Email;
+            Gsm = mentor.Gsm;
+            Functie = mentor.Functie;
+            Aanspreektitel = mentor.Aanspreektitel;
+        }
 
+        public StageMentorModel()
+        {
+            
+        }
+        [Required]
+        [StringLength(100, ErrorMessage = "de {0} moet minstens {2} karakters lang zijn.", MinimumLength = 3)]
+        [Display(Name = "Naam")]
+        public String Naam { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "de {0} moet minstens {2} karakters lang zijn.", MinimumLength = 3)]
+        [Display(Name = "Voornaam")]
+        public String Voornaam { get; set; }
+
+        [Required]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "E-mail")]
+        [RegularExpression(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", ErrorMessage = "Email adres is niet correct ingevoerd")]
+        public String Email { get; set; }
+
+        [Required]
+        [DataType(DataType.PhoneNumber)]
+        [Display(Name = "Gsm")]
+        public String Gsm { get; set; }
+
+        [Required]
+        [Display(Name = "Functie")]
+        public String Functie { get; set; }
+
+        [Required]
+        [Display(Name = "Aanspreektitel")]
+        public String Aanspreektitel { get; set; }
+
+    }
     public class StageOpdrachtenModel
     {
-        [Display(Name = "StageOpdrachten")]
-        public String StageOpdracht { get; set; }
-    }
-
-    public class StageOpdrachtToevoegenModel
-    {
         [Required]
-        [Display(Name = "StageNaam")]
+        [StringLength(100, ErrorMessage = "de {0} moet minstens {2} karakters lang zijn.", MinimumLength = 3)]
+        [Display(Name = "Stagenaam")]
         public String StageNaam { get; set; }
 
-
-
         [Required]
+        [StringLength(500, ErrorMessage = "de {0} moet minstens {2} karakters lang zijn.", MinimumLength = 10)]
         [Display(Name = "Omschrijving")]
         public String Omschrijving { get; set; }
 
@@ -153,55 +162,208 @@ namespace projecten.Models
 
         [Required]
         [Display(Name = "Semester")]
-        public String Semester { get; set; }
+        public int Semester { get; set; }
 
         [Required]
         [Display(Name = "Aantal Studenten")]
-        public String Aantal { get; set; }
+        public int Aantal { get; set; }
 
         [Required]
-        [Display(Name = "StageMentor")]
+        [Display(Name = "Status")]
+        public String Status { get; set; }
+
+        [Required]
+        [Display(Name = "Stagementor")]
+        public String StageMentor { get; set; }
+    }
+
+    public class IngenomenOpdrachtenModel
+    {
+        public IngenomenOpdrachtenModel()
+        {
+            
+        }
+
+        public IngenomenOpdrachtenModel(StageOpdracht opdracht)
+        {
+            StageNaam = opdracht.Naam;
+            Omschrijving = opdracht.Naam;
+            Specialisatie = opdracht.Specialisatie;
+            Semester = opdracht.Semester;
+            Aantal = opdracht.AantalStudenten;
+        }
+        [Required]
+        [StringLength(100, ErrorMessage = "de {0} moet minstens {2} karakters lang zijn.", MinimumLength = 3)]
+        [Display(Name = "Stagenaam")]
+        public String StageNaam { get; set; }
+
+        [Required]
+        [StringLength(500, ErrorMessage = "de {0} moet minstens {2} karakters lang zijn.", MinimumLength = 10)]
+        [Display(Name = "Omschrijving")]
+        public String Omschrijving { get; set; }
+
+        [Required]
+        [Display(Name = "Specialisatie")]
+        public String Specialisatie { get; set; }
+
+        [Required]
+        [Display(Name = "Semester")]
+        public int Semester { get; set; }
+
+        [Required]
+        [Display(Name = "Aantal Studenten")]
+        public int Aantal { get; set; }
+    }
+    public class StageOpdrachtToevoegenModel
+    {
+        public StageOpdrachtToevoegenModel(StageOpdracht stage)
+        {
+            StageNaam = stage.Naam;
+            Omschrijving = stage.Omschrijving;
+            Specialisatie = stage.Specialisatie;
+            Semester = stage.Semester;
+            Aantal = stage.AantalStudenten;
+            StageMentor = stage.StageMentor;
+        }
+
+        public StageOpdrachtToevoegenModel()
+        {
+            
+        }
+        [Required]
+        [StringLength(100, ErrorMessage = "de {0} moet minstens {2} karakters lang zijn.", MinimumLength = 3)]
+        [Display(Name = "Stagenaam")]
+        public String StageNaam { get; set; }
+
+        [Required]
+        [StringLength(500, ErrorMessage = "de {0} moet minstens {2} karakters lang zijn.", MinimumLength = 10)]
+        [Display(Name = "Omschrijving")]
+        public String Omschrijving { get; set; }
+
+        [Required]
+        [Display(Name = "Specialisatie")]
+        public String Specialisatie { get; set; }
+
+        [Required]
+        [Display(Name = "Semester")]
+        public int Semester { get; set; }
+
+        [Required]
+        [Display(Name = "Aantal Studenten")]
+        public int Aantal { get; set; }
+
+        [Required]
+        [Display(Name = "Stagementor")]
         public String StageMentor { get; set; }
     }
 
     public class LoginStudentModel
     {
-         [Required]
+        [Required]
         [Display(Name = "Email")]
         [DataType(DataType.EmailAddress)]
         public String Email { get; set; }
-         [Required]
+
+        [Required]
         [Display(Name = "Wachtwoord")]
         [DataType(DataType.Password)]
         public String Wachtwoord { get; set; }
+    }
+    public class EersteAanmeldingModel
+    {
+        [Required]
+        [Display(Name = "Email")]
+        [DataType(DataType.EmailAddress)]
+        public String Email { get; set; }
 
+        [Required]
+        [Display(Name = "Geef je wachtwoord in")]
+        [DataType(DataType.Password)]
+        public String Wachtwoord { get; set; }
 
-
+        [Required]
+        [Display(Name = "Bevestig je wachtwoord")]
+        [DataType(DataType.Password)]
+        public string Wachtwoordbevestigd { get; set; }
     }
     public class RegistreerStudentModel
     {
         [Display(Name = "Email")]
+        [Required]
         public String Email { get; set; }
+        [Required]
+        [DataType(DataType.Password)]
         public String Wachtwoord { get; set; }
 
     }
     public class WachtwoordVeranderenModel
     {
-
+        [Display(Name = "Email")]
         public string Email { get; set; }
+
+        [Display(Name = "huidig wachtwoord")]
         public string CurrentWachtwoord { get; set; }
+
         [Required]
         [StringLength(100, ErrorMessage = "het {0} moet minstens {2} caracters lang zijn.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "nieuw wachtwoord")]
         public string NewPassword { get; set; }
 
+        [Required]
         [DataType(DataType.Password)]
         [Display(Name = "bevestig nieuw wachtwoord")]
-        [Compare("nieuw wachtwoord", ErrorMessage = "Het nieuwe wachtwoord komt niet overeen met het bevestigingswachtwoord.")]
+        [Compare("NewPassword", ErrorMessage = "Het nieuwe wachtwoord komt niet overeen met het bevestigingswachtwoord.")]
         public string ConfirmPassword { get; set; }
 
     }
+
+    public class StageBegeleiderModel
+    {
+        public StageBegeleiderModel()
+        {
+            
+        }
+
+        public StageBegeleiderModel(StageBegeleider begeleider)
+        {
+            Naam = begeleider.Naam;
+            VoorNaam = begeleider.VoorNaam;
+            Adres = begeleider.Adres;
+            Email = begeleider.Email;
+            Telefoon = begeleider.Telefoon;
+            Gsm = begeleider.Gsm;
+        }
+        [Required]
+        [Display(Name = "Naam")]
+        public string Naam { get; set; }
+
+        [Required]
+        [Display(Name = "Voornaam")]
+        public string VoorNaam { get; set; }
+
+        [Required]
+        [Display(Name = "Adres")]
+        public string Adres { get; set; }
+
+        [Required]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        [Required]
+        [Display(Name = "Telefoon")]
+        public string Telefoon { get; set; }
+
+        [Required]
+        [Display(Name = "Gsm")]
+        public string Gsm { get; set; }
+
+        
+        [Display(Name = "Foto")]
+        public string Foto { get; set; }
+    }
+        
+    
     public class ExternalLogin
     {
         public string Provider { get; set; }
@@ -209,3 +371,4 @@ namespace projecten.Models
         public string ProviderUserId { get; set; }
     }
 }
+    

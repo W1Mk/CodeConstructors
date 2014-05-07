@@ -31,6 +31,9 @@
                 @Html.CheckBoxFor(m => m.RememberMe)
                 @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })
             </li>
+            <li>
+                <p>Is dit de eerste keer dat u zich aanmeld? Klik @Html.ActionLink("hier", "EersteAanmelding") om je wachtwoord in te stellen.</p>
+            </li>
         </ol>
         <input type="submit" value="Log in" />
     </fieldset>

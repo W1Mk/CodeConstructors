@@ -1,0 +1,46 @@
+﻿@model projecten.Models.StageMentorModel
+@{
+    ViewBag.Title = "Stagementor Toevoegen";
+}
+
+<h2>Stagementor Toevoegen</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+
+    <fieldset>
+        <legend>Registration Form</legend>
+        <ol>
+            <li>
+                @Html.LabelFor(m => m.Naam)
+                @Html.TextBoxFor(m => m.Naam)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Voornaam)
+                @Html.TextBoxFor(m => m.Voornaam)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Email)
+                @Html.TextBoxFor(m => m.Email)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Gsm)
+                @Html.TextBoxFor(m => m.Gsm)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Functie)
+                @Html.TextBoxFor(m => m.Functie)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Aanspreektitel)
+                @Html.TextBoxFor(m => m.Aanspreektitel)
+            </li>
+        </ol>
+        <input type="submit" value="Voeg toe" />
+    </fieldset>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

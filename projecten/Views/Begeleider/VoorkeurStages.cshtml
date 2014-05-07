@@ -1,0 +1,97 @@
+﻿@using System.Collections
+@using System.Collections.ObjectModel
+@using System.Configuration
+@using Microsoft.Ajax.Utilities
+@using MySql.Data.MySqlClient
+@using projecten.Models
+@using projecten.Models.DAL
+@model IEnumerable<projecten.Models.Domain.StageOpdracht>
+@{
+    ViewBag.Title = "Jouw voorkeurstages";
+}
+
+<div class="subheader">
+    @Html.ActionLink("Beschikbare stageopdrachten", "StageOpdrachten", "Begeleider")
+    @Html.ActionLink("Alle studenten", "Studenten", "Begeleider")
+</div>
+
+<hgroup class="title">
+    <h1>@ViewBag.Title</h1>
+</hgroup>
+
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Naam)
+
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Omschrijving)
+
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Semester)
+
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Specialisatie)
+
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AantalStudenten)
+
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StageMentor)
+
+        </th>
+            
+        <th></th>
+    </tr>
+@if (!Model.Any())
+{
+    <tr>
+        <td colspan="4" align="center">Er zijn geen stageopdrachten gevonden!</td>
+    </tr>
+}
+else
+{
+    foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Naam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Omschrijving)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Semester)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Specialisatie)
+            </td>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.AantalStudenten)
+            </td>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StageMentor)
+            </td>
+            <td>
+                @Html.ActionLink("Voorkeur annuleren", "VoorkeurOpdrachtAnnuleren", new {id = item.StageOpdrachtid}, new {@class = "linkbutton"})
+            </td>
+           
+        </tr>
+    }
+}
+
+</table>
