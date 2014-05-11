@@ -33,6 +33,7 @@ namespace projecten.Controllers
         private BedrijfRepository BedrijfRep = new BedrijfRepository(context);
         private StudentRepository StudentRep = new StudentRepository(context);
         private StageBegeleiderRepository StageBegRep = new StageBegeleiderRepository(context);
+        private static PasswordHash passwordHash = new PasswordHash();
         public string username;
         // GET: /Account/Login
 
@@ -59,7 +60,8 @@ namespace projecten.Controllers
             if (BedrijfRep.FindBy(model.Email) == null)
             {
                 //Bedrijf bedrijf = new Bedrijf();
-                bedrijf.Wachtwoord = "";
+                bedrijf.Wachtwoord = PasswordHash.CreateHash("fout");
+                //ModelState.AddModelError("Het email bestaat ni","Het email bestaat niet");
             }
             else
             {
@@ -67,7 +69,7 @@ namespace projecten.Controllers
             }
             if (StudentRep.FindBy(model.Email) == null)
             {
-                student.wachtwoord = "";
+                student.wachtwoord = PasswordHash.CreateHash("fout");
             }
             else
             {
@@ -75,7 +77,7 @@ namespace projecten.Controllers
             }
             if (StageBegRep.FindBy(model.Email) == null)
             {
-                begeleider.Wachtwoord = "";
+                begeleider.Wachtwoord = PasswordHash.CreateHash("fout");
             }
             else
             {
@@ -86,7 +88,7 @@ namespace projecten.Controllers
                 {
                     Wachtwoord = BedrijfRep.FindBy(model.Email).Wachtwoord;
                 }*/
-                if (ModelState.IsValid && model.Wachtwoord == bedrijf.Wachtwoord)
+                if (ModelState.IsValid && PasswordHash.ValidatePassword(model.Wachtwoord, bedrijf.Wachtwoord))
                 {
                     string rol = "Bedrijf";
                     FormsAuthenticationTicket authTicket = new FormsAuthenticationTicket(1, model.Email, DateTime.Now, DateTime.Now.AddMinutes(20), false, rol, "/");
@@ -98,7 +100,7 @@ namespace projecten.Controllers
                     //return RedirectToLocal(returnUrl);
                     return RedirectToAction("Index", "Bedrijf");
                 }
-                else if (ModelState.IsValid && model.Wachtwoord == student.wachtwoord)
+                else if (ModelState.IsValid && PasswordHash.ValidatePassword(model.Wachtwoord, student.wachtwoord))
                 {
                     string rol = "Student";
                     FormsAuthenticationTicket authTicket = new FormsAuthenticationTicket(1, model.Email, DateTime.Now, DateTime.Now.AddMinutes(20), false, rol, "/");
@@ -110,7 +112,7 @@ namespace projecten.Controllers
                     //return RedirectToLocal(returnUrl);
                     return RedirectToAction("Index", "Student");
                 }
-                else if (ModelState.IsValid && model.Wachtwoord == begeleider.Wachtwoord)
+                else if (ModelState.IsValid && PasswordHash.ValidatePassword(model.Wachtwoord, begeleider.Wachtwoord))
                 {
                     string rol = "StageBegeleider";
                     FormsAuthenticationTicket authTicket = new FormsAuthenticationTicket(1, model.Email, DateTime.Now, DateTime.Now.AddMinutes(20), false, rol, "/");
@@ -148,19 +150,19 @@ namespace projecten.Controllers
                 if (ModelState.IsValid && model.Wachtwoord == model.Wachtwoordbevestigd && bedrijf != null)
                 {
                     //bedrijf.Wachtwoord = EncodePassword(model.Wachtwoord, PasswordSalt);
-                    bedrijf.Wachtwoord = model.Wachtwoord;
+                    bedrijf.Wachtwoord =  PasswordHash.CreateHash(model.Wachtwoord);
                     BedrijfRep.SaveChanges();
                     return RedirectToAction("Login");
                 }
                 if (ModelState.IsValid && model.Wachtwoord == model.Wachtwoordbevestigd && student != null)
                 {
-                    student.wachtwoord = model.Wachtwoord;
+                    student.wachtwoord = PasswordHash.CreateHash(model.Wachtwoord);
                     StudentRep.SaveChanges();
                     return RedirectToAction("Login");
                 }
                 if (ModelState.IsValid && model.Wachtwoord == model.Wachtwoordbevestigd && begeleider != null)
                 {
-                    begeleider.Wachtwoord = model.Wachtwoord;
+                    begeleider.Wachtwoord = PasswordHash.CreateHash(model.Wachtwoord);
                     StageBegRep.SaveChanges();
                     return RedirectToAction("Login");
                 }
@@ -242,7 +244,7 @@ namespace projecten.Controllers
                     Bedrijf bedrijf = new Bedrijf { Bedrijfsnaam = model.BedrijfsNaam, adres = model.Adres, url = model.Url, Email = model.email, telefoon = model.Telefoon, Wachtwoord = model.Wachtwoord, bedrijfsactiviteit = model.BedrijfsActiviteit, bereikbaarheid = model.Bereikbaarheid};
                     if (!BedrijfRep.FindEqual(model.email))
                     {
-                        //bedrijf.Wachtwoord = EncodePassword(model.Wachtwoord, PasswordSalt);
+                        bedrijf.Wachtwoord = PasswordHash.CreateHash(model.Wachtwoord);
                         BedrijfRep.Add(bedrijf);
                     }
                     else

@@ -51,7 +51,9 @@ namespace projecten.Controllers
         [HttpPost]
         public ActionResult StageOpdrachten(string zoekopdracht)
         {
-            var stages = StageRep.FindAllFilter(zoekopdracht);
+            StageBegeleider beg = rep.FindBy(User.Identity.Name);
+            IEnumerable<StageOpdracht> lijst = beg.getIngenomenOpdrachten();
+            var stages = StageRep.FindAllFilter(lijst, zoekopdracht);
             return View(stages);
         }
         
@@ -138,9 +140,12 @@ namespace projecten.Controllers
             StageBegeleider begeleider = rep.FindBy(User.Identity.Name);
             try
             {
-                
-                var foto = (Byte[]) begeleider.Foto;
-                //begeleider.Foto = Convert.ToBase64String(foto);
+
+                var foto = (Byte[])begeleider.Foto;
+                if (foto != null)
+                {
+                    begeleider.FotoString = Convert.ToBase64String(begeleider.Foto);
+                }
             }
             catch
             {
@@ -171,13 +176,12 @@ namespace projecten.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult ProfielWijzigen(StageBegeleiderModel begeleider, HttpPostedFileBase image)
+        public ActionResult ProfielWijzigen(StageBegeleiderModel model, HttpPostedFileBase image)
         {
             MemoryStream target = new MemoryStream();
             if (ModelState.IsValid)
             {
-                try
-                {
+
                     if (rep.FindBy(User.Identity.Name) != null)
                     {
                         StageBegeleider begeleiderupdate = rep.FindBy(User.Identity.Name);
@@ -188,16 +192,14 @@ namespace projecten.Controllers
 
                             arr = target.ToArray();
                             begeleiderupdate.Foto = arr;
-                            begeleider.Foto = Convert.ToBase64String(arr);
+                            model.Foto = Convert.ToBase64String(arr);
                         }
-                        begeleiderupdate.setUpdates(begeleider);
+                        begeleiderupdate.setUpdates(model);
                     }
+                    
                     rep.SaveChanges();
+                    target.Close();
                     return RedirectToAction("Profiel");
-                }
-                catch
-                {                   
-                }
             }
             if (rep.FindBy(User.Identity.Name) != null)
             {
@@ -207,7 +209,7 @@ namespace projecten.Controllers
                 return View(begeleider1);
             }
             target.Close();
-            return View(begeleider);
+            return View(model);
         }
 
         public ActionResult Bedrijven()
@@ -248,7 +250,7 @@ namespace projecten.Controllers
             {
                 opdracht.setUpdates(model);
                 StageRep.SaveChanges();
-                return RedirectToAction("IngenomenOpdrachten");
+                return RedirectToAction("StageOpdrachten");
             }
             return View(model);
         }

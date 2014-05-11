@@ -49,7 +49,6 @@ namespace projecten.Models.Domain
         public void setUpdates(ProfielModel model)
         {
             naam = model.naam;
-            Email = model.Email;
             tweedeEmail = model.tweedeEmail;
             adres = model.adres;
             gsm = model.gsm;

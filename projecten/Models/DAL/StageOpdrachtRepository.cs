@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using System.Web.WebPages;
 using projecten.Models.Domain;
 
 namespace projecten.Models.DAL
@@ -38,10 +40,6 @@ namespace projecten.Models.DAL
 
         }
 
-        public IQueryable<StageOpdracht> FindAllGoedgekeurde()
-        {
-            return stageOpdrachten.OrderBy(b => b.Naam).Where(b => b.Status == "Goedgekeurd");
-        }
         public IEnumerable<StageOpdracht> FindAllByName(string naam)
         {
             stageOpdrachten.ToList<StageOpdracht>();
@@ -55,39 +53,22 @@ namespace projecten.Models.DAL
             List<StageOpdracht> stageFilter = stages.FindAll(s => s.StageOpdrachtid==id);//tijdelijk
             return stageFilter;
         }
-        public IEnumerable<StageOpdracht> FindAllBy(int semester,string naam,string specialisatie)
+        public IEnumerable<StageOpdracht> FindAllBy(string zoekopdracht)
         {
             stageOpdrachten.ToList<StageOpdracht>();
             stages.AddRange(stageOpdrachten);
-             List<StageOpdracht> stageFilter = stages;
-            if (semester != 0 & naam == "" & specialisatie=="")
-            {
-               stageFilter = stages.FindAll(s => s.Semester == semester);
-            }
-            else if (semester == 0 & naam != "" & specialisatie =="")
-            {
-                stageFilter = stages.FindAll(s => s.Naam == naam);
-            }
-            else if (semester != 0 & naam != "" & specialisatie =="")
-            {
-                 stageFilter = stages.FindAll(s => s.Naam == naam & s.Semester == semester);
-            }
-            else if (semester != 0 & naam != "" & specialisatie != "")
-            {
-                stageFilter = stages.FindAll(s => s.Naam == naam & s.Semester == semester & s.Specialisatie ==specialisatie);
-            }
-            else if (semester == 0 & naam == "" & specialisatie != "")
-            {
-                stageFilter = stages.FindAll(s => s.Specialisatie == specialisatie);
-            }
-            else if (semester != 0 & naam == "" & specialisatie != "")
-            {
-                stageFilter = stages.FindAll(s => s.Semester == semester & s.Specialisatie == specialisatie);
-            }
-            else if (semester == 0 & naam != "" & specialisatie != "")
-            {
-                stageFilter = stages.FindAll(s => s.Naam == naam & s.Specialisatie == specialisatie);
-            }
+             IEnumerable<StageOpdracht> stageFilter = stages;
+            if(stages.Where(b => b.Semester == zoekopdracht.AsInt()).Any())
+                stageFilter = stages.Where(b => b.Semester == zoekopdracht.AsInt());
+            else if (stages.Where(b => b.Naam.ToLower() == zoekopdracht.ToLower()).Any())
+                stageFilter = stages.Where(b => b.Naam.ToLower() == zoekopdracht.ToLower());
+            else if (stages.Where(b => b.Specialisatie.ToLower() == zoekopdracht.ToLower()).Any())
+                stageFilter = stages.Where(b => b.Specialisatie.ToLower() == zoekopdracht.ToLower());
+            else if (zoekopdracht == "")
+                stageFilter = stages;
+            else
+                stageFilter = new List<StageOpdracht>();
+            int i = stageFilter.Count();
             return stageFilter;
         }
         /*public IQueryable<StageOpdracht> FindAll(Bedrijf bedrijf)
@@ -104,15 +85,15 @@ namespace projecten.Models.DAL
             return lijst ;
         }
 
-        public IQueryable<StageOpdracht> FindAllFilter(string zoekopdracht)
+        public IQueryable<StageOpdracht> FindAllFilter(IEnumerable<StageOpdracht> lijst,string zoekopdracht)
         {
             IQueryable<StageOpdracht> list = null;
             if (stageOpdrachten.Where(b => b.Naam == zoekopdracht).Any())
-                list = stageOpdrachten.Where(b => b.Naam == zoekopdracht);
+                list = lijst.AsQueryable().Where(b => b.Naam.ToLower() == zoekopdracht.ToLower());
             else if (stageOpdrachten.Where(b => b.Specialisatie == zoekopdracht).Any())
-                list = stageOpdrachten.Where(b => b.Specialisatie == zoekopdracht);
-            if (zoekopdracht == "")
-                list = FindAllGoedgekeurde();
+                list = lijst.AsQueryable().Where(b => b.Specialisatie.ToLower() == zoekopdracht.ToLower());
+            else if (zoekopdracht == "")
+                list = lijst.AsQueryable();
             else
             {
                 list = new List<StageOpdracht>().AsQueryable();

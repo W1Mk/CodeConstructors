@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using System.Windows.Forms;
 
 namespace projecten.Models.Domain
@@ -60,6 +61,13 @@ namespace projecten.Models.Domain
             Specialisatie = stage.Specialisatie;
             AantalStudenten = stage.Aantal;
         }
+
+        public SelectList GetstStudents(StageOpdracht stage)
+        {
+            SelectList list = new SelectList(stage.studenten,"naam","naam",0);
+            return list;
+        }
+ 
 
 
     }

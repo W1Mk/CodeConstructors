@@ -246,6 +246,7 @@
     <Compile Include="Models\DAL\StageOpdrachtRepository.cs" />
     <Compile Include="Models\DAL\StudentRepository.cs" />
     <Compile Include="Models\Domain\Bedrijf.cs" />
+    <Compile Include="Models\Domain\PasswordHash.cs" />
     <Compile Include="Models\Domain\StageBegeleider.cs" />
     <Compile Include="Models\Domain\StageMentor.cs" />
     <Compile Include="Models\Domain\StageOpdracht.cs" />
@@ -433,6 +434,11 @@
     <Content Include="Views\Begeleider\Bedrijven.cshtml" />
     <Content Include="Views\Begeleider\BedrijfsProfiel.cshtml" />
     <Content Include="Views\Begeleider\IngenomenWijzigen.cshtml" />
+    <Content Include="Views\Home\ProjectenI.cshtml" />
+    <Content Include="Views\Home\ProjectenII.cshtml" />
+    <Content Include="Views\Home\ProjectenIII.cshtml" />
+    <Content Include="Views\Home\Stage.cshtml" />
+    <Content Include="Views\Home\Bachelorproef.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

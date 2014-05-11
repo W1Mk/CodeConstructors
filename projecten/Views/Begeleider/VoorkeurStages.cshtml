@@ -89,7 +89,9 @@ else
             <td>
                 @Html.ActionLink("Voorkeur annuleren", "VoorkeurOpdrachtAnnuleren", new {id = item.StageOpdrachtid}, new {@class = "linkbutton"})
             </td>
-           
+            <td>
+                @Html.ActionLink("Wijzigen", "IngenomenWijzigen", new {id = item.StageOpdrachtid}, new {@class = "linkbutton"})
+           </td>
         </tr>
     }
 }

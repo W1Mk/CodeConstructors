@@ -37,6 +37,26 @@ namespace projecten.Controllers
 
             return View();
         }
-      
+
+        public ActionResult ProjectenI()
+        {
+            return View();
+        }
+        public ActionResult ProjectenII()
+        {
+            return View();
+        }
+        public ActionResult ProjectenIII()
+        {
+            return View();
+        }
+        public ActionResult Stage()
+        {
+            return View();
+        }
+        public ActionResult Bachelorproef()
+        {
+            return View();
+        }
     }
 }

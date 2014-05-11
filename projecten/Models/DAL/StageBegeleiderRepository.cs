@@ -101,13 +101,6 @@ namespace projecten.Models.DAL
                 return begeleider.Voorkeurstages.AsQueryable();
             return null;
         }
-        /*public IQueryable<StageOpdracht> FindAllNietVoorkeur(StageBegeleider begeleider, string naam)
-        {
-            if (begeleider != null)
-                if(begeleider.stages.AsQueryable().OrderBy(b => b.Naam).Where(b => b.Naam == naam) != null)
-                return begeleider.stages.AsQueryable().OrderBy(b => b.Naam).Where(b => b.Naam == naam);
-            return null;
-        }*/
 
         /*public IEnumerable<String> FindAllNamen()
         {
@@ -126,7 +119,7 @@ namespace projecten.Models.DAL
             IEnumerable<StageOpdracht> sublijst2 = new List<StageOpdracht>();
             for (int i = 0; i < lijst.Count(); i++)
             {
-                sublijst2 = lijst.ElementAt(i).stages;//geeft alle opdrachten van één begeleider mee                
+                sublijst2 = lijst.ElementAt(i).Stages;//geeft alle opdrachten van één begeleider mee                
                 if (sublijst2.Any())//als deze lijst opdrachten bevat
                 {
                         for (int j = 0; j < sublijst2.Count(); j++)
@@ -145,21 +138,6 @@ namespace projecten.Models.DAL
             
             return value;
         }
-        /*public IQueryable<StageOpdracht> FindAllOpdrachten(Bedrijf bedrijf)
-        {
-            if (bedrijf.stages != null)
-                return bedrijf.stages.AsQueryable();
 
-            return null;
-
-        }*/
-        /*public IQueryable<StageMentor> FindAllMentors(Bedrijf bedrijf)
-        {
-            if (bedrijf.mentors != null)
-                return bedrijf.mentors.AsQueryable();
-
-            return null;
-
-        }*/
     }
 }

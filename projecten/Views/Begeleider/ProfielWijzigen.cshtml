@@ -13,7 +13,7 @@
 <hgroup class="title">
     <h1>@ViewBag.Title</h1>
 </hgroup>
-@using (Html.BeginForm())
+@using (Html.BeginForm("ProfielWijzigen", "Begeleider", FormMethod.Post, new {enctype="multipart/form-data"}))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary()

@@ -20,7 +20,7 @@ namespace projecten.Models.DAL.Mapper
             //Property(t => t.Bedrijf_idBedrijf).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             Property(t => t.Email).IsRequired().HasMaxLength(50);
             Property(t => t.adres).IsRequired().HasMaxLength(50);
-            Property(t => t.wachtwoord).IsRequired().HasMaxLength(50);
+            Property(t => t.wachtwoord).IsRequired().HasMaxLength(100);
             Property(t => t.gsm).IsOptional().HasMaxLength(50);
             Property(t => t.naam).IsOptional().HasMaxLength(50);
             Property(t => t.EersteAanmelding).IsRequired();

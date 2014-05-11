@@ -7,13 +7,13 @@
 @model projecten.Models.Domain.StageBegeleider
 @{
     ViewBag.Title = "Stagebegeleider";
-    var foto = Model.Foto;
+    var foto = Model.FotoString;
 }
 
 <hgroup class="title">
     <h1>@ViewBag.Title</h1>
 </hgroup>
-@using (Html.BeginForm())
+@using (Html.BeginForm("Profiel", "Begeleider", FormMethod.Post, new {enctype="multipart/form-data"}))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary()
@@ -78,11 +78,11 @@
                     @Html.DisplayNameFor(model => model.Foto)
                 </li>
                 <li>
-                    <img alt="" width="300" height="200" src="data:image/jpeg;base64,@foto" /> <input type="file" name="image" />
+                    <img alt="" width="300" height="200" src="data:image/jpeg;base64,@foto" />
                 </li>   
                     
             </ol>
-            @Html.ActionLink("Wijzig", "ProfielWijzigen", Model, new {@class = "linkbutton"}) 
+            @Html.ActionLink("Wijzig", "ProfielWijzigen", new{id = Model.Id}, new {@class = "linkbutton"}) 
         </fieldset>
     </div>
 }

@@ -187,7 +187,7 @@ namespace projecten.Models
         public IngenomenOpdrachtenModel(StageOpdracht opdracht)
         {
             StageNaam = opdracht.Naam;
-            Omschrijving = opdracht.Naam;
+            Omschrijving = opdracht.Omschrijving;
             Specialisatie = opdracht.Specialisatie;
             Semester = opdracht.Semester;
             Aantal = opdracht.AantalStudenten;
@@ -333,6 +333,12 @@ namespace projecten.Models
             Email = begeleider.Email;
             Telefoon = begeleider.Telefoon;
             Gsm = begeleider.Gsm;
+            if (begeleider.Foto != null)
+                Foto = begeleider.Foto.ToString();
+            else
+            {
+                Foto = "geen foto";
+            }
         }
         [Required]
         [Display(Name = "Naam")]

@@ -35,11 +35,14 @@ namespace projecten.Controllers
             ProfielModel ProfielModel = new ProfielModel(student);
             try
             {
-
-
-               
                 var foto = (Byte[])student.foto;
-               ProfielModel.foto= Convert.ToBase64String(foto);
+                if(foto != null)
+                ProfielModel.foto= Convert.ToBase64String(foto);
+                else
+                {
+                    foto = new byte[20];
+                    ProfielModel.foto = Convert.ToBase64String(foto);
+                }
                 ProfielModel.OudWachtwoord = student.wachtwoord;
                 if (ProfielModel.adres == null)
                 {
@@ -91,7 +94,7 @@ namespace projecten.Controllers
             
              var data = (Byte[])student.foto;
              student.setUpdates(model);
-             student.wachtwoord = model.OudWachtwoord;
+           /*  model.OudWachtwoord = student.wachtwoord;
             if (ModelState.IsValid && model.OudWachtwoord == student.wachtwoord)
             {
                 student.wachtwoord = model.NieuwWachtwoord;
@@ -100,8 +103,8 @@ namespace projecten.Controllers
             else
             {
 
-            }
-             studentRep.Update(student);
+            }*/
+             //studentRep.Update(student);
              studentRep.SaveChanges();
              target.Close();
              return View(model);
@@ -117,25 +120,25 @@ namespace projecten.Controllers
          }
            [AllowAnonymous]
            [HttpPost]
-           public ActionResult Stages(string naam,string specialisatie,string gemeente,int semester = +0)
+           public ActionResult Stages(string zoekopdracht)
            {
               
               
                    //  var stages = stageRep.FindAllByName(naam);
                   
-                    var stages = stageRep.FindAllBy(semester, naam, specialisatie);
-                    List<StageOpdracht> lijst = new List<StageOpdracht>();
-                    if (gemeente != "")
+                    var stages = stageRep.FindAllBy(zoekopdracht);
+                   // List<StageOpdracht> lijst = new List<StageOpdracht>();
+                    /*if (gemeente != "")
                     {
                         var bedrijven = bedrijfRep.FindAllByAdres(gemeente);
                         foreach (var item in bedrijven)
                         {
                             lijst.AddRange(stageRep.FindAllByBedrijfId(item.BedrijfId));
 
-                        }
+                        }*/
                        
-                        stages = lijst;
-                    }
+                        //stages = lijst;
+                    //}
                     
                     return View(stages);
               

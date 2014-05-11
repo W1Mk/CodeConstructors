@@ -23,6 +23,12 @@ namespace projecten.Models
              keuzevak = student.keuzevak;
              adres = student.adres;
              gsm = student.gsm;
+             if(student.foto != null)
+             foto = student.foto.ToString();
+             else
+             {
+                 foto = "geen foto";
+             }
          }
          [Display(Name = "Email")]
          public string Email { get; set; }

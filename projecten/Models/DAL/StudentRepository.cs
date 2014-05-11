@@ -38,14 +38,14 @@ namespace projecten.Models.DAL
         public IQueryable<Student> FindAllFilter(string zoekopdracht)
         {
             IQueryable<Student> list = null;
-            if (Student.Where(b => b.naam == zoekopdracht).Any())
-                list = Student.Where(b => b.naam == zoekopdracht);
-            else if (Student.Where(b => b.adres == zoekopdracht).Any())
-                list = Student.Where(b => b.adres == zoekopdracht);
-            else if (Student.Where(b => b.keuzevak == zoekopdracht).Any())
-                list = Student.Where(b => b.keuzevak == zoekopdracht);
-            else if (Student.Where(b => b.Email == zoekopdracht).Any())
-                list = Student.Where(b => b.Email == zoekopdracht);
+            if (Student.Where(b => b.naam.ToLower() == zoekopdracht.ToLower()).Any())
+                list = Student.Where(b => b.naam.ToLower() == zoekopdracht.ToLower());
+            else if (Student.Where(b => b.adres.ToLower() == zoekopdracht.ToLower()).Any())
+                list = Student.Where(b => b.adres.ToLower() == zoekopdracht.ToLower());
+            else if (Student.Where(b => b.keuzevak.ToLower() == zoekopdracht.ToLower()).Any())
+                list = Student.Where(b => b.keuzevak.ToLower() == zoekopdracht.ToLower());
+            else if (Student.Where(b => b.Email.ToLower() == zoekopdracht.ToLower()).Any())
+                list = Student.Where(b => b.Email.ToLower() == zoekopdracht.ToLower());
             else
             {
                 list = new List<Student>().AsQueryable();

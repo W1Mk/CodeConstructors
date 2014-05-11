@@ -28,7 +28,8 @@ a {
     }
     a:hover {
         color: #ffffff;
-        background-color: #32ACE2; 
+        /*background-color: #32ACE2; */
+        border-radius: 10px;
     }
 
 
@@ -63,7 +64,93 @@ mark {
     
     text-decoration: none;
 }
+.omschrijving {
+    table-layout: fixed;
+    width: 20px; 
+    
 
+}
+
+nav ul ul {
+	display: none;
+}
+
+	nav ul li:hover > ul {
+		display: block;
+        background: linear-gradient(to top, #2989d8, #6bb0e5);
+	    
+	}
+    nav > ul {
+	background: #efefef; 
+	/*background: linear-gradient(top, #efefef 0%, #bbbbbb 100%);*/  
+	background: -moz-linear-gradient(top, #efefef 0%,  #6bb0e5 100%); 
+	background: -webkit-linear-gradient(top, #efefef 0%,#6bb0e5 100%); 
+	box-shadow: 0px 0px 9px rgba(0,0,0,0.15);
+    padding: 0px;
+    margin-top: 0px;
+	/*padding: 0 20px;*/
+	border-radius: 10px;  
+	list-style: none;
+	position: relative;
+	display: inline-table;
+    font-weight: 600;
+    margin-left: 0;
+    padding-top: 0px;
+    width: 798px;
+    background: linear-gradient(to bottom, #2989d8, #6bb0e5);
+}
+    .size {
+        width: 100px !important;
+    }
+	nav ul:after {
+		content: ""; clear: both; display: block;
+	}
+    nav ul li {
+	float: left;
+    display: inline;
+        list-style: none;
+}
+
+	nav ul li:hover {
+		background:#2989d8;
+		background: linear-gradient(to top, #2989d8 0%, #6bb0e5 40%);
+		background: -moz-linear-gradient(top, #2989d8 0%, #6bb0e5 40%);
+		background: -webkit-linear-gradient(top, #2989d8 0%,#6bb0e5 40%);
+	    border-radius: 10px;
+	}
+		nav ul li:hover a {
+			color: #000;
+            text-decoration: none;
+		    
+		}
+	
+	nav ul li a {
+        background: none;
+		display: block; padding: 25px 40px;
+		color: #2989d8; text-decoration: none;
+	}
+    nav ul ul {
+	background: linear-gradient(to bottom, #2989d8 0%, #6bb0e5 40%); border-radius: 2px; padding: 0;
+	position: absolute; top: 100%;
+}
+	nav ul ul li {
+		float: none; 
+		border-top: 1px solid #6b727c;
+		border-bottom: 1px solid #575f6a;
+		position: relative;
+	}
+		nav ul ul li a {
+			padding: 15px 40px;
+			color: #fff;
+		}	
+			nav ul ul li a:hover {
+				background: linear-gradient(to top, #2989d8 0%, #6bb0e5 40%);
+			    
+			}
+            nav ul ul ul {
+	position: absolute; left: 100%; top:0;
+}
+	
 .float-right {
     float: right;
 }

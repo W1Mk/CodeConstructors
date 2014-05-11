@@ -1,12 +1,4 @@
-﻿@using System.Collections
-@using System.Collections.ObjectModel
-@using System.Configuration
-@using Microsoft.Ajax.Utilities
-@using MySql.Data.MySqlClient
-@using projecten.Models
-@using projecten.Models.DAL
-@model IEnumerable<projecten.Models.Domain.StageOpdracht>
-
+﻿@model IEnumerable<projecten.Models.Domain.StageOpdracht>
 @{
     ViewBag.Title = "Beschikbare stageopdrachten";
 }
@@ -58,7 +50,7 @@
             @Html.DisplayNameFor(model => model.Status)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.StageMentor)
+            @Html.DisplayName("Studenten")
 
         </th>
             
@@ -95,11 +87,13 @@
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.StageMentor)
+                @Html.DropDownListFor(modelItem => item.studenten,item.GetstStudents(item))
             </td>
 
     <td>
-        @Html.ActionLink("Voorkeur instellen", "VoorkeurOpdracht", new {id = item.StageOpdrachtid}, new {@class = "linkbutton"})
+        @Html.ActionLink("Voorkeur instellen", "VoorkeurOpdracht", new {id = item.StageOpdrachtid}, new {@class = "linkbutton"}) |
+        @Html.ActionLink("Opdracht wijzigen", "IngenomenWijzigen", new {id = item.StageOpdrachtid}, new {@class = "linkbutton"})
+
     </td>
         </tr>
     }

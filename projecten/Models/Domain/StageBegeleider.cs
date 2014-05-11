@@ -16,14 +16,15 @@ namespace projecten.Models.Domain
         public string Gsm { get; set; }
         public string Wachtwoord { get; set; }
         public byte[] Foto { get; set; }
+        public string FotoString { get; set; }
         public int EersteAanmelding { get; set; }
-        public virtual ICollection<StageOpdracht> stages { get; set; }
+        public virtual ICollection<StageOpdracht> Stages { get; set; }
         public virtual ICollection<StageOpdracht> Voorkeurstages { get; set; }
         public virtual ICollection<StageOpdracht> VoorkeurDefinitief { get; set; } 
 
         public StageBegeleider()
         {
-            stages = new List<StageOpdracht>();
+            Stages = new List<StageOpdracht>();
             Voorkeurstages = new List<StageOpdracht>();
             VoorkeurDefinitief = new List<StageOpdracht>();
         }
@@ -50,11 +51,11 @@ namespace projecten.Models.Domain
         public IEnumerable<StageOpdracht> getIngenomenOpdrachten()
         {
             ICollection<StageOpdracht> lijst = new List<StageOpdracht>();
-            for (int i = 0; i < stages.Count(); i++)
+            for (int i = 0; i < Stages.Count(); i++)
             {
-                if (stages.ElementAt(i).studenten.Any() && stages.ElementAt(i).Status == "Goedgekeurd")
+                if (Stages.ElementAt(i).studenten.Any() && Stages.ElementAt(i).Status == "Goedgekeurd")
                 {
-                    lijst.Add(stages.ElementAt(i));
+                    lijst.Add(Stages.ElementAt(i));
                 }
             }
             return lijst;
@@ -70,7 +71,7 @@ namespace projecten.Models.Domain
 
         public void SetOpdrachtBeschikbaar(StageOpdracht stage)
         {
-            stages.Add(stage);
+            Stages.Add(stage);
         }
     }
 }

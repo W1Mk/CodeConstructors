@@ -22,7 +22,7 @@ namespace projecten.Models.DAL.Mapper
             Property(t => t.VoorNaam).IsRequired().HasMaxLength(50);
             Property(t => t.Email).IsRequired().HasMaxLength(50);
             Property(t => t.Adres).IsRequired().HasMaxLength(50);
-            Property(t => t.Wachtwoord).IsRequired().HasMaxLength(50);
+            Property(t => t.Wachtwoord).IsRequired().HasMaxLength(100);
             Property(t => t.Telefoon).IsOptional().HasMaxLength(12);
             Property(t => t.Gsm).IsOptional().HasMaxLength(50);
             Property(t => t.EersteAanmelding).IsRequired();
@@ -35,7 +35,7 @@ namespace projecten.Models.DAL.Mapper
               .Map(t => t.MapKey("BegeleiderFK"))
               .WillCascadeOnDelete(true);
 
-            this.HasMany(t => t.stages)
+            this.HasMany(t => t.Stages)
                 .WithMany(t => t.begeleiders)
                 .Map(m =>
                 {

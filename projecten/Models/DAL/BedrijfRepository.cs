@@ -105,14 +105,14 @@ namespace projecten.Models.DAL
         public IQueryable<Bedrijf> FindAllFilter(string zoekopdracht)
         {
             IQueryable<Bedrijf> list = null;
-            if (bedrijven.Where(b => b.Bedrijfsnaam == zoekopdracht).Any())
-                list = bedrijven.Where(b => b.Bedrijfsnaam == zoekopdracht);
-            else if (bedrijven.Where(b => b.Email == zoekopdracht).Any())
-                list = bedrijven.Where(b => b.Email == zoekopdracht);
-            else if (bedrijven.Where(b => b.adres == zoekopdracht).Any())
-                list = bedrijven.Where(b => b.adres == zoekopdracht);
-            else if (bedrijven.Where(b => b.bedrijfsactiviteit == zoekopdracht).Any())
-                list = bedrijven.Where(b => b.bedrijfsactiviteit == zoekopdracht);           
+            if (bedrijven.Where(b => b.Bedrijfsnaam.ToLower() == zoekopdracht.ToLower()).Any())
+                list = bedrijven.Where(b => b.Bedrijfsnaam.ToLower() == zoekopdracht.ToLower());
+            else if (bedrijven.Where(b => b.Email.ToLower() == zoekopdracht.ToLower()).Any())
+                list = bedrijven.Where(b => b.Email.ToLower() == zoekopdracht.ToLower());
+            else if (bedrijven.Where(b => b.adres.ToLower() == zoekopdracht.ToLower()).Any())
+                list = bedrijven.Where(b => b.adres.ToLower() == zoekopdracht.ToLower());
+            else if (bedrijven.Where(b => b.bedrijfsactiviteit.ToLower() == zoekopdracht.ToLower()).Any())
+                list = bedrijven.Where(b => b.bedrijfsactiviteit.ToLower() == zoekopdracht.ToLower());           
             else
             {
                 list = new List<Bedrijf>().AsQueryable();

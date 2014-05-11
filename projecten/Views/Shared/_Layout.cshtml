@@ -15,6 +15,7 @@ StageBegeleiderRepository begRep = new StageBegeleiderRepository(context);
         @Scripts.Render("~/bundles/modernizr")
     </head>
     <body>
+
         <header>
             <div class="content-wrapper">
                 <div class="float-left">
@@ -29,9 +30,19 @@ StageBegeleiderRepository begRep = new StageBegeleiderRepository(context);
                     </section>
                 </div>
                 <nav>
-                    <ul id="menu">
-                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                            <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <ul>
+                            <li>@Html.ActionLink("Home", "Index", "Home")
+                                
+                            </li>
+                            <li>@Html.ActionLink("About", "About", "Home")
+                                <ul>
+                                    <li class="size">@Html.ActionLink("Projecten I","ProjectenI","Home")</li>
+                                    <li>@Html.ActionLink("Projecten II","ProjectenII","Home")</li>
+                                    <li>@Html.ActionLink("Projecten III","ProjectenIII","Home")</li>
+                                    <li>@Html.ActionLink("Stages","Stage","Home")</li>
+                                    <li>@Html.ActionLink("Bachelorproef","Bachelorproef","Home")</li>
+                                </ul>
+                            </li>
                             <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
 @if (Request.IsAuthenticated && User.Identity.Name.Contains("hogent.be") && rep.FindBy(User.Identity.Name) != null) { 
                             <li>@Html.ActionLink("Stages", "Stages", "Student")</li>
@@ -39,9 +50,16 @@ StageBegeleiderRepository begRep = new StageBegeleiderRepository(context);
 }
 @if (Request.IsAuthenticated && User.Identity.Name.Contains("hogent.be") && begRep.FindBy(User.Identity.Name) != null)
 {
-    <li>@Html.ActionLink("Voorkeurstages", "VoorkeurStages", "Begeleider")</li>
+    <li>@Html.ActionLink("Voorkeurstages", "VoorkeurStages", "Begeleider")
+                        <ul>
+                            <li class="size">@Html.ActionLink("Beschikbare opdrachten","StageOpdrachten","Begeleider")</li>
+                            <li>@Html.ActionLink("Voorkeurstages","VoorkeurStages","Begeleider")</li>
+                            <li>@Html.ActionLink("Studenten","Studenten","Begeleider")</li>
+                            <li>@Html.ActionLink("Ingenomen opdrachten","IngenomenOpdrachten","Begeleider")</li>
+                        </ul>
+</li>
     <li>@Html.ActionLink("De Bedrijven", "Bedrijven", "Begeleider")</li>
-    <li>@Html.ActionLink("Ingenomen stages", "IngenomenOpdrachten", "Begeleider")</li>
+    
 }
                     </ul>
                 </nav>
@@ -62,7 +80,8 @@ StageBegeleiderRepository begRep = new StageBegeleiderRepository(context);
                 </div>
             </div>
         </footer>
-
+        <script src="/Scripts/jquery-2.1.0.js"></script>
+        <script src="/Scripts/modernizr-2.7.2.js"></script>
         @Scripts.Render("~/bundles/jquery")
         @RenderSection("scripts", required: false)
     </body>
