@@ -27,6 +27,8 @@ namespace projecten.Models.Domain
         public string bedrijfsactiviteit { get; set; }
        // [Required, MaxLength(20)]
         public string bereikbaarheid { get; set; }
+        public byte[] Foto { get; set; }
+        public string FotoString { get; set; }
         public virtual ICollection<StageOpdracht> stages { get; set; }
         public virtual ICollection<StageMentor> mentors { get; set; }
 

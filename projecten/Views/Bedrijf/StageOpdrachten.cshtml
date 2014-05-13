@@ -21,57 +21,47 @@
 
 <table>
     <tr>
-        <th>
+        <th class="firstth">
             @Html.DisplayNameFor(model => model.StageNaam)
-
         </th>
-
         <th>
             @Html.DisplayNameFor(model => model.Omschrijving)
-
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Semester)
-
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Specialisatie)
-
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Aantal)
-
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Status)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.StageMentor)
-
         </th>
-        <th></th>
     </tr>
 
     @foreach (var item in opdrachten)
     {
         <tr>
-            <td>
+            <td class="firsttd">
                 @Html.DisplayFor(modelItem => item.Naam)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Omschrijving)
+            <td class="omschrijving">
+                @Html.DisplayFor(modelItem => item.Omschrijving)             
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Semester)
             </td>
-            <td>
+            <td class="omschrijving">
                 @Html.DisplayFor(modelItem => item.Specialisatie)
             </td>
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.AantalStudenten) 
-                </td>
-            
+            <td>
+                @Html.DisplayFor(modelItem => item.AantalStudenten) 
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Status)
             </td>

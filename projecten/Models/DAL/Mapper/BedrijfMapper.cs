@@ -26,6 +26,7 @@ namespace projecten.Models.DAL.Mapper
             Property(t => t.bedrijfsactiviteit).IsOptional().HasMaxLength(50);
             Property(t => t.bereikbaarheid).IsOptional().HasMaxLength(50);
             Property(t => t.url).IsOptional().HasMaxLength(50);
+            Property(t => t.Foto).IsOptional().HasColumnType("LONGBLOB");
             //Relationships
             HasMany(t => t.stages)
                 .WithOptional()

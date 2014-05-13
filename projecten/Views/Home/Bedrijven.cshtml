@@ -1,0 +1,55 @@
+﻿@using System.Collections
+@using System.Collections.ObjectModel
+@using System.Configuration
+@using Microsoft.Ajax.Utilities
+@using MySql.Data.MySqlClient
+@using projecten.Models.DAL
+@model IEnumerable<projecten.Models.Domain.Bedrijf>
+@{
+    ViewBag.Title = "Bedrijven";
+    BedrijfContext context = new BedrijfContext();
+    BedrijfRepository rep = new BedrijfRepository(context);
+    var bedrijven = rep.FindAll();
+}
+@*<div class="subheader">
+    @using(Html.BeginForm("Bedrijven", "Begeleider"))
+{
+   <h4>Zoek op naam, email, adres of bedrijfsactiviteit:</h4>
+    <input type="text" name="zoekopdracht"/>
+    <input type="submit" value="Filter" />
+}
+</div>*@
+<hgroup>
+    <h1>@ViewBag.Title</h1>
+</hgroup>
+<table>
+    <tr>
+        <th>
+                @Html.DisplayNameFor(model => model.Foto)
+            </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Bedrijfsnaam)
+
+        </th>
+            
+    </tr>
+@if (!Model.Any())
+    {
+        <tr>
+            <td colspan="4" align="center">Er zijn geen bedrijven gevonden!</td>
+        </tr>
+    }
+@foreach (var item in Model)
+{
+    var foto = item.FotoString;
+        <tr>
+            <td>
+                <img alt="" width="100" height="100" src="data:image/jpeg;base64,@foto" />
+            </td>
+            <td>
+                @Html.ActionLink(item.Bedrijfsnaam, "BedrijfsProfiel", new{id = item.BedrijfId})
+            </td>
+        </tr>
+    }
+    
+</table>    

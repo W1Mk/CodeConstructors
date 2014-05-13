@@ -27,7 +27,7 @@ namespace projecten.Controllers
         public ActionResult ProfielMentor(int id, StageMentorModel model)
         {
             StageMentor mentor = MentorRep.FindBy(id);
-            var viewmodel = new StageMentorModel(mentor);
+            model = new StageMentorModel(mentor);
             if (ModelState.IsValid)
             {
                 try
@@ -41,19 +41,19 @@ namespace projecten.Controllers
                 }
             }
            // return RedirectToAction("ProfielWijzigen", new { id = id });
-            return View(viewmodel);
+            return View(model);
 
         }
         [AllowAnonymous]
         public ActionResult ProfielWijzigen(int id)
         {
             StageMentor mentor = MentorRep.FindBy(id);
-            var viewmodel = new StageMentorModel(mentor);
+            var viewmodel = new StageMentorWijzigenModel(mentor);
             return View(viewmodel);
         }
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult ProfielWijzigen(int id, StageMentorModel model)
+        public ActionResult ProfielWijzigen(int id, StageMentorWijzigenModel model)
         {
             if (ModelState.IsValid)
             {
@@ -71,7 +71,7 @@ namespace projecten.Controllers
 
             }
             StageMentor mentor = MentorRep.FindBy(id);
-            var viewmodel = new StageMentorModel(mentor);
+            var viewmodel = new StageMentorWijzigenModel(mentor);
 
             return View(viewmodel);
         }

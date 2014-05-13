@@ -323,6 +323,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Images\anonymous.gif" />
+    <Content Include="Images\index.png" />
     <Content Include="Images\logo.png" />
     <Content Include="Images\refresh-button.png" />
     <Content Include="Models\Domain\Domain.cd" />
@@ -439,6 +440,8 @@
     <Content Include="Views\Home\ProjectenIII.cshtml" />
     <Content Include="Views\Home\Stage.cshtml" />
     <Content Include="Views\Home\Bachelorproef.cshtml" />
+    <Content Include="Views\Home\Bedrijven.cshtml" />
+    <Content Include="Views\Home\ContactBachelor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

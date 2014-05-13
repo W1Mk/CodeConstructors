@@ -20,7 +20,7 @@ namespace projecten.Models
        
         public string OldPassword { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Dit veld is verplicht")]
         [StringLength(100, ErrorMessage = "de {0} moet minstens {2} karakters lang zijn.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Nieuw wachtwoord")]
@@ -34,11 +34,11 @@ namespace projecten.Models
 
     public class LoginModel
     {
-        [Required]
+        [Required(ErrorMessage = "Dit veld is verplicht")]
         [Display(Name = "email")]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Dit veld is verplicht")]
         [DataType(DataType.Password)]
         [Display(Name = "wachtwoord")]
         public string Wachtwoord { get; set; }
@@ -54,21 +54,21 @@ namespace projecten.Models
 
     public class RegisterModel
     {
-        [Required]
+        [Required(ErrorMessage = "Dit veld is verplicht")]
         [Display(Name = "bedrijfsnaam")]
         public string BedrijfsNaam { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Dit veld is verplicht")]
         [Display(Name = "adres")]
         public string Adres { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Dit veld is verplicht")]
         [DataType(DataType.Url)]
         [Display(Name = "url")]
         // [RegularExpression("http(s)?://([\w-]+\.)+[\w-]+(/[\w- ./?%&=]*)?", ErrorMessage = "Geen correcte Url ingevoerd")]
         public string Url { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Dit veld is verplicht")]
         [DataType(DataType.EmailAddress)]
         [Display(Name = "e-mail")]
         [RegularExpression(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", ErrorMessage = "Email adres is niet correct ingevoerd")]
@@ -77,21 +77,20 @@ namespace projecten.Models
         [DataType(DataType.Password)]
         public string Wachtwoord { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Dit veld is verplicht")]
         [DataType(DataType.PhoneNumber)]
         [Display(Name = "telefoon")]
         public string Telefoon { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Dit veld is verplicht")]
         [Display(Name = "bereikbaarheid")]
         public string Bereikbaarheid { get; set; }
 
-
-
-
-        [Required]
+        [Required(ErrorMessage = "Dit veld is verplicht")]
         [Display(Name = "bedrijfsactiviteit")]
         public string BedrijfsActiviteit { get; set; }
+
+        public string Foto { get; set; }
     }
     public class DeleteOpdracht
     {
@@ -114,65 +113,101 @@ namespace projecten.Models
         {
             
         }
-        [Required]
+
+        [Display(Name = "Naam")]
+        public String Naam { get; set; }
+
+        [Display(Name = "Voornaam")]
+        public String Voornaam { get; set; }
+
+        [Display(Name = "E-mail")]
+        public String Email { get; set; }
+
+        [DataType(DataType.PhoneNumber)]
+        [Display(Name = "Gsm")]
+        public String Gsm { get; set; }
+
+        [Display(Name = "Functie")]
+        public String Functie { get; set; }
+
+        [Display(Name = "Aanspreektitel")]
+        public String Aanspreektitel { get; set; }
+
+    }
+    public class StageMentorWijzigenModel
+    {
+        public StageMentorWijzigenModel(StageMentor mentor)
+        {
+            Naam = mentor.Naam;
+            Voornaam = mentor.Voornaam;
+            Email = mentor.Email;
+            Gsm = mentor.Gsm;
+            Functie = mentor.Functie;
+            Aanspreektitel = mentor.Aanspreektitel;
+        }
+
+        public StageMentorWijzigenModel()
+        {
+
+        }
+        [Required(ErrorMessage = "Dit veld is verplicht")]
         [StringLength(100, ErrorMessage = "de {0} moet minstens {2} karakters lang zijn.", MinimumLength = 3)]
         [Display(Name = "Naam")]
         public String Naam { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Dit veld is verplicht")]
         [StringLength(100, ErrorMessage = "de {0} moet minstens {2} karakters lang zijn.", MinimumLength = 3)]
         [Display(Name = "Voornaam")]
         public String Voornaam { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Dit veld is verplicht")]
         [DataType(DataType.EmailAddress)]
         [Display(Name = "E-mail")]
         [RegularExpression(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", ErrorMessage = "Email adres is niet correct ingevoerd")]
         public String Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Dit veld is verplicht")]
         [DataType(DataType.PhoneNumber)]
         [Display(Name = "Gsm")]
         public String Gsm { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Dit veld is verplicht")]
         [Display(Name = "Functie")]
         public String Functie { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Dit veld is verplicht")]
         [Display(Name = "Aanspreektitel")]
         public String Aanspreektitel { get; set; }
 
     }
     public class StageOpdrachtenModel
     {
-        [Required]
+        [Required(ErrorMessage = "Dit veld is verplicht")]
         [StringLength(100, ErrorMessage = "de {0} moet minstens {2} karakters lang zijn.", MinimumLength = 3)]
         [Display(Name = "Stagenaam")]
         public String StageNaam { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Dit veld is verplicht")]
         [StringLength(500, ErrorMessage = "de {0} moet minstens {2} karakters lang zijn.", MinimumLength = 10)]
         [Display(Name = "Omschrijving")]
         public String Omschrijving { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Dit veld is verplicht")]
         [Display(Name = "Specialisatie")]
         public String Specialisatie { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Dit veld is verplicht")]
         [Display(Name = "Semester")]
         public int Semester { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Dit veld is verplicht")]
         [Display(Name = "Aantal Studenten")]
         public int Aantal { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Dit veld is verplicht")]
         [Display(Name = "Status")]
         public String Status { get; set; }
 
-        [Required]
         [Display(Name = "Stagementor")]
         public String StageMentor { get; set; }
     }
@@ -192,25 +227,25 @@ namespace projecten.Models
             Semester = opdracht.Semester;
             Aantal = opdracht.AantalStudenten;
         }
-        [Required]
+        [Required(ErrorMessage = "Dit veld is verplicht")]
         [StringLength(100, ErrorMessage = "de {0} moet minstens {2} karakters lang zijn.", MinimumLength = 3)]
         [Display(Name = "Stagenaam")]
         public String StageNaam { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Dit veld is verplicht")]
         [StringLength(500, ErrorMessage = "de {0} moet minstens {2} karakters lang zijn.", MinimumLength = 10)]
         [Display(Name = "Omschrijving")]
         public String Omschrijving { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Dit veld is verplicht")]
         [Display(Name = "Specialisatie")]
         public String Specialisatie { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Dit veld is verplicht")]
         [Display(Name = "Semester")]
         public int Semester { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Dit veld is verplicht")]
         [Display(Name = "Aantal Studenten")]
         public int Aantal { get; set; }
     }
@@ -230,58 +265,58 @@ namespace projecten.Models
         {
             
         }
-        [Required]
+        [Required(ErrorMessage = "Stagenaam is verplicht")]
         [StringLength(100, ErrorMessage = "de {0} moet minstens {2} karakters lang zijn.", MinimumLength = 3)]
         [Display(Name = "Stagenaam")]
         public String StageNaam { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Omschrijving is verplicht")]
         [StringLength(500, ErrorMessage = "de {0} moet minstens {2} karakters lang zijn.", MinimumLength = 10)]
         [Display(Name = "Omschrijving")]
         public String Omschrijving { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Specialisatie is verplicht")]
         [Display(Name = "Specialisatie")]
         public String Specialisatie { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Semester is verplicht")]
         [Display(Name = "Semester")]
         public int Semester { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Aantal studenten is verplicht")]
         [Display(Name = "Aantal Studenten")]
         public int Aantal { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Stagementor is verplicht")]
         [Display(Name = "Stagementor")]
         public String StageMentor { get; set; }
     }
 
     public class LoginStudentModel
     {
-        [Required]
+        [Required(ErrorMessage = "Dit veld is verplicht")]
         [Display(Name = "Email")]
         [DataType(DataType.EmailAddress)]
         public String Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Dit veld is verplicht")]
         [Display(Name = "Wachtwoord")]
         [DataType(DataType.Password)]
         public String Wachtwoord { get; set; }
     }
     public class EersteAanmeldingModel
     {
-        [Required]
+        [Required(ErrorMessage = "Email is verplicht")]
         [Display(Name = "Email")]
         [DataType(DataType.EmailAddress)]
         public String Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Wachtoord is verplichtd")]
         [Display(Name = "Geef je wachtwoord in")]
         [DataType(DataType.Password)]
         public String Wachtwoord { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Bevestig je wachtwoord!")]
         [Display(Name = "Bevestig je wachtwoord")]
         [DataType(DataType.Password)]
         public string Wachtwoordbevestigd { get; set; }
@@ -291,7 +326,7 @@ namespace projecten.Models
         [Display(Name = "Email")]
         [Required]
         public String Email { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Dit veld is verplicht")]
         [DataType(DataType.Password)]
         public String Wachtwoord { get; set; }
 
@@ -304,13 +339,13 @@ namespace projecten.Models
         [Display(Name = "huidig wachtwoord")]
         public string CurrentWachtwoord { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Niew wachtwoord is verplicht")]
         [StringLength(100, ErrorMessage = "het {0} moet minstens {2} caracters lang zijn.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "nieuw wachtwoord")]
         public string NewPassword { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Dit veld is verplicht")]
         [DataType(DataType.Password)]
         [Display(Name = "bevestig nieuw wachtwoord")]
         [Compare("NewPassword", ErrorMessage = "Het nieuwe wachtwoord komt niet overeen met het bevestigingswachtwoord.")]
@@ -340,35 +375,56 @@ namespace projecten.Models
                 Foto = "geen foto";
             }
         }
-        [Required]
+        [Required(ErrorMessage = "Naam is verplicht")]
         [Display(Name = "Naam")]
         public string Naam { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Voornaam is verplicht")]
         [Display(Name = "Voornaam")]
         public string VoorNaam { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Adres is verplicht")]
         [Display(Name = "Adres")]
         public string Adres { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Email is verplicht")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Telefoon is verplicht")]
         [Display(Name = "Telefoon")]
         public string Telefoon { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Gsm is verplicht")]
         [Display(Name = "Gsm")]
         public string Gsm { get; set; }
 
-        
         [Display(Name = "Foto")]
         public string Foto { get; set; }
     }
+
+    public class ContactModel
+    {
+        [Required(ErrorMessage = "Naam is verplicht")]
+        [Display(Name = "Naam")]
+        public string Naam { get; set; }
+
+        [Required(ErrorMessage = "Voornaam is verplicht")]
+        [Display(Name = "Voornaam")]
+        public string Voornaam { get; set; }
+
+        [Required(ErrorMessage = "Bedrijf is verplicht")]
+        [Display(Name = "Bedrijf")]
+        public string Bedrijf { get; set; }
         
+        [Required(ErrorMessage = "Omschrijving is verplicht")]
+        [Display(Name = "Omschrijving bachelorproef")]
+        public string Omschrijving { get; set; }
+
+        [Required(ErrorMessage = "Vragen/Opmerkingen is verplicht")]
+        [Display(Name = "Vragen/Opmerkingen")]
+        public string Vragen { get; set; }
+    }
     
     public class ExternalLogin
     {

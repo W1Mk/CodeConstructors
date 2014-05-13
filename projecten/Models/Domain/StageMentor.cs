@@ -31,7 +31,7 @@ namespace projecten.Models.Domain
             Aanspreektitel = model.Aanspreektitel;
         }
 
-        public void setUpdates(StageMentorModel model)
+        public void setUpdates(StageMentorWijzigenModel model)
         {
             Naam = model.Naam;
             Voornaam = model.Voornaam;

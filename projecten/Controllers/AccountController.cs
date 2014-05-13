@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Security.AccessControl;
@@ -98,7 +99,7 @@ namespace projecten.Controllers
                     HttpContext.User = new GenericPrincipal(new GenericIdentity(model.Email), new string[] { rol });
 
                     //return RedirectToLocal(returnUrl);
-                    return RedirectToAction("Index", "Bedrijf");
+                    return RedirectToAction("Index", "Home");
                 }
                 else if (ModelState.IsValid && PasswordHash.ValidatePassword(model.Wachtwoord, student.wachtwoord))
                 {
@@ -110,7 +111,7 @@ namespace projecten.Controllers
                     HttpContext.User = new GenericPrincipal(new GenericIdentity(model.Email), new string[] { rol });
 
                     //return RedirectToLocal(returnUrl);
-                    return RedirectToAction("Index", "Student");
+                    return RedirectToAction("Index", "Home");
                 }
                 else if (ModelState.IsValid && PasswordHash.ValidatePassword(model.Wachtwoord, begeleider.Wachtwoord))
                 {
@@ -122,12 +123,12 @@ namespace projecten.Controllers
                     HttpContext.User = new GenericPrincipal(new GenericIdentity(model.Email), new string[] { rol });
 
                     //return RedirectToLocal(returnUrl);
-                    return RedirectToAction("Index", "Begeleider");
+                    return RedirectToAction("Index", "Home");
                 }
             
             
             // If we got this far, something failed, redisplay form
-            ModelState.AddModelError("", "Het email of wachtwoord is incorrect.");
+            ModelState.AddModelError(string.Empty, "Het email of wachtwoord is incorrect.");
             return View(model);
         }
 
@@ -151,20 +152,27 @@ namespace projecten.Controllers
                 {
                     //bedrijf.Wachtwoord = EncodePassword(model.Wachtwoord, PasswordSalt);
                     bedrijf.Wachtwoord =  PasswordHash.CreateHash(model.Wachtwoord);
+                    
                     BedrijfRep.SaveChanges();
                     return RedirectToAction("Login");
                 }
                 if (ModelState.IsValid && model.Wachtwoord == model.Wachtwoordbevestigd && student != null)
                 {
                     student.wachtwoord = PasswordHash.CreateHash(model.Wachtwoord);
+                    student.EersteAanmelding = 1;
                     StudentRep.SaveChanges();
                     return RedirectToAction("Login");
                 }
                 if (ModelState.IsValid && model.Wachtwoord == model.Wachtwoordbevestigd && begeleider != null)
                 {
                     begeleider.Wachtwoord = PasswordHash.CreateHash(model.Wachtwoord);
+                    begeleider.EersteAanmelding = 1;
                     StageBegRep.SaveChanges();
                     return RedirectToAction("Login");
+                }
+                if (model.Wachtwoord != model.Wachtwoordbevestigd)
+                {
+                    ModelState.AddModelError(string.Empty,"Uw wachtwoord komt niet overeen");
                 }
             }
             catch
@@ -192,67 +200,56 @@ namespace projecten.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            RegisterModel model = new RegisterModel();
+            return View(model);
         }
 
         //
         // POST: /Account/Register
-        private string PasswordSalt
-        {
-            get
-            {
-                var rng = new RNGCryptoServiceProvider();
-                var buff = new byte[32];
-                rng.GetBytes(buff);
-                return Convert.ToBase64String(buff);
-            }
-        }
-
-        private string EncodePassword(string password, string salt)
-        {
-            byte[] bytes = Encoding.Unicode.GetBytes(password);
-            byte[] src = Encoding.Unicode.GetBytes(salt);
-            byte[] dst = new byte[src.Length + bytes.Length];
-            Buffer.BlockCopy(src, 0, dst, 0, src.Length);
-            Buffer.BlockCopy(bytes, 0, dst, src.Length, bytes.Length);
-            HashAlgorithm algorithm = HashAlgorithm.Create("SHA1");
-            byte[] inarray = algorithm.ComputeHash(dst);
-            return Convert.ToBase64String(inarray);
-        }
         
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(RegisterModel model)
+        public ActionResult Register(RegisterModel model, HttpPostedFileBase image)
         {
+            MemoryStream target = new MemoryStream();
             if (ModelState.IsValid)
             {
                 // Attempt to register the user
                 try
                 {
-                
+
                     
                     String RandomWachtwoord;
                     RandomWachtwoord = CreateRandomPassword(6);
-                    MailMessage message = new MailMessage();
-                    message.From = new MailAddress(model.email);                   
-                    message.To.Add(model.email);
-                    message.Subject = "Wachtwoord";
-                    message.Body = "jouw wachtwoord: " + RandomWachtwoord;
                     model.Wachtwoord = RandomWachtwoord;
+                    string subject ="Wachtwoord";
+                    string body = "Beste, " + model.BedrijfsNaam + "\r\n\r\n" + "Uw wachtwoord is: " + model.Wachtwoord
+                        + "\r\n" + "U kan dit aanpassen bij uw eerste loging door op de link onder het loginformulier te klikken."
+                        + "\r\n\r\n" + "Bedankt voor uw registratie," + "\r\n" +"Het InternNet-Team";
 
                     Bedrijf bedrijf = new Bedrijf { Bedrijfsnaam = model.BedrijfsNaam, adres = model.Adres, url = model.Url, Email = model.email, telefoon = model.Telefoon, Wachtwoord = model.Wachtwoord, bedrijfsactiviteit = model.BedrijfsActiviteit, bereikbaarheid = model.Bereikbaarheid};
                     if (!BedrijfRep.FindEqual(model.email))
                     {
                         bedrijf.Wachtwoord = PasswordHash.CreateHash(model.Wachtwoord);
+                        byte[] arr = target.ToArray();
+                    if (image != null)
+                    {
+                        image.InputStream.CopyTo(target);
+
+                        arr = target.ToArray();
+                        bedrijf.Foto = arr;
+                        model.Foto = Convert.ToBase64String(arr);
+                    }
                         BedrijfRep.Add(bedrijf);
                     }
                     else
                     {
                         System.Diagnostics.Debug.WriteLine("email already exists");
                     }
+                    target.Close();
                     BedrijfRep.SaveChanges();
-                    
+                    sendMail(model.email,subject, body);
                     var client = new SmtpClient("smtp.gmail.com", 587)
                     {
                         Credentials = new NetworkCredential("nielsdepauw94@gmail.com", "Yankee12"),
@@ -272,9 +269,24 @@ namespace projecten.Controllers
                     ModelState.AddModelError("", ErrorCodeToString(e.StatusCode));
                 }
             }
-            
+            target.Close();
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+        public void sendMail(string to, string subject, string body)
+        {
+            MailMessage message = new MailMessage();
+            message.To.Add(to);
+            message.Subject = subject;
+            message.Body = body;
+            var client = new SmtpClient("smtp.gmail.com", 587)
+            {
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential("nielsdepauw94@gmail.com", " qsraqfdnmtbefoih "),
+                EnableSsl = true
+
+            };
+            client.Send("nielsdepauw94@gmail.com", message.To.ToString(), message.Subject, message.Body);
         }
         public static string CreateRandomPassword(int PasswordLength)
         {

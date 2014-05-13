@@ -1,0 +1,60 @@
+﻿@model projecten.Models.ContactModel
+@{
+    ViewBag.Title = "Contact bachelorproef";
+
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title</h1>
+</hgroup>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+    <div style="float: left;">
+        <fieldset>
+            <legend>Profiel</legend>
+            <ol>
+                <li class="h3">
+                    @Html.DisplayNameFor(model => model.Naam)
+                    
+                </li>
+                <li>
+                    @Html.TextBoxFor(model => model.Naam)
+                </li>
+                <li class="h3">
+                    @Html.DisplayNameFor(model => model.Voornaam)
+                    
+                </li>
+                <li>
+                    @Html.TextBoxFor(model => model.Voornaam)
+                </li>
+
+                <li class="h3">
+                    @Html.DisplayNameFor(model => model.Bedrijf)
+                    
+                </li>
+                <li>
+                    @Html.TextBoxFor(model => model.Bedrijf)
+                </li>
+                <li class="h3">
+                    @Html.DisplayNameFor(model => model.Omschrijving)                    
+                </li>
+                <li>
+                    @Html.TextAreaFor(model => model.Omschrijving)
+                </li>
+                <li class="h3">
+                    @Html.DisplayNameFor(model => model.Vragen)
+                    
+                </li>
+                <li>
+                    @Html.TextAreaFor(model => model.Vragen)
+                </li>
+            </ol>
+            <input type="submit" value="Verzend" /> 
+        </fieldset>
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -43,23 +43,33 @@ StageBegeleiderRepository begRep = new StageBegeleiderRepository(context);
                                     <li>@Html.ActionLink("Bachelorproef","Bachelorproef","Home")</li>
                                 </ul>
                             </li>
-                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")
+                        <ul>
+                            <li>@Html.ActionLink("Contact bachelorproef", "ContactBachelor", "Home")</li>
+                        </ul>
+</li>
+                         <li>@Html.ActionLink("De Bedrijven", "Bedrijven", "Home")</li>
 @if (Request.IsAuthenticated && User.Identity.Name.Contains("hogent.be") && rep.FindBy(User.Identity.Name) != null) { 
-                            <li>@Html.ActionLink("Stages", "Stages", "Student")</li>
-                            <li>@Html.ActionLink("Jouw Stages", "IngenomenStages", "Student")</li>
+    <li>
+        <a href="#">Student</a>
+        <ul>
+            <li>@Html.ActionLink("Stages", "Stages", "Student")</li>
+            <li>@Html.ActionLink("Jouw Stages", "IngenomenStages", "Student")</li>
+        </ul>
+    </li>
+                            
 }
 @if (Request.IsAuthenticated && User.Identity.Name.Contains("hogent.be") && begRep.FindBy(User.Identity.Name) != null)
 {
-    <li>@Html.ActionLink("Voorkeurstages", "VoorkeurStages", "Begeleider")
-                        <ul>
-                            <li class="size">@Html.ActionLink("Beschikbare opdrachten","StageOpdrachten","Begeleider")</li>
+    <li>
+        <a href="#">Begeleider</a>
+        <ul>
+            <li class="size">@Html.ActionLink("Beschikbare opdrachten","StageOpdrachten","Begeleider")</li>
                             <li>@Html.ActionLink("Voorkeurstages","VoorkeurStages","Begeleider")</li>
                             <li>@Html.ActionLink("Studenten","Studenten","Begeleider")</li>
                             <li>@Html.ActionLink("Ingenomen opdrachten","IngenomenOpdrachten","Begeleider")</li>
-                        </ul>
-</li>
-    <li>@Html.ActionLink("De Bedrijven", "Bedrijven", "Begeleider")</li>
-    
+        </ul>
+    </li>    
 }
                     </ul>
                 </nav>
@@ -75,7 +85,7 @@ StageBegeleiderRepository begRep = new StageBegeleiderRepository(context);
         <footer>
             <div class="content-wrapper">
 
-                <div class="float-left">
+                <div>
                     <p>&copy; @DateTime.Now.Year | Code Constructors</p>
                 </div>
             </div>

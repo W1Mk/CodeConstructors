@@ -1,7 +1,8 @@
 ﻿html {
-    background-color: #e2e2e2;
+    
     margin: 0;
     padding: 0;
+    
 }
 
 body {
@@ -12,6 +13,7 @@ body {
     font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
     margin: 0;
     padding: 0;
+    background: url(/Images/index.png) 
 }
 
 a {
@@ -40,7 +42,7 @@ nav, section {
 
 
 mark {
-    background-color: #a6dbed;
+    background-color: #2989d8,;
     padding-left: 5px;
     padding-right: 5px;
 }
@@ -83,8 +85,8 @@ nav ul ul {
     nav > ul {
 	background: #efefef; 
 	/*background: linear-gradient(top, #efefef 0%, #bbbbbb 100%);*/  
-	background: -moz-linear-gradient(top, #efefef 0%,  #6bb0e5 100%); 
-	background: -webkit-linear-gradient(top, #efefef 0%,#6bb0e5 100%); 
+	background: -moz-linear-gradient(top, #efefef 0%,  #2989d8, 100%); 
+	background: -webkit-linear-gradient(top, #efefef 0%,#2989d8, 100%); 
 	box-shadow: 0px 0px 9px rgba(0,0,0,0.15);
     padding: 0px;
     margin-top: 0px;
@@ -94,9 +96,10 @@ nav ul ul {
 	position: relative;
 	display: inline-table;
     font-weight: 600;
+    font-size: large;
     margin-left: 0;
     padding-top: 0px;
-    width: 798px;
+    width: 838px;
     background: linear-gradient(to bottom, #2989d8, #6bb0e5);
 }
     .size {
@@ -150,7 +153,18 @@ nav ul ul {
             nav ul ul ul {
 	position: absolute; left: 100%; top:0;
 }
-	
+.omschrijving {
+    text-overflow: ellipsis;
+    max-width: 20px;
+    overflow: hidden;
+}
+#footer {
+    clear: both;
+    position: relative;
+    z-index: 10;
+    height: 3em;
+    margin-top: -3em;
+}
 .float-right {
     float: right;
 }
@@ -204,7 +218,7 @@ h5, h6 {
 }
 
 #body {
-    background: linear-gradient(to bottom, #efeeef 20%,#f6f6f6 75%);
+   
     clear: both;
     padding-bottom: 35px;
 }
@@ -224,7 +238,7 @@ header .content-wrapper {
 footer {
     clear: both;
     height: 100px;
-    background-color: #e2e2e2;
+    text-align: center;
     font-size: .8em;
 }
 
@@ -256,11 +270,12 @@ footer {
 }
 
     #login a {
-        background-color: #7ac0da;
+        background:linear-gradient(to bottom, #2989d8, #6bb0e5);;
         margin-left: 10px;
         margin-right: 3px;
         padding: 2px 3px;
         text-decoration: none;
+        border-radius: 7px;
     }
 
     #login a:hover {
@@ -318,18 +333,19 @@ ul#menu {
 ----------------------------------------------------------*/
 /* featured */
 .featured {
-    background-color: #fff;
+    
 }
 
     .featured .content-wrapper {
-        background-color: #7ac0da;
+        background: linear-gradient(to bottom, #2989d8, #6bb0e5);;
         background-image: -ms-linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
         background-image: -o-linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
-        background-image: -webkit-gradient(linear, left top, right top, color-stop(0, #7ac0da), color-stop(1, #a4d4e6));
-        background-image: -webkit-linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
+        /*background-image: -webkit-gradient(linear, left top, right top, color-stop(0, #7ac0da), color-stop(1, #a4d4e6));
+        background-image: -webkit-linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);*/
         background-image: linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
         color: #3e5667;
-        padding: 20px 40px 30px 40px;
+        border-radius: 10px;
+        padding: 10px 0px 20px 0px;
     }
 
         .featured hgroup.title h1, .featured hgroup.title h2 {
@@ -342,7 +358,9 @@ ul#menu {
 
 /* page titles */
 hgroup.title {
-    margin-bottom: 10px;
+    text-align: center;
+    font-size: large;
+
 }
 
 hgroup.title h1, hgroup.title h2 {
@@ -647,7 +665,7 @@ th {
     font-size: 1.2em;
     text-align: left;
     border: none 0px;
-    padding-left: 0;
+    padding-left: 10px;
 }
 
     th a {
@@ -689,6 +707,18 @@ th {
 td {
     padding: 0.25em 2em 0.25em 0em;
     border: 0 none;
+    padding-left: 10px;
+}
+.firstth {
+    font-size: 1.2em;
+    text-align: left;
+    border: none 0px;
+    padding-left: 0;
+}
+.firsttd {
+    padding: 0.25em 2em 0.25em 0em;
+    border: 0 none;
+    
 }
 
 tr.pager td {

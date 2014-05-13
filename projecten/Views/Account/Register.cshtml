@@ -1,6 +1,7 @@
 ﻿@model projecten.Models.RegisterModel
 @{
     ViewBag.Title = "Registreer";
+    var foto = Model.Foto;
 }
 
 <hgroup class="title">
@@ -8,7 +9,7 @@
   @*  <h2>Maak een niewe account.</h2> *@
 </hgroup>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new {enctype="multipart/form-data"})) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary()
 
@@ -63,7 +64,12 @@
                   "text",
                    2))
             </li>
-
+                <li class="h3">
+                    @Html.Label("foto:")
+                </li>
+                <li>
+                    <img alt="" width="300" height="200" src="data:image/jpeg;base64,@foto" /> <input type="file" name="image" />
+                </li> 
 
 
         </ol>
