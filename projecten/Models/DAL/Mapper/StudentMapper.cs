@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity.ModelConfiguration;
-using System.Linq;
-using System.Web;
+﻿using System.Data.Entity.ModelConfiguration;
 using projecten.Models.Domain;
 
 namespace projecten.Models.DAL.Mapper
@@ -17,30 +12,35 @@ namespace projecten.Models.DAL.Mapper
             ToTable("student");
             HasKey(t => t.Studentid);
             //properties
-            //Property(t => t.Bedrijf_idBedrijf).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             Property(t => t.Email).IsRequired().HasMaxLength(50);
-            Property(t => t.adres).IsRequired().HasMaxLength(50);
-            Property(t => t.wachtwoord).IsRequired().HasMaxLength(100);
-            Property(t => t.gsm).IsOptional().HasMaxLength(50);
-            Property(t => t.naam).IsOptional().HasMaxLength(50);
-            Property(t => t.EersteAanmelding).IsRequired();
-            Property(t => t.foto).IsOptional().HasColumnType("LONGBLOB");
+            Property(t => t.Adres).IsRequired().HasMaxLength(50);
+            Property(t => t.Wachtwoord).IsRequired().HasMaxLength(100);
+            Property(t => t.Gsm).IsOptional().HasMaxLength(50);
+            Property(t => t.Naam).IsOptional().HasMaxLength(50);
+            Property(t => t.Foto).IsOptional().HasColumnType("LONGBLOB");
+            Property(t => t.BeginDatum).IsOptional();
+            Property(t => t.EindeDatum).IsOptional();
+            Property(t => t.StageContract).IsOptional();
 
             //Relationships
 
             this.HasMany(t => t.Stageopdrachten)
-                .WithMany(t => t.studenten)
+                .WithMany(t => t.Studenten)
                 .Map(m => { m.MapLeftKey("studentid") ;
             m.MapRightKey("stageopdrachtid");
         }
 
     );
-            
+            this.HasMany(t => t.Solicitaties)
+                .WithMany(t => t.StudentSolicitaties)
+                .Map(m =>
+                {
+                    m.MapLeftKey("studentidsol");
+                    m.MapRightKey("stageopdrachtidsol");
+                }
 
-            /* this.HasOptional(t => t.tweedeEmail)
-                .WithMany()
-                .Map(m => m.MapKey("Studentid"))
-                .WillCascadeOnDelete(true);*/
+    );
+
         }
     }
 }

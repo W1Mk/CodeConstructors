@@ -1,19 +1,21 @@
 ﻿@model IEnumerable<projecten.Models.Domain.StageOpdracht>
 
+<h2>Uw goedgekeurde voorkeurstages</h2>
 <table id="Lijst">
     <tr>
-        <th>naam</th>
-        <th>omschrijving</th>
+        <th class="firstth">Naam</th>
+        <th >Omschrijving</th>
         <th>Semester</th>
         <th>Specialisatie</th>
-        <th>Aantal studenten</th>
+        <th>studenten</th>
+        <th>Academiejaar</th>
         <th></th>
     </tr>
 
-    @if (Model.Count() == 0)
+    @if (!Model.Any())
     {
         <tr>
-            <td colspan="4" align="center">Er zijn nog geen ingenomen opdrachten</td>
+            <td colspan="4" align="center">U hebt nog geen goedgekeurde voorkeurstages.</td>
         </tr>
     }
 
@@ -21,18 +23,16 @@
     {
 
         <tr>
-            <td>@Html.DisplayFor(modelItem => item.Naam)</td>
-            <td>@Html.DisplayFor(modelItem => item.Omschrijving)</td>
+            <td class="firsttd">@Html.DisplayFor(modelItem => item.Naam)</td>
+            <td class="omschrijving">@Html.DisplayFor(modelItem => item.Omschrijving)</td>
             <td>@Html.DisplayFor(modelItem => item.Semester)</td>
-            <td>@Html.DisplayFor(modelItem => item.Specialisatie)</td>
+            <td class="omschrijving">@Html.DisplayFor(modelItem => item.Specialisatie)</td>
             <td>@Html.DisplayFor(modelItem => item.AantalStudenten)</td>
             <td>
-
-
-
-                @Html.ActionLink("Wijzigen", "IngenomenWijzigen", new {id = item.StageOpdrachtid}, new {@class = "linkbutton"})
-
-
+                @Html.DisplayFor(modelItem => item.Academiejaar)
+            </td>
+            <td>
+                @Html.DropDownListFor(modelItem => item.Studenten, new SelectList(item.Studenten, "Naam", "Naam"))
             </td>
         </tr>
     }

@@ -1,27 +1,14 @@
-﻿@using System.Collections
-@using System.Collections.ObjectModel
-@using System.Configuration
-@using Microsoft.Ajax.Utilities
-@using MySql.Data.MySqlClient
-@using projecten.Models
-@using projecten.Models.DAL
-@model IEnumerable<projecten.Models.Domain.StageOpdracht>
+﻿@model IEnumerable<projecten.Models.Domain.StageOpdracht>
 @{
     ViewBag.Title = "Jouw voorkeurstages";
 }
-
-<div class="subheader">
-    @Html.ActionLink("Beschikbare stageopdrachten", "StageOpdrachten", "Begeleider")
-    @Html.ActionLink("Alle studenten", "Studenten", "Begeleider")
-</div>
-
-<hgroup class="title">
+<hgroup class="subtitle">
     <h1>@ViewBag.Title</h1>
 </hgroup>
 
 <table>
     <tr>
-        <th>
+        <th class="firstth">
             @Html.DisplayNameFor(model => model.Naam)
 
         </th>
@@ -39,15 +26,15 @@
 
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.AantalStudenten)
+            @Html.DisplayName("Studenten")
 
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Status)
+            @Html.DisplayName("Mentor")
+
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.StageMentor)
-
+            @Html.DisplayNameFor(model => model.Academiejaar)
         </th>
             
         <th></th>
@@ -63,35 +50,31 @@ else
     foreach (var item in Model)
     {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Naam)
+            <td  class="firsttd">
+                @Html.ActionLink(item.Naam,"StageOpdracht", new{id = item.StageOpdrachtid})
             </td>
-            <td>
+            <td  class="omschrijving">
                 @Html.DisplayFor(modelItem => item.Omschrijving)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Semester)
             </td>
-            <td>
+            <td  class="omschrijving">
                 @Html.DisplayFor(modelItem => item.Specialisatie)
             </td>
             
             <td>
                 @Html.DisplayFor(modelItem => item.AantalStudenten)
             </td>
-            
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.StageMentor)
             </td>
             <td>
-                @Html.ActionLink("Voorkeur annuleren", "VoorkeurOpdrachtAnnuleren", new {id = item.StageOpdrachtid}, new {@class = "linkbutton"})
+                 @Html.DisplayFor(modelItem => item.Academiejaar)
             </td>
             <td>
-                @Html.ActionLink("Wijzigen", "IngenomenWijzigen", new {id = item.StageOpdrachtid}, new {@class = "linkbutton"})
-           </td>
+                @Html.ActionLink("Voorkeur annuleren", "VoorkeurOpdrachtAnnuleren", new {id = item.StageOpdrachtid}, new {@class = "linkbutton"})
+            </td>
         </tr>
     }
 }

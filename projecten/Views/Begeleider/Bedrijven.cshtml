@@ -1,15 +1,6 @@
-﻿@using System.Collections
-@using System.Collections.ObjectModel
-@using System.Configuration
-@using Microsoft.Ajax.Utilities
-@using MySql.Data.MySqlClient
-@using projecten.Models.DAL
-@model IEnumerable<projecten.Models.Domain.Bedrijf>
+﻿@model IEnumerable<projecten.Models.Domain.Bedrijf>
 @{
-    ViewBag.Title = "Bedrijven";
-    BedrijfContext context = new BedrijfContext();
-    BedrijfRepository rep = new BedrijfRepository(context);
-    var bedrijven = rep.FindAll();
+    ViewBag.Title = "De Bedrijven";
 }
 <div class="subheader">
     @using(Html.BeginForm("Bedrijven", "Begeleider"))
@@ -19,7 +10,7 @@
     <input type="submit" value="Filter" />
 }
 </div>
-<hgroup class="title">
+<hgroup class="subtitle">
     <h1>@ViewBag.Title</h1>
 </hgroup>
 <table>

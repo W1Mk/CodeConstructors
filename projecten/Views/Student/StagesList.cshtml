@@ -4,16 +4,19 @@
 </script>       
 <table id="Lijst">
     <tr>
-        <th>naam</th>
-        <th>omschrijving</th>
+        <th class="firstth">Naam</th>
+        <th>Omschrijving</th>
         <th>Semester</th>
         <th>Specialisatie</th>
-        <th>StageMentor</th>
-        <th>AantalStudenten</th>
+        <th>Mentor</th>
+        <th>Studenten</th>
+        <th>
+            Academiejaar
+        </th>
         <th></th>
     </tr>
     
-    @if (Model.Count() == 0)
+    @if (!Model.Any())
     {
         <tr>
             <td colspan="4" align="center">Er zijn geen stageopdrachten gevonden!</td>
@@ -25,19 +28,25 @@
     {
         
         <tr>
-            <td>@Html.DisplayFor(modelItem => item.Naam)</td>
-            <td>@Html.DisplayFor(modelItem => item.Omschrijving)</td>
+            <td class="firsttd">@Html.DisplayFor(modelItem => item.Naam)</td>
+            <td class="omschrijving">@Html.DisplayFor(modelItem => item.Omschrijving)</td>
             <td>@Html.DisplayFor(modelItem => item.Semester)</td>
-            <td>@Html.DisplayFor(modelItem => item.Specialisatie)</td>
+            <td class="omschrijving">@Html.DisplayFor(modelItem => item.Specialisatie)</td>
             <td>@Html.DisplayFor(modelItem => item.StageMentor)</td>
             <td>@Html.DisplayFor(modelItem => item.AantalStudenten)</td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Academiejaar)
+            </td>
             <td>
               
                 
                    
            @using (Html.BeginForm("Bekijk", "Student",FormMethod.Get)) { 
                <input type="hidden" id="@item.StageOpdrachtid" value="@item.StageOpdrachtid" name="id" />
-                    <input type="submit" id="@item.StageOpdrachtid" value="bekijk" name="@item.StageOpdrachtid"/>
+
+                @Html.ActionLink("Soliciteer", "Solicitatie", new{id = item.StageOpdrachtid}, new {@class = "linkbutton"}) 
+                
+                @Html.ActionLink("Bekijk", "Bekijk", new{id = item.StageOpdrachtid}, new {@class = "linkbutton"})
            }
                     
                 

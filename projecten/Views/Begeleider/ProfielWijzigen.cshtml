@@ -1,10 +1,10 @@
 ﻿@model projecten.Models.StageBegeleiderModel
 @{
-    ViewBag.Title = "Stagebegeleider";
+    ViewBag.Title = "Profiel wijzigen";
     var foto = Model.Foto;
 }
 
-<hgroup class="title">
+<hgroup class="subtitle">
     <h1>@ViewBag.Title</h1>
 </hgroup>
 @using (Html.BeginForm("ProfielWijzigen", "Begeleider", FormMethod.Post, new {enctype="multipart/form-data"}))
@@ -65,7 +65,7 @@
                 </li>   
                     
             </ol>
-            <input type="submit" value="Wijzig" /> 
+            <input class="linkbutton" type="submit" value="Wijzig" /> 
         </fieldset>
     </div>
 }

@@ -1,9 +1,5 @@
 ﻿@model projecten.Models.Domain.Bedrijf
 @Html.AntiForgeryToken()
-
-
-
-
 <div style="float: none;">
     <fieldset>
         <h3>Profiel</h3>
@@ -11,7 +7,7 @@
         <ol>
             <li>
                 @Html.Label("bedrijfsnaam:")
-                @Html.DisplayFor(m => m.bedrijfsactiviteit)
+                @Html.DisplayFor(m => m.Bedrijfsactiviteit)
             </li>
             <li>
                 @Html.Label("omschrijving:")
@@ -20,7 +16,7 @@
             </li>
             <li>
                 @Html.Label("semester:")
-                @Html.DisplayFor(m => m.bereikbaarheid)
+                @Html.DisplayFor(m => m.Bereikbaarheid)
 
             </li>
             <li>
@@ -43,8 +39,8 @@
         @using (Html.BeginForm("Bekijk", "Student", FormMethod.Post))
         {
             var item = Model;
-            <input type="hidden" id="@item.StageOpdrachtid" value="@item.StageOpdrachtid" name="id" />
-            <input type="submit" value="stage innemen" />
+            <input type="hidden" id="@item.BedrijfId" value="@item.BedrijfId" name="id" />
+            <input class="linkbutton" type="submit" value="stage innemen" />
         }
     </fieldset>
 </div>

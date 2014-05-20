@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
-using System.Windows.Forms;
 
 namespace projecten.Models.Domain
 {
@@ -12,26 +7,26 @@ namespace projecten.Models.Domain
     {
         public int StageOpdrachtid { get; set; }
         public string Naam { get; set; }
-        public int Semester { get; set; }
+        public string Semester { get; set; }
         public string Omschrijving { get; set; }
         public string Specialisatie { get; set; }
         public int AantalStudenten { get; set; }
         public string StageMentor { get; set; }
-        /*public Bedrijf Bedrijf { get; set; }
-        public int Bedrijfid { get; set; }*/
         public string Status { get; set; }
-        private string[] status { get; set; }
-        public virtual ICollection<Student> studenten { get; set; }
-        public virtual ICollection<StageBegeleider> begeleiders { get; set; }
-        public virtual ICollection<StageBegeleider> voorkeurbegeleiders { get; set; }
+        public string Status2 { get; set; }
+        public virtual ICollection<Student> StudentSolicitaties { get; set; }
+        public virtual ICollection<Student> Studenten { get; set; }
+        public virtual ICollection<StageBegeleider> Begeleiders { get; set; }
+        public virtual ICollection<StageBegeleider> Voorkeurbegeleiders { get; set; }
+        public string Academiejaar { get; set; }
 
         public StageOpdracht()
         {
-            status = new string[] { "wachten", "goedgekeurd", "afgekeurd" };
-            Status = status[0];
-            studenten = new List<Student>();
-            begeleiders = new List<StageBegeleider>();
-            voorkeurbegeleiders = new List<StageBegeleider>();
+
+            Studenten = new List<Student>();
+            Begeleiders = new List<StageBegeleider>();
+            Voorkeurbegeleiders = new List<StageBegeleider>();
+            StudentSolicitaties = new List<Student>();
         }
 
         public StageOpdracht(StageOpdrachtToevoegenModel model)
@@ -42,6 +37,7 @@ namespace projecten.Models.Domain
             Specialisatie = model.Specialisatie;
             AantalStudenten = model.Aantal;
             StageMentor = model.StageMentor;
+            Academiejaar = model.Academiejaar;
         }
         public void setUpdates(StageOpdrachtToevoegenModel stage)
         {
@@ -51,6 +47,7 @@ namespace projecten.Models.Domain
             Specialisatie = stage.Specialisatie;
             AantalStudenten = stage.Aantal;
             StageMentor = stage.StageMentor;
+            Academiejaar = stage.Academiejaar;
         }
 
         public void setUpdates(IngenomenOpdrachtenModel stage)
@@ -61,14 +58,15 @@ namespace projecten.Models.Domain
             Specialisatie = stage.Specialisatie;
             AantalStudenten = stage.Aantal;
         }
+        public void setUpdates(BegIngenomenOpdrachtenModel stage)
+        {
+            Omschrijving = stage.Omschrijving;
+        }
 
         public SelectList GetstStudents(StageOpdracht stage)
         {
-            SelectList list = new SelectList(stage.studenten,"naam","naam",0);
+            SelectList list = new SelectList(stage.Studenten,"naam","naam",0);
             return list;
         }
- 
-
-
     }
 }

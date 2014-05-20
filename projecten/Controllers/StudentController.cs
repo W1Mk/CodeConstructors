@@ -1,10 +1,8 @@
-﻿using MySql.Data.MySqlClient;
-using projecten.Models;
+﻿using projecten.Models;
 using projecten.Models.DAL;
 using projecten.Models.Domain;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -18,16 +16,9 @@ namespace projecten.Controllers
     {
         static BedrijfContext context = new BedrijfContext();
         StudentRepository studentRep = new StudentRepository(context);
-        BedrijfRepository bedrijfRep = new BedrijfRepository(context);
         StageOpdrachtRepository stageRep = new StageOpdrachtRepository(context);
         StageBegeleiderRepository begrep = new StageBegeleiderRepository(context);
-       // static ProfielModel ProfielModel = new ProfielModel();
         
-        
-        public ActionResult Index()
-        {
-            return View();
-        }
          [AllowAnonymous]
         public ActionResult Profiel()
         {
@@ -35,34 +26,34 @@ namespace projecten.Controllers
             ProfielModel ProfielModel = new ProfielModel(student);
             try
             {
-                var foto = (Byte[])student.foto;
+                var foto = (Byte[])student.Foto;
                 if(foto != null)
-                ProfielModel.foto= Convert.ToBase64String(foto);
+                ProfielModel.Foto= Convert.ToBase64String(foto);
                 else
                 {
                     foto = new byte[20];
-                    ProfielModel.foto = Convert.ToBase64String(foto);
+                    ProfielModel.Foto = Convert.ToBase64String(foto);
                 }
-                ProfielModel.OudWachtwoord = student.wachtwoord;
-                if (ProfielModel.adres == null)
+                ProfielModel.OudWachtwoord = student.Wachtwoord;
+                if (ProfielModel.Adres == null)
                 {
-                    ProfielModel.adres = "/";
+                    ProfielModel.Adres = "/";
                 }
-                if (ProfielModel.gsm == null)
+                if (ProfielModel.Gsm == null)
                 {
-                    ProfielModel.gsm = "/";
+                    ProfielModel.Gsm = "/";
                 }
-                if (ProfielModel.keuzevak == null)
+                if (ProfielModel.Keuzevak == null)
                 {
-                    ProfielModel.keuzevak = "/";
+                    ProfielModel.Keuzevak = "/";
                 }
-                if (ProfielModel.naam == null)
+                if (ProfielModel.Naam == null)
                 {
-                    ProfielModel.naam = "/";
+                    ProfielModel.Naam = "/";
                 }
-                if (ProfielModel.tweedeEmail == null)
+                if (ProfielModel.TweedeEmail == null)
                 {
-                    ProfielModel.tweedeEmail = "/";
+                    ProfielModel.TweedeEmail = "/";
                 }
                
             }
@@ -88,61 +79,28 @@ namespace projecten.Controllers
                  image.InputStream.CopyTo(target);
                
                  arr = target.ToArray();
-                 student.foto = arr;
-                 model.foto = Convert.ToBase64String(arr);
+                 student.Foto = arr;
+                 model.Foto = Convert.ToBase64String(arr);
              }
             
-             var data = (Byte[])student.foto;
+             var data = (Byte[])student.Foto;
              student.setUpdates(model);
-           /*  model.OudWachtwoord = student.wachtwoord;
-            if (ModelState.IsValid && model.OudWachtwoord == student.wachtwoord)
-            {
-                student.wachtwoord = model.NieuwWachtwoord;
-                
-            }
-            else
-            {
-
-            }*/
-             //studentRep.Update(student);
              studentRep.SaveChanges();
              target.Close();
              return View(model);
          }
            [AllowAnonymous]
            public ActionResult Stages()
-         {
-             
-            // if (Request.IsAjaxRequest()) return View();
+         {           
              var stages = stageRep.FindAll();
-             //if (Request.IsAjaxRequest()) return PartialView("StagesList", stages);
              return View(stages);
          }
            [AllowAnonymous]
            [HttpPost]
            public ActionResult Stages(string zoekopdracht)
            {
-              
-              
-                   //  var stages = stageRep.FindAllByName(naam);
-                  
                     var stages = stageRep.FindAllBy(zoekopdracht);
-                   // List<StageOpdracht> lijst = new List<StageOpdracht>();
-                    /*if (gemeente != "")
-                    {
-                        var bedrijven = bedrijfRep.FindAllByAdres(gemeente);
-                        foreach (var item in bedrijven)
-                        {
-                            lijst.AddRange(stageRep.FindAllByBedrijfId(item.BedrijfId));
-
-                        }*/
-                       
-                        //stages = lijst;
-                    //}
-                    
-                    return View(stages);
-              
-               
+                    return View(stages); 
            }
            [AllowAnonymous]
            public ActionResult IngenomenStages()
@@ -164,7 +122,6 @@ namespace projecten.Controllers
            public ActionResult Bekijk(StagesModel model,int id)
            {
                StageOpdracht stage = stageRep.FindBy(id);
-               //Bedrijf bedrijf = bedrijfRep.FindBy(stage.Bedrijfid);
                return View(stage);
            }
            [AllowAnonymous]
@@ -173,7 +130,7 @@ namespace projecten.Controllers
            {
                StageOpdracht stage = stageRep.FindBy(id);
                Student student = studentRep.FindBy(User.Identity.Name);
-               
+               AcademieJaar jaar = new AcademieJaar();
                if (stage.AantalStudenten == 0)
                {
                    
@@ -181,14 +138,84 @@ namespace projecten.Controllers
                else
                {
                    StageBegeleider beg = new StageBegeleider();
-                   beg.VoegOpdrachtAanBegeleidersToe(begrep.GetBegeleiders(), stage);
-                   student.AddStageOpdracht(stage);
-                   stage.AantalStudenten -= 1;
+                   if (student.Stageopdrachten.Any())
+                   {
+                       ICollection<StageOpdracht> lijst = student.Stageopdrachten.ToList();
+                       if (!lijst.Where(b => b.Academiejaar == stage.Academiejaar).Any())
+                       {
+                           beg.VoegOpdrachtAanBegeleidersToe(begrep.GetBegeleiders(), stage);
+                           student.AddStageOpdracht(stage);
+                           if (stage.Semester == "1")
+                           {
+                               student.BeginDatum = new DateTime(2013, 09, 01);
+                               student.EindeDatum = new DateTime(2013, 12, 20);
+                           }
+                           else if (stage.Semester == "2")
+                           {
+                               student.BeginDatum = new DateTime(2014, 01, 01);
+                               student.EindeDatum = new DateTime(2014, 06, 30);
+                           }
+                           else
+                           {
+                               student.BeginDatum = new DateTime(2013, 09, 01);
+                               student.EindeDatum = new DateTime(2014, 12, 20);
+                           }
+                           stage.AantalStudenten -= 1;
+                       }
+                       else
+                       {
+                           ModelState.AddModelError("CustomError","Je kan maar 1 opdracht per acadamiejaar innemen.");
+                           return View(stage);
+                       }
+                   }
+                   else
+                   {
+                       if (stage.Semester == "1")
+                       {
+                           student.BeginDatum = new DateTime(2013, 09, 01);
+                           student.EindeDatum = new DateTime(2013, 12, 20);
+                       }
+                       else if (stage.Semester == "2")
+                       {
+                           student.BeginDatum = new DateTime(2014, 01, 01);
+                           student.EindeDatum = new DateTime(2014, 06, 30);
+                       }
+                       else
+                       {
+                           student.BeginDatum = new DateTime(2013, 09, 01);
+                           student.EindeDatum = new DateTime(2014, 12, 20);
+                       }
+                       beg.VoegOpdrachtAanBegeleidersToe(begrep.GetBegeleiders(), stage);
+                       student.AddStageOpdracht(stage);
+                       stage.AantalStudenten -= 1;
+                   }
+                   
                }
                stageRep.Update(stage);
                stageRep.SaveChanges();
                return RedirectToAction("IngenomenStages","Student");
            }
+
+        public ActionResult Solicitatie(int id)
+        {
+            StageOpdracht stage = stageRep.FindBy(id);
+            return View(stage);
+        }
+
+        [HttpPost]
+        public ActionResult Solicitatie(int id, StageOpdracht stage)
+        {
+            if (ModelState.IsValid)
+            {
+                Student student = studentRep.FindBy(User.Identity.Name);
+                stage = stageRep.FindBy(id);
+                
+                student.Soliciteer(stage);
+                studentRep.SaveChanges();
+                return RedirectToAction("Stages");
+            }
+            return View(stage);
+        }
         
     }
 }

@@ -3,6 +3,7 @@
     BedrijfContext context = new BedrijfContext();
     StudentRepository rep = new StudentRepository(context);
 StageBegeleiderRepository begRep = new StageBegeleiderRepository(context);
+BedrijfRepository bedrijfRep = new BedrijfRepository(context); 
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -34,7 +35,7 @@ StageBegeleiderRepository begRep = new StageBegeleiderRepository(context);
                             <li>@Html.ActionLink("Home", "Index", "Home")
                                 
                             </li>
-                            <li>@Html.ActionLink("About", "About", "Home")
+                            <li>@Html.ActionLink("Info", "About", "Home")
                                 <ul>
                                     <li class="size">@Html.ActionLink("Projecten I","ProjectenI","Home")</li>
                                     <li>@Html.ActionLink("Projecten II","ProjectenII","Home")</li>
@@ -46,6 +47,7 @@ StageBegeleiderRepository begRep = new StageBegeleiderRepository(context);
                         <li>@Html.ActionLink("Contact", "Contact", "Home")
                         <ul>
                             <li>@Html.ActionLink("Contact bachelorproef", "ContactBachelor", "Home")</li>
+                            <li>@Html.ActionLink("Contact bachelorproef", "ContactProjectwerking", "Home")</li>
                         </ul>
 </li>
                          <li>@Html.ActionLink("De Bedrijven", "Bedrijven", "Home")</li>
@@ -67,7 +69,17 @@ StageBegeleiderRepository begRep = new StageBegeleiderRepository(context);
             <li class="size">@Html.ActionLink("Beschikbare opdrachten","StageOpdrachten","Begeleider")</li>
                             <li>@Html.ActionLink("Voorkeurstages","VoorkeurStages","Begeleider")</li>
                             <li>@Html.ActionLink("Studenten","Studenten","Begeleider")</li>
-                            <li>@Html.ActionLink("Ingenomen opdrachten","IngenomenOpdrachten","Begeleider")</li>
+                            <li>@Html.ActionLink("Uw goedgekeurde voorkeuren","IngenomenOpdrachten","Begeleider")</li>
+        </ul>
+    </li>    
+}
+@if (Request.IsAuthenticated && bedrijfRep.FindBy(User.Identity.Name) != null)
+{
+    <li>
+        <a href="#">Bedrijf</a>
+        <ul>
+            <li class="size">@Html.ActionLink("Mijn Stageopdrachten","StageOpdrachten","Bedrijf")</li>
+                            <li>@Html.ActionLink("Mijn Stagementoren","StageMentoren","Bedrijf")</li>
         </ul>
     </li>    
 }

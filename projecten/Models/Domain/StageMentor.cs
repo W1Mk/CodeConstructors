@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
-
-namespace projecten.Models.Domain
+﻿namespace projecten.Models.Domain
 {
     public class StageMentor
     {

@@ -1,18 +1,10 @@
-﻿
-using System.Net;
+﻿using System.Net;
 using System.Net.Mail;
 using projecten.Models;
 using projecten.Models.DAL;
 using projecten.Models.Domain;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Security;
-using System.Windows.Forms;
 
 namespace projecten.Controllers
 {
@@ -84,6 +76,16 @@ namespace projecten.Controllers
             return View(bedrijven);
         }
 
+        public ActionResult BedrijfsProfiel(int id)
+        {
+            if (BedrijfRep.FindBy(id) != null)
+            {
+                Bedrijf bedrijf = BedrijfRep.FindBy(id);
+                return View(bedrijf);
+            }
+            return View(new Bedrijf());
+        }
+
         public ActionResult ContactBachelor()
         {
             return View();
@@ -108,6 +110,36 @@ namespace projecten.Controllers
                 catch (Exception)
                 {
                     
+                    throw;
+                }
+            }
+            return View(model);
+        }
+
+        public ActionResult ContactProjectwerking()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ContactProjectwerking(ContactProjectModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    string subject = "Contact Bachelorproef " + model.Naam;
+                    string body = "Beste," + "\r\n\r\n" + "Student " + model.Naam + " " + model.Voornaam
+                                  + " had een vraag/opmerking over het project van " + model.Bedrijf +
+                                  " met als omschrijving: " + "\r\n\r\n" + model.Omschrijving + "\r\n\r\n" +
+                                  " Zijn/Haar vraag/opmerking was:" + "\r\n\r\n" + model.Vragen + "\r\n\r\n"
+                                  + "Vriendelijke groeten," + "\r\n" + "Het InternNet-Team.";
+                    sendMail("depauwniels@hotmail.com", subject, body);
+                    return RedirectToAction("Index");
+                }
+                catch (Exception)
+                {
+
                     throw;
                 }
             }

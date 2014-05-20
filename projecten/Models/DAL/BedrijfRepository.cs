@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
-using Ninject.Infrastructure.Language;
 using projecten.Models.Domain;
 
 namespace projecten.Models.DAL
@@ -50,26 +48,7 @@ namespace projecten.Models.DAL
         {
             context.Entry(bedrijf).State = EntityState.Modified;
         }
-        public IEnumerable<Bedrijf> FindAllByAdres(string adres)
-        {
-            bedrijven.ToList<Bedrijf>();
-            bedrijf.AddRange(bedrijven);
-            List<Bedrijf> bedrijfFilter = bedrijf.FindAll(s => s.adres==adres);
-           
-            return bedrijfFilter;
-        }
-        public List<Bedrijf> lijst()
-        {
-            List<Bedrijf> bedrijfslijst = new List<Bedrijf>();
-            bedrijfslijst.Add(new Bedrijf());
-            return bedrijfslijst;
-        }
-        public int FindId(string email)
-        {
-            Bedrijf tijdelijk = FindBy(email);
-
-            return tijdelijk.BedrijfId;
-        }
+       
         public Boolean FindEqual(string email)
         {
             Boolean value = true; ;
@@ -111,8 +90,8 @@ namespace projecten.Models.DAL
                 list = bedrijven.Where(b => b.Email.ToLower() == zoekopdracht.ToLower());
             else if (bedrijven.Where(b => b.adres.ToLower() == zoekopdracht.ToLower()).Any())
                 list = bedrijven.Where(b => b.adres.ToLower() == zoekopdracht.ToLower());
-            else if (bedrijven.Where(b => b.bedrijfsactiviteit.ToLower() == zoekopdracht.ToLower()).Any())
-                list = bedrijven.Where(b => b.bedrijfsactiviteit.ToLower() == zoekopdracht.ToLower());           
+            else if (bedrijven.Where(b => b.Bedrijfsactiviteit.ToLower() == zoekopdracht.ToLower()).Any())
+                list = bedrijven.Where(b => b.Bedrijfsactiviteit.ToLower() == zoekopdracht.ToLower());           
             else
             {
                 list = new List<Bedrijf>().AsQueryable();

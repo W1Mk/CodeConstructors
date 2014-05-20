@@ -1,21 +1,15 @@
-﻿@using System.Collections
-@using System.Collections.ObjectModel
-@using System.Configuration
-@using Microsoft.Ajax.Utilities
-@using MySql.Data.MySqlClient
-@using projecten.Models.DAL
+﻿@using projecten.Models.DAL
 @{
     ViewBag.Title = "Welkom";
-    BedrijfContext context = new BedrijfContext();
-    BedrijfRepository rep = new BedrijfRepository(context);
-    StageMentorRepository repository = new StageMentorRepository(context);
+    var context = new BedrijfContext();
+    var rep = new BedrijfRepository(context);
     var bedrijf = rep.FindBy(User.Identity.Name);
     
 }
 @section featured {
     <section class="featured">
         <div class="content-wrapper">
-            <hgroup class="title">
+            <hgroup class="subtitle">
                 <h1>@ViewBag.Title</h1>
 
             </hgroup>

@@ -1,34 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Web;
 
 namespace projecten.Models.Domain
 {
     public class Student
     {
-        //[Required, MaxLength(100)]
-        public string naam { get; set; }
-        //[Required, MaxLength(100)]
+        public string Naam { get; set; }
         public string Email { get; set; }
-        public string tweedeEmail { get; set; }
-       // [Required, MaxLength(100)]
-        public string wachtwoord { get; set; }
-        public string adres { get; set; }
-        public string gsm { get; set; }
-        public byte[] foto { get; set; }
-        public string keuzevak {get;set;}
-        //[Key]
+        public string TweedeEmail { get; set; }
+        public string Wachtwoord { get; set; }
+        public string Adres { get; set; }
+        public string Gsm { get; set; }
+        public byte[] Foto { get; set; }
+        public string Keuzevak {get;set;}
         public int Studentid { get; set; }
-        public int EersteAanmelding { get; set; }
+        public DateTime? BeginDatum { get; set; }
+        public DateTime? EindeDatum { get; set; }
+        public string StageContract { get; set; }
+        public virtual ICollection<StageOpdracht> Solicitaties { get; set; }  
         public virtual ICollection<StageOpdracht> Stageopdrachten { get; set; }
        
         public Student()
         {
             Stageopdrachten = new List<StageOpdracht>();
+            Solicitaties = new List<StageOpdracht>();
         }
 
+        public void Soliciteer(StageOpdracht opdracht)
+        {
+            Solicitaties.Add(opdracht);
+        }
+
+        public void VerwijderSolicitatie(StageOpdracht opdracht)
+        {
+            Solicitaties.Remove(opdracht);
+        }
         public void AddStageOpdracht(StageOpdracht stageopdracht)
         {
             Stageopdrachten.Add(stageopdracht);
@@ -48,11 +55,11 @@ namespace projecten.Models.Domain
 
         public void setUpdates(ProfielModel model)
         {
-            naam = model.naam;
-            tweedeEmail = model.tweedeEmail;
-            adres = model.adres;
-            gsm = model.gsm;
-            keuzevak = model.keuzevak;
+            Naam = model.Naam;
+            TweedeEmail = model.TweedeEmail;
+            Adres = model.Adres;
+            Gsm = model.Gsm;
+            Keuzevak = model.Keuzevak;
         }
         
     }

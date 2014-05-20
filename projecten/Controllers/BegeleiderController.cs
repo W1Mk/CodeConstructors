@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Security;
-using Ninject.Planning.Targets;
 using projecten.Models;
 using projecten.Models.DAL;
 using projecten.Models.Domain;
@@ -20,14 +15,11 @@ namespace projecten.Controllers
         public StudentRepository sturep = new StudentRepository(context);
         public StageOpdrachtRepository StageRep = new StageOpdrachtRepository(context);
         public BedrijfRepository BedrijfRep = new BedrijfRepository(context);
+
         public ActionResult Index()
         {
-            ViewBag.Message = "Index";
-
-
             return View();
         }
-
         public ActionResult Studenten()
         {
             var studenten = sturep.FindAll();
@@ -74,7 +66,6 @@ namespace projecten.Controllers
         {
             if (ModelState.IsValid)
             {
-                //stage = StageRep.FindBy(id);
                 if (rep.FindBy(User.Identity.Name) != null)
                 {
                     StageBegeleider begeleider = rep.FindBy(User.Identity.Name);
@@ -83,10 +74,9 @@ namespace projecten.Controllers
                 }
                 rep.SaveChanges();
                 StageRep.SaveChanges();
+                StageRep.Update(stage);
                 return RedirectToAction("StageOpdrachten");
             }
-            /*var viewmodel = new DeleteOpdracht();
-            viewmodel.Naam = opdracht.Naam;*/
             return View(stage);
         }
         [AllowAnonymous]
@@ -105,7 +95,6 @@ namespace projecten.Controllers
         {
            if (ModelState.IsValid)
             {
-                //stage = StageRep.FindBy(id);
                 if (rep.FindBy(User.Identity.Name) != null)
                 {
                     StageBegeleider begeleider = rep.FindBy(User.Identity.Name);
@@ -116,8 +105,6 @@ namespace projecten.Controllers
                 StageRep.SaveChanges();
                 return RedirectToAction("StageOpdrachten");
             }
-            /*var viewmodel = new DeleteOpdracht();
-            viewmodel.Naam = opdracht.Naam;*/
             return View(stage);
         }
         public ActionResult VoorkeurStages()
@@ -156,22 +143,16 @@ namespace projecten.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult ProfielWijzigen(StageBegeleiderModel model)
+        public ActionResult ProfielWijzigen(int id)
         {
-            try
-            {
+
                 if (rep.FindBy(User.Identity.Name) != null)
                 {
                     StageBegeleider begeleider = rep.FindBy(User.Identity.Name);
-                    model = new StageBegeleiderModel(begeleider);
+                    StageBegeleiderModel model = new StageBegeleiderModel(begeleider);
                     return View(model);
                 }
-            }
-            catch
-            {
-                
-            }
-            return View(model);
+            return View(new StageBegeleiderModel());
         }
 
         [HttpPost]
@@ -181,7 +162,6 @@ namespace projecten.Controllers
             MemoryStream target = new MemoryStream();
             if (ModelState.IsValid)
             {
-
                     if (rep.FindBy(User.Identity.Name) != null)
                     {
                         StageBegeleider begeleiderupdate = rep.FindBy(User.Identity.Name);
@@ -238,12 +218,12 @@ namespace projecten.Controllers
         public ActionResult IngenomenWijzigen(int id)
         {
             StageOpdracht opdracht = StageRep.FindBy(id);
-            IngenomenOpdrachtenModel model = new IngenomenOpdrachtenModel(opdracht);
+            BegIngenomenOpdrachtenModel model = new BegIngenomenOpdrachtenModel(opdracht);
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult IngenomenWijzigen(int id, IngenomenOpdrachtenModel model)
+        public ActionResult IngenomenWijzigen(int id, BegIngenomenOpdrachtenModel model)
         {
             StageOpdracht opdracht = StageRep.FindBy(id);
             if (ModelState.IsValid)
@@ -257,10 +237,15 @@ namespace projecten.Controllers
 
         public ActionResult IngenomenOpdrachten()
         {
+            StageBegeleider beg = rep.FindBy(User.Identity.Name);
             IEnumerable<StageOpdracht> lijst = new List<StageOpdracht>();
-            ICollection<StageOpdracht> lijst1 = new Collection<StageOpdracht>();
-                lijst = sturep.FindAllStudentOpdrachten(lijst1).AsEnumerable();
+            lijst = beg.VoorkeurDefinitief;
             return View(lijst);
+        }
+        public ActionResult StageOpdracht(int id)
+        {
+            StageOpdracht stage = StageRep.FindBy(id);
+            return View(stage);
         }
     }
 }

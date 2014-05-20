@@ -1,12 +1,11 @@
 ﻿@model projecten.Models.RegisterModel
 @{
     ViewBag.Title = "Registreer";
-    var foto = Model.Foto;
+    var foto = Model.Logo;
 }
 
-<hgroup class="title">
+<hgroup class="subtitle">
     <h1>@ViewBag.Title</h1>
-  @*  <h2>Maak een niewe account.</h2> *@
 </hgroup>
 
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new {enctype="multipart/form-data"})) {
@@ -29,8 +28,8 @@
                 @Html.TextBoxFor(m => m.Url)
             </li>
             <li>
-                @Html.LabelFor(m => m.email)
-                @Html.TextBoxFor(m => m.email)
+                @Html.LabelFor(m => m.Email)
+                @Html.TextBoxFor(m => m.Email)
             </li>
                 <li>
                 @Html.LabelFor(m => m.Telefoon)
@@ -65,13 +64,11 @@
                    2))
             </li>
                 <li class="h3">
-                    @Html.Label("foto:")
+                    @Html.LabelFor(m => Model.Logo)
                 </li>
                 <li>
                     <img alt="" width="300" height="200" src="data:image/jpeg;base64,@foto" /> <input type="file" name="image" />
                 </li> 
-
-
         </ol>
         <input type="submit" value="Registreer" />
     </fieldset>

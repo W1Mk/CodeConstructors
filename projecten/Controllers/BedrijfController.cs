@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using System.Web.Security;
 using projecten.Models;
@@ -22,22 +17,17 @@ namespace projecten.Controllers
         private StageOpdrachtRepository StageRep = new StageOpdrachtRepository(context);
         private StageMentorRepository MentorRep = new StageMentorRepository(context);
 
-        public ActionResult Index()
-        {
-            return View("Index");
-        }
-
         public ActionResult StageOpdrachten()
         {
-             return View();
+            IEnumerable<StageOpdracht> lijst = BedrijfRep.FindBy(User.Identity.Name).stages;
+             return View(lijst);
         }
         [AllowAnonymous]
         public ActionResult StageOpdrachtToevoegen()
         {         
             return View();
         }
-
-        
+    
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -49,7 +39,9 @@ namespace projecten.Controllers
                 try
                 {
                     string subject = "Toegevoegde opdracht";
-                    string body = "De opdracht werd succesvol toegevoegd.";
+                    string body = "Beste," + "\r\n\r\n" + "De opdracht werd succesvol toegevoegd." + "\r\n" +
+                                  "U kan deze bekijken, verwijderen en wijzigen op onze site." +
+                                  "\r\n\r\n" + "Vriendelijke groeten," + "\r\n" + "Het InternNet-Team.";
 
                     if (BedrijfRep.FindBy((User.Identity.Name)) != null)
                     {
@@ -108,12 +100,17 @@ namespace projecten.Controllers
             {
                 try
                 {
+                    string subject = "Gewijzigde opdracht";
+                    string body = "Beste," + "\r\n\r\n" + "Uw wijzigingen aan de opdracht zijn succesvol doorgevoerd." + "\r\n" +
+                                  "U kan deze bekijken, verwijderen en wijzigen op onze site." +
+                                  "\r\n\r\n" + "Vriendelijke groeten," + "\r\n" + "Het InternNet-Team.";
                     if (StageRep.FindBy(id) != null)
                     {
                         StageOpdracht opdrachtupdate = StageRep.FindBy(id);
                         opdrachtupdate.setUpdates(stage);
                     }
                     StageRep.SaveChanges();
+                    sendMail(User.Identity.Name, subject, body);
                     return RedirectToAction("StageOpdrachten", "Bedrijf");
                 }
                 catch (MembershipCreateUserException e)
@@ -148,6 +145,9 @@ namespace projecten.Controllers
             //StageOpdracht opdracht = StageRep.FindBy(id);
             if (ModelState.IsValid)
             {
+                string subject = "Verwijderde opdracht";
+                string body = "Beste," + "\r\n\r\n" + "De opdracht met naam " + stage.Naam + " is succesvol verwijderd" + "\r\n" +
+                              "\r\n\r\n" + "Vriendelijke groeten," + "\r\n" + "Het InternNet-Team.";
                 //stage = StageRep.FindBy(id);
                 if (BedrijfRep.FindBy(User.Identity.Name) != null)
                 {
@@ -156,6 +156,7 @@ namespace projecten.Controllers
                 }
                 BedrijfRep.SaveChanges();
                 StageRep.SaveChanges();
+                sendMail(User.Identity.Name, subject, body);
                 return RedirectToAction("StageOpdrachten");
             }
             /*var viewmodel = new DeleteOpdracht();
@@ -180,15 +181,20 @@ namespace projecten.Controllers
             {
                 try
                 {
+                    string subject = "Toegevoegde stagementor";
+                    string body = "";
                     if (BedrijfRep.FindBy(User.Identity.Name) != null)
                     {
                         Bedrijf bedrijf = BedrijfRep.FindBy(User.Identity.Name);
                         StageMentor mentor = new StageMentor(model);
                         bedrijf.AddStageMentor(mentor);
+                        body = "Beste," + "\r\n\r\n" + "Er is een niewe stagementor toegevoegd bij bedrijf "
+                                   + bedrijf.Bedrijfsnaam +"."+ "\r\n" + "Deze heeft als naam " + mentor.Naam + "." +
+                                  "\r\n\r\n" + "Vriendelijke groeten," + "\r\n" + "Het InternNet-Team.";
                     }
                     BedrijfRep.SaveChanges();
                     MentorRep.SaveChanges();
-
+                    sendMail("depauwniels@hotmail.com", subject, body);
                     return RedirectToAction("StageMentoren", "Bedrijf");
                 }
                 catch (MembershipCreateUserException e)
@@ -221,14 +227,20 @@ namespace projecten.Controllers
         {
             if (ModelState.IsValid)
             {
+                string subject = "Verwijderde stagementor";
+                string body = "";
                 //mentor = MentorRep.FindBy(id);
                 if (BedrijfRep.FindBy(User.Identity.Name) != null)
                 {
                     Bedrijf bedrijf = BedrijfRep.FindBy(User.Identity.Name);
                     MentorRep.Delete(bedrijf.DeleteStageMentor(id));
+                    body = "Beste," + "\r\n\r\n" + "Bedrijf "
+                                   + bedrijf.Bedrijfsnaam + " heeft stagementor "+ mentor.Naam + " verwijderd." + "\r\n" +
+                                  "\r\n\r\n" + "Vriendelijke groeten," + "\r\n" + "Het InternNet-Team.";
                 }
                 BedrijfRep.SaveChanges();
                 MentorRep.SaveChanges();
+                sendMail("depauwniels@hotmail.com", subject, body);
                 return RedirectToAction("StageMentoren");
             }
             return View(mentor);

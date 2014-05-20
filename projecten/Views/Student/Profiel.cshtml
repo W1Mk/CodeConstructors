@@ -7,12 +7,12 @@
     @Html.AntiForgeryToken()
    
     
-    var adres = Model.adres;
-    var gsm = Model.gsm;
-    var keuzevak = Model.keuzevak;
-    var naam = Model.naam;
-    var tweedeEmail = Model.tweedeEmail;
-    var foto = Model.foto;
+    var adres = Model.Adres;
+    var gsm = Model.Gsm;
+    var keuzevak = Model.Keuzevak;
+    var naam = Model.Naam;
+    var tweedeEmail = Model.TweedeEmail;
+    var foto = Model.Foto;
    
     <script>
         function textboxButton()
@@ -67,26 +67,26 @@
             <ol>
                 <li>
                     @Html.Label("adres:")
-                    @adres  <input type="Button" style="background-image: url('../Images/refresh-button.png');background-size:cover;border-radius:20px;" onclick ="textboxButton()" value="     " /><div id="t1" style="visibility:hidden">@Html.TextBoxFor(m=>m.adres)</div>
+                    @adres  <input type="Button" style="background-image: url('../Images/refresh-button.png');background-size:cover;border-radius:20px;" onclick ="textboxButton()" value="     " /><div id="t1" style="visibility:hidden">@Html.TextBoxFor(m=>m.Adres)</div>
                 </li>
                 <li>
                     @Html.Label("gsm:")
-                    @gsm  <input type="Button" style="background-image: url('../Images/refresh-button.png'); background-size: cover; border-radius: 20px;" onclick="textboxButton2()" value="     " /><div id="t2" style="visibility:hidden">@Html.TextBoxFor(m => m.gsm)</div>
+                    @gsm  <input type="Button" style="background-image: url('../Images/refresh-button.png'); background-size: cover; border-radius: 20px;" onclick="textboxButton2()" value="     " /><div id="t2" style="visibility:hidden">@Html.TextBoxFor(m => m.Gsm)</div>
 
                 </li>
                 <li>
                     @Html.Label("keuzevak:")
-                    @keuzevak  <input type="Button" style="background-image: url('../Images/refresh-button.png'); background-size: cover; border-radius: 20px;" onclick="textboxButton3()" value="     " /><div id="t3" style="visibility:hidden">@Html.TextBoxFor(m => m.keuzevak)</div>
+                    @keuzevak  <input type="Button" style="background-image: url('../Images/refresh-button.png'); background-size: cover; border-radius: 20px;" onclick="textboxButton3()" value="     " /><div id="t3" style="visibility:hidden">@Html.TextBoxFor(m => m.Keuzevak)</div>
 
                 </li>
                 <li>
                     @Html.Label("naam:")
-                    @naam  <input type="Button" style="background-image: url('../Images/refresh-button.png'); background-size: cover; border-radius: 20px;" onclick="textboxButton4()" value="     " /><div id="t4" style="visibility:hidden">@Html.TextBoxFor(m => m.naam)</div>
+                    @naam  <input type="Button" style="background-image: url('../Images/refresh-button.png'); background-size: cover; border-radius: 20px;" onclick="textboxButton4()" value="     " /><div id="t4" style="visibility:hidden">@Html.TextBoxFor(m => m.Naam)</div>
 
                 </li>
                 <li>
                     @Html.Label("thuis Email:")
-                    @tweedeEmail  <input type="Button" style="background-image: url('../Images/refresh-button.png'); background-size: cover; border-radius: 20px;" onclick="textboxButton5()" value="     " /><div id="t5" style="visibility:hidden">@Html.TextBoxFor(m => m.tweedeEmail)</div>
+                    @tweedeEmail  <input type="Button" style="background-image: url('../Images/refresh-button.png'); background-size: cover; border-radius: 20px;" onclick="textboxButton5()" value="     " /><div id="t5" style="visibility:hidden">@Html.TextBoxFor(m => m.TweedeEmail)</div>
 
                 </li>
 
@@ -96,16 +96,16 @@
                    
                 </li>
             </ol>
-            <input type="submit" value="verander profiel"/>
+            <input class="linkbutton" type="submit" value="verander profiel"/>
 
         </fieldset>
     </div>
     
-    <div style="float: right;">
+    @*<div style="float: right;">
         @Html.Partial("ProfielWachtwoord")
 
 
-    </div>
+    </div>*@
 
 
 }

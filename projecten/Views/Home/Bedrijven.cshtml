@@ -1,15 +1,6 @@
-﻿@using System.Collections
-@using System.Collections.ObjectModel
-@using System.Configuration
-@using Microsoft.Ajax.Utilities
-@using MySql.Data.MySqlClient
-@using projecten.Models.DAL
-@model IEnumerable<projecten.Models.Domain.Bedrijf>
+﻿@model IEnumerable<projecten.Models.Domain.Bedrijf>
 @{
     ViewBag.Title = "Bedrijven";
-    BedrijfContext context = new BedrijfContext();
-    BedrijfRepository rep = new BedrijfRepository(context);
-    var bedrijven = rep.FindAll();
 }
 @*<div class="subheader">
     @using(Html.BeginForm("Bedrijven", "Begeleider"))
@@ -36,7 +27,7 @@
 @if (!Model.Any())
     {
         <tr>
-            <td colspan="4" align="center">Er zijn geen bedrijven gevonden!</td>
+            <td colspan="4" text-align="center">Er zijn geen bedrijven gevonden!</td>
         </tr>
     }
 @foreach (var item in Model)

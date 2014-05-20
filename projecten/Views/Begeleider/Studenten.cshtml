@@ -1,39 +1,25 @@
-﻿@using System.Collections
-@using System.Collections.ObjectModel
-@using System.Configuration
-@using Microsoft.Ajax.Utilities
-@using MySql.Data.MySqlClient
-@using projecten.Models
-@using projecten.Models.DAL
-@model IEnumerable<projecten.Models.Domain.Student>
+﻿@model IEnumerable<projecten.Models.Domain.Student>
 @{
-    ViewBag.Title = "Studenten";
-    BedrijfContext context = new BedrijfContext();
-    StudentRepository repository = new StudentRepository(context);
-    var opdrachten = repository.FindAll();
+    ViewBag.Title = "De Studenten";
 }
 
-<div class="subheader">
-    @Html.ActionLink("Beschikbare stageopdrachten", "StageOpdrachten", "Begeleider")
-    @Html.ActionLink("Alle studenten", "Studenten", "Begeleider")
-</div>
 
 <div class="subheader">
     @using(Html.BeginForm("Studenten", "Begeleider"))
 {
    <h4>Zoek op naam, email, adres of keuzevak:</h4>
     <input type="text" name="zoekopdracht"/>
-    <input type="submit" value="Filter" />
+    <input class="linkbutton" type="submit" value="Filter" />
 }
 </div>
-<hgroup class="title">
+<hgroup class="subtitle">
     <h1>@ViewBag.Title</h1>
 </hgroup>
 
 <table>
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.naam)
+        <th class="firstth">
+            @Html.DisplayNameFor(model => model.Naam)
 
         </th>
 
@@ -42,19 +28,19 @@
 
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.tweedeEmail)
+            @Html.DisplayNameFor(model => model.TweedeEmail)
 
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.adres)
+            @Html.DisplayNameFor(model => model.Adres)
 
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.gsm)
+            @Html.DisplayNameFor(model => model.Gsm)
 
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.keuzevak)
+            @Html.DisplayNameFor(model => model.Keuzevak)
         </th>
         <th></th>
     </tr>
@@ -68,28 +54,24 @@
     {
         <tr>
             <td>
-                @Html.ActionLink(item.naam, "ProfielStudent", new { id = item.Studentid})
+                @Html.ActionLink(item.Naam, "ProfielStudent", new { id = item.Studentid})
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.tweedeEmail)
+                @Html.DisplayFor(modelItem => item.TweedeEmail)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.adres)
+                @Html.DisplayFor(modelItem => item.Adres)
             </td>
             
             <td>
-                @Html.DisplayFor(modelItem => item.gsm)
+                @Html.DisplayFor(modelItem => item.Gsm)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.keuzevak)
+                @Html.DisplayFor(modelItem => item.Keuzevak)
             </td>
-           @* <td>
-                @Html.ActionLink("Wijzigen", "StageOpdrachtWijzigen", new { id = item.StageOpdrachtid}) |
-                @Html.ActionLink("Verwijderen", "Delete", new {id = item.StageOpdrachtid})
-            </td>*@
         </tr>
     }
 

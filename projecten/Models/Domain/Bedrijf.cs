@@ -1,37 +1,24 @@
-﻿using System;
+﻿
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Web;
 
 namespace projecten.Models.Domain
 {
     public class Bedrijf
     {
-        //[Key]
         public int BedrijfId { get; set; }
-        //[Required, MaxLength(50)]
         public string Bedrijfsnaam { get; set; }
-       // [Required, MaxLength(50)]
         public string Email { get; set; }
-       // [MaxLength(20)]
         public string telefoon { get; set; }
-       // [Required, MaxLength(50)]
         public string adres { get; set; }
-       // [MaxLength(50)]
         public string url { get; set; }
-       // [Required, MaxLength(20)]
         public string Wachtwoord { get; set; }
-       // [Required, MaxLength(20)]
-        public string bedrijfsactiviteit { get; set; }
-       // [Required, MaxLength(20)]
-        public string bereikbaarheid { get; set; }
+        public string Bedrijfsactiviteit { get; set; }
+        public string Bereikbaarheid { get; set; }
         public byte[] Foto { get; set; }
         public string FotoString { get; set; }
         public virtual ICollection<StageOpdracht> stages { get; set; }
         public virtual ICollection<StageMentor> mentors { get; set; }
-
 
         public Bedrijf()
         {

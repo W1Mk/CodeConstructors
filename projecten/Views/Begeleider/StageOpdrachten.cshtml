@@ -4,28 +4,22 @@
 }
 
 <div class="subheader">
-    @Html.ActionLink("Beschikbare stageopdrachten", "StageOpdrachten", "Begeleider")
-    @Html.ActionLink("Alle studenten", "Studenten", "Begeleider")
-</div>
-
-<div class="subheader">
     @using(Html.BeginForm("StageOpdrachten", "Begeleider"))
 {
     <h4>Zoek op naam of specialisatie:</h4>
     
     <input type="text" name="zoekopdracht"/>
-    <input type="submit" value="Filter" />
+    <input class="linkbutton" type="submit" value="Filter" />
 }
-    
-    
+
 </div>
-<hgroup class="title">
+<hgroup class="subtitle">
     <h1>@ViewBag.Title</h1>
 </hgroup>
 
 <table>
     <tr>
-        <th>
+        <th class ="firstth">
             @Html.DisplayNameFor(model => model.Naam)
 
         </th>
@@ -43,11 +37,11 @@
 
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.AantalStudenten)
+            @Html.DisplayName("#Studenten")
 
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Status)
+            @Html.DisplayNameFor(model => model.Academiejaar)
         </th>
         <th>
             @Html.DisplayName("Studenten")
@@ -66,33 +60,32 @@
     @foreach (var item in Model)
     {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Naam)
+            <td class="firsttd">
+               @Html.ActionLink(item.Naam,"StageOpdracht", new{id = item.StageOpdrachtid}) 
             </td>
-            <td>
+            <td  class="omschrijving">
                 @Html.DisplayFor(modelItem => item.Omschrijving)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Semester)
             </td>
-            <td>
+            <td  class="omschrijving">
                 @Html.DisplayFor(modelItem => item.Specialisatie)
             </td>
            
-                <td>
-                    @Html.DisplayFor(modelItem => item.AantalStudenten)
-                </td>
-            
             <td>
-                @Html.DisplayFor(modelItem => item.Status)
+                @Html.DisplayFor(modelItem => item.AantalStudenten)
             </td>
             <td>
-                @Html.DropDownListFor(modelItem => item.studenten,item.GetstStudents(item))
+                @Html.DisplayFor(modelItem => item.Academiejaar)
+            </td>
+            <td>
+                @Html.DropDownListFor(modelItem => item.Studenten,item.GetstStudents(item))
             </td>
 
     <td>
-        @Html.ActionLink("Voorkeur instellen", "VoorkeurOpdracht", new {id = item.StageOpdrachtid}, new {@class = "linkbutton"}) |
-        @Html.ActionLink("Opdracht wijzigen", "IngenomenWijzigen", new {id = item.StageOpdrachtid}, new {@class = "linkbutton"})
+        @Html.ActionLink("Voorkeur", "VoorkeurOpdracht", new {id = item.StageOpdrachtid}, new {@class = "linkbutton"}) |
+        @Html.ActionLink("wijzigen", "IngenomenWijzigen", new {id = item.StageOpdrachtid}, new {@class = "linkbutton"})
 
     </td>
         </tr>

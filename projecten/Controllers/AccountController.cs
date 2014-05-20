@@ -1,25 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Security.AccessControl;
-using System.Security.Cryptography;
-using System.Text;
 using System.Transactions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
 using projecten.Models;
 using System.Net.Mail;
-using WebMatrix.Data;
-using System.Data.SqlClient;
-using System.Configuration;
-using MySql.Data.MySqlClient;
-
 using projecten.Models.DAL;
 using projecten.Models.Domain;
 using System.Security.Principal;
@@ -70,7 +60,7 @@ namespace projecten.Controllers
             }
             if (StudentRep.FindBy(model.Email) == null)
             {
-                student.wachtwoord = PasswordHash.CreateHash("fout");
+                student.Wachtwoord = PasswordHash.CreateHash("fout");
             }
             else
             {
@@ -89,43 +79,51 @@ namespace projecten.Controllers
                 {
                     Wachtwoord = BedrijfRep.FindBy(model.Email).Wachtwoord;
                 }*/
+
+
+
                 if (ModelState.IsValid && PasswordHash.ValidatePassword(model.Wachtwoord, bedrijf.Wachtwoord))
                 {
                     string rol = "Bedrijf";
-                    FormsAuthenticationTicket authTicket = new FormsAuthenticationTicket(1, model.Email, DateTime.Now, DateTime.Now.AddMinutes(20), false, rol, "/");
+                    FormsAuthenticationTicket authTicket = new FormsAuthenticationTicket(1, model.Email, DateTime.Now,
+                        DateTime.Now.AddMinutes(20), false, rol, "/");
                     FormsAuthentication.SetAuthCookie(model.Email, false);
-                    HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, FormsAuthentication.Encrypt(authTicket));
+                    HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName,
+                        FormsAuthentication.Encrypt(authTicket));
                     Response.Cookies.Add(cookie);
-                    HttpContext.User = new GenericPrincipal(new GenericIdentity(model.Email), new string[] { rol });
+                    HttpContext.User = new GenericPrincipal(new GenericIdentity(model.Email), new string[] {rol});
 
                     //return RedirectToLocal(returnUrl);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Stageopdrachten", "Bedrijf");
                 }
-                else if (ModelState.IsValid && PasswordHash.ValidatePassword(model.Wachtwoord, student.wachtwoord))
+                else if (ModelState.IsValid && PasswordHash.ValidatePassword(model.Wachtwoord, student.Wachtwoord))
                 {
                     string rol = "Student";
-                    FormsAuthenticationTicket authTicket = new FormsAuthenticationTicket(1, model.Email, DateTime.Now, DateTime.Now.AddMinutes(20), false, rol, "/");
+                    FormsAuthenticationTicket authTicket = new FormsAuthenticationTicket(1, model.Email, DateTime.Now,
+                        DateTime.Now.AddMinutes(20), false, rol, "/");
                     FormsAuthentication.SetAuthCookie(model.Email, false);
-                    HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, FormsAuthentication.Encrypt(authTicket));
+                    HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName,
+                        FormsAuthentication.Encrypt(authTicket));
                     Response.Cookies.Add(cookie);
-                    HttpContext.User = new GenericPrincipal(new GenericIdentity(model.Email), new string[] { rol });
+                    HttpContext.User = new GenericPrincipal(new GenericIdentity(model.Email), new string[] {rol});
 
                     //return RedirectToLocal(returnUrl);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Stages", "Student");
                 }
                 else if (ModelState.IsValid && PasswordHash.ValidatePassword(model.Wachtwoord, begeleider.Wachtwoord))
                 {
                     string rol = "StageBegeleider";
-                    FormsAuthenticationTicket authTicket = new FormsAuthenticationTicket(1, model.Email, DateTime.Now, DateTime.Now.AddMinutes(20), false, rol, "/");
+                    FormsAuthenticationTicket authTicket = new FormsAuthenticationTicket(1, model.Email, DateTime.Now,
+                        DateTime.Now.AddMinutes(20), false, rol, "/");
                     FormsAuthentication.SetAuthCookie(model.Email, false);
-                    HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, FormsAuthentication.Encrypt(authTicket));
+                    HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName,
+                        FormsAuthentication.Encrypt(authTicket));
                     Response.Cookies.Add(cookie);
-                    HttpContext.User = new GenericPrincipal(new GenericIdentity(model.Email), new string[] { rol });
+                    HttpContext.User = new GenericPrincipal(new GenericIdentity(model.Email), new string[] {rol});
 
                     //return RedirectToLocal(returnUrl);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("StageOpdrachten", "Begeleider");
                 }
-            
             
             // If we got this far, something failed, redisplay form
             ModelState.AddModelError(string.Empty, "Het email of wachtwoord is incorrect.");
@@ -158,15 +156,15 @@ namespace projecten.Controllers
                 }
                 if (ModelState.IsValid && model.Wachtwoord == model.Wachtwoordbevestigd && student != null)
                 {
-                    student.wachtwoord = PasswordHash.CreateHash(model.Wachtwoord);
-                    student.EersteAanmelding = 1;
+                    student.Wachtwoord = PasswordHash.CreateHash(model.Wachtwoord);
+
                     StudentRep.SaveChanges();
                     return RedirectToAction("Login");
                 }
                 if (ModelState.IsValid && model.Wachtwoord == model.Wachtwoordbevestigd && begeleider != null)
                 {
                     begeleider.Wachtwoord = PasswordHash.CreateHash(model.Wachtwoord);
-                    begeleider.EersteAanmelding = 1;
+
                     StageBegRep.SaveChanges();
                     return RedirectToAction("Login");
                 }
@@ -228,8 +226,8 @@ namespace projecten.Controllers
                         + "\r\n" + "U kan dit aanpassen bij uw eerste loging door op de link onder het loginformulier te klikken."
                         + "\r\n\r\n" + "Bedankt voor uw registratie," + "\r\n" +"Het InternNet-Team";
 
-                    Bedrijf bedrijf = new Bedrijf { Bedrijfsnaam = model.BedrijfsNaam, adres = model.Adres, url = model.Url, Email = model.email, telefoon = model.Telefoon, Wachtwoord = model.Wachtwoord, bedrijfsactiviteit = model.BedrijfsActiviteit, bereikbaarheid = model.Bereikbaarheid};
-                    if (!BedrijfRep.FindEqual(model.email))
+                    Bedrijf bedrijf = new Bedrijf { Bedrijfsnaam = model.BedrijfsNaam, adres = model.Adres, url = model.Url, Email = model.Email, telefoon = model.Telefoon, Wachtwoord = model.Wachtwoord, Bedrijfsactiviteit = model.BedrijfsActiviteit, Bereikbaarheid = model.Bereikbaarheid};
+                    if (!BedrijfRep.FindEqual(model.Email))
                     {
                         bedrijf.Wachtwoord = PasswordHash.CreateHash(model.Wachtwoord);
                         byte[] arr = target.ToArray();
@@ -239,7 +237,7 @@ namespace projecten.Controllers
 
                         arr = target.ToArray();
                         bedrijf.Foto = arr;
-                        model.Foto = Convert.ToBase64String(arr);
+                        model.Logo = Convert.ToBase64String(arr);
                     }
                         BedrijfRep.Add(bedrijf);
                     }
@@ -249,7 +247,7 @@ namespace projecten.Controllers
                     }
                     target.Close();
                     BedrijfRep.SaveChanges();
-                    sendMail(model.email,subject, body);
+                    sendMail(model.Email,subject, body);
                     var client = new SmtpClient("smtp.gmail.com", 587)
                     {
                         Credentials = new NetworkCredential("nielsdepauw94@gmail.com", "Yankee12"),
@@ -466,89 +464,8 @@ namespace projecten.Controllers
             ViewBag.ShowRemoveButton = externalLogins.Count > 1 || OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
             return PartialView("_RemoveExternalLoginsPartial", externalLogins);
         }
-
-        public ActionResult StageOpdrachten()
-        {
-            return View();
-        }
-        [AllowAnonymous]
-        public ActionResult SelectAccount(string returnUrl)
-        {
-            ViewBag.Message = "SelectAccount";
-            return View();
-        }
-        [AllowAnonymous]
-        public ActionResult RegistreerSelectAccount(string returnUrl)
-        {
-            ViewBag.Message = "SelectAccount";
-            return View();
-        }
-       
-
-      
-       
-        [AllowAnonymous]
-        public ActionResult LoginStudent()
-        {
         
-            ViewBag.Message = "LoginStudent";
-            return View();
 
-        }
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public ActionResult LoginStudent(LoginStudentModel model, string returnUrl)
-        {
-            
-            try{
-                var Wachtwoord = StudentRep.FindBy(model.Email).wachtwoord;
-
-
-
-                if (ModelState.IsValid && model.Wachtwoord == Wachtwoord)
-            {
-                string rol = "Student";
-                FormsAuthenticationTicket authTicket = new FormsAuthenticationTicket(1, model.Email, DateTime.Now, DateTime.Now.AddMinutes(20), false, rol, "/");
-                FormsAuthentication.SetAuthCookie(model.Email, false);
-                HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, FormsAuthentication.Encrypt(authTicket));
-                Response.Cookies.Add(cookie);
-                HttpContext.User = new GenericPrincipal(new GenericIdentity(model.Email), new string[] { rol });
-                var test = StudentRep.FindBy(model.Email).EersteAanmelding;
-                if (StudentRep.FindBy(model.Email).EersteAanmelding == 1)
-                {
-                    Student student = StudentRep.FindBy(model.Email);
-                    student.EersteAanmelding = 0;
-                    StudentRep.Update(student);
-                    StudentRep.SaveChanges();
-                    return RedirectToAction("Profiel","Student");
-                }
-                
-                return RedirectToLocal(returnUrl);
-
-            }
-            }
-
-            catch
-            {
-
-            }
-         
-            ModelState.AddModelError("", "The user name or password provided is incorrect.");
-            return View(model);
-        }
-        [AllowAnonymous]
-        public ActionResult WachtwoordVeranderen()
-        {
-            return View();
-        }
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public ActionResult WachtwoordVeranderen(WachtwoordVeranderenModel model)
-        {          
-                    return RedirectToAction("Profiel", "Student");      
-        }
          
        
        

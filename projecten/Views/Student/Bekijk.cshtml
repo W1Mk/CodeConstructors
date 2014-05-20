@@ -1,13 +1,11 @@
 ﻿@model projecten.Models.Domain.StageOpdracht
     @Html.AntiForgeryToken()
 
-
-
-
     <div style="float: none;">
         <fieldset>
             <h3>Profiel</h3>
             <legend>Profiel</legend>
+@Html.ValidationMessage("CustomError")
             <ol>
                 <li>
                     @Html.Label("bedrijfsnaam:")
@@ -43,7 +41,7 @@
 @using (Html.BeginForm("Bekijk", "Student",FormMethod.Post)) {
     var item = Model;
      <input type="hidden" id="@item.StageOpdrachtid" value="@item.StageOpdrachtid" name="id" />
-            <input type="submit" value="stage innemen" />
+            <input class="linkbutton" type="submit" value="stage innemen" />
 }
         </fieldset>
     </div>

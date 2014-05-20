@@ -1,16 +1,10 @@
-﻿@using System.Collections
-@using System.Collections.ObjectModel
-@using System.Configuration
-@using Microsoft.Ajax.Utilities
-@using MySql.Data.MySqlClient
-@using projecten.Models.DAL
-@model projecten.Models.Domain.Student
+﻿@model projecten.Models.Domain.Student
 @{
-    ViewBag.Title = "Stagebegeleider";
-    var foto = Model.foto;
+    ViewBag.Title = "Profiel student";
+    var foto = Model.Foto;
 }
 
-<hgroup class="title">
+<hgroup class="subtitle">
     <h1>@ViewBag.Title</h1>
 </hgroup>
 @using (Html.BeginForm())
@@ -22,11 +16,11 @@
             <legend>Profiel</legend>
             <ol>
                 <li class="h3">
-                    @Html.DisplayNameFor(model => model.naam)
+                    @Html.DisplayNameFor(model => model.Naam)
 
                 </li>
                 <li>
-                    @Html.DisplayFor(model => model.naam)
+                    @Html.DisplayFor(model => model.Naam)
 
                 </li>
                 <li>
@@ -42,47 +36,47 @@
 
                 </li>
                 <li class="h3">
-                    @Html.DisplayNameFor(model => model.tweedeEmail)
+                    @Html.DisplayNameFor(model => model.TweedeEmail)
                 </li>
                 <li>
-                    @Html.DisplayFor(model => model.tweedeEmail)
-                </li>
-                <li>
-
-                </li>
-                <li class="h3">
-                    @Html.DisplayNameFor(model => model.adres)
-                </li>
-                <li>
-                    @Html.DisplayFor(model => model.adres)
+                    @Html.DisplayFor(model => model.TweedeEmail)
                 </li>
                 <li>
 
                 </li>
                 <li class="h3">
-                    @Html.DisplayNameFor(model => model.gsm)
+                    @Html.DisplayNameFor(model => model.Adres)
                 </li>
                 <li>
-                    @Html.DisplayFor(model => model.gsm)
+                    @Html.DisplayFor(model => model.Adres)
                 </li>
                 <li>
 
                 </li>
                 <li class="h3">
-                    @Html.DisplayNameFor(model => model.keuzevak)
+                    @Html.DisplayNameFor(model => model.Gsm)
                 </li>
                 <li>
-                    @Html.DisplayFor(model => model.keuzevak)
+                    @Html.DisplayFor(model => model.Gsm)
+                </li>
+                <li>
+
                 </li>
                 <li class="h3">
-                    @Html.DisplayNameFor(model => model.foto)
+                    @Html.DisplayNameFor(model => model.Keuzevak)
+                </li>
+                <li>
+                    @Html.DisplayFor(model => model.Keuzevak)
+                </li>
+                <li class="h3">
+                    @Html.DisplayNameFor(model => model.Foto)
                 </li>
                 <li>
                     <img alt="" width="300" height="200" src="data:image/jpeg;base64,@foto" /> 
                 </li>   
                     
             </ol>
-            <input type="submit" value="Wijzig" /> 
+            <input class="linkbutton" type="submit" value="Wijzig" /> 
         </fieldset>
     </div>
 }

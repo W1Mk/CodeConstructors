@@ -1,10 +1,4 @@
-﻿@using System.Collections
-@using System.Collections.ObjectModel
-@using System.Configuration
-@using Microsoft.Ajax.Utilities
-@using MySql.Data.MySqlClient
-@using projecten.Models.DAL
-@model projecten.Models.StageMentorWijzigenModel
+﻿@model projecten.Models.StageMentorWijzigenModel
 @{
     ViewBag.Title = "Stagementor wijzigigen";
 }
@@ -46,7 +40,7 @@
                 @Html.TextBoxFor(m => m.Aanspreektitel)
             </li>
         </ol>
-        <input type="submit" value="Wijzig" />
+        <input class="linkbutton" type="submit" value="Wijzig" />
     </fieldset>
 }
 @section Scripts {

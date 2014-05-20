@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
-using System.Web.WebPages;
 using projecten.Models.Domain;
 
 namespace projecten.Models.DAL
@@ -36,7 +33,7 @@ namespace projecten.Models.DAL
         }
         public IEnumerable<StageOpdracht> FindAll()
         {
-            return stageOpdrachten.OrderBy(b => b.Naam);
+            return stageOpdrachten.OrderBy(b => b.Naam).Where(b => b.Status == "Goedgekeurd" && b.AantalStudenten != 0);
 
         }
 
@@ -58,23 +55,21 @@ namespace projecten.Models.DAL
             stageOpdrachten.ToList<StageOpdracht>();
             stages.AddRange(stageOpdrachten);
              IEnumerable<StageOpdracht> stageFilter = stages;
-            if(stages.Where(b => b.Semester == zoekopdracht.AsInt()).Any())
-                stageFilter = stages.Where(b => b.Semester == zoekopdracht.AsInt());
+            if(stages.Where(b => b.Semester.ToLower() == zoekopdracht.ToLower()).Any())
+                stageFilter = stages.Where(b => b.Semester.ToLower() == zoekopdracht.ToLower());
             else if (stages.Where(b => b.Naam.ToLower() == zoekopdracht.ToLower()).Any())
                 stageFilter = stages.Where(b => b.Naam.ToLower() == zoekopdracht.ToLower());
             else if (stages.Where(b => b.Specialisatie.ToLower() == zoekopdracht.ToLower()).Any())
                 stageFilter = stages.Where(b => b.Specialisatie.ToLower() == zoekopdracht.ToLower());
             else if (zoekopdracht == "")
                 stageFilter = stages;
+            else if (stages.Where(b => b.Academiejaar.ToLower() == zoekopdracht.ToLower()).Any())
+                stageFilter = stages.Where(b => b.Academiejaar.ToLower() == zoekopdracht.ToLower());
             else
                 stageFilter = new List<StageOpdracht>();
             int i = stageFilter.Count();
             return stageFilter;
         }
-        /*public IQueryable<StageOpdracht> FindAll(Bedrijf bedrijf)
-        {        
-            return stageOpdrachten.OrderBy(b => b.Naam).Where(b => b.Bedrijf.Email == bedrijf.Email);
-        }*/
 
         public IEnumerable<String> FindAllNamen()
         {

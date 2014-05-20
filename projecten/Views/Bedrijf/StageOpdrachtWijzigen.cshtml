@@ -1,22 +1,17 @@
-﻿@using System.Collections
-@using System.Collections.ObjectModel
-@using System.Configuration
-@using Microsoft.Ajax.Utilities
-@using MySql.Data.MySqlClient
-@using projecten.Models.DAL
+﻿@using projecten.Models.DAL
 @model projecten.Models.StageOpdrachtToevoegenModel
 @{
     ViewBag.Title = "StageOpdracht wijzigen";
-    BedrijfContext context = new BedrijfContext();
-    BedrijfRepository rep = new BedrijfRepository(context);
-    StageMentorRepository repository = new StageMentorRepository(context);
+    var context = new BedrijfContext();
+    var rep = new BedrijfRepository(context);
+    var acrep = new AcademieJaarRepository(context);
     var bedrijf = rep.FindBy(User.Identity.Name);
     var mentoren = rep.FindAllMentors(bedrijf);
     var selectItems = new SelectList(mentoren, "Naam", "Naam");
-
+    var items = new SelectList(acrep.FindAll(), "Academiejaar", "Academiejaar");
 }
 
-<h2>StageOpdracht Toevoegen</h2>
+<h2>StageOpdracht Wijzigen</h2>
 
 @using (Html.BeginForm())
 {
@@ -52,19 +47,30 @@
             </li>
             <li>
                 @Html.LabelFor(m => m.Semester)
-                @Html.RadioButtonFor(m => m.Semester, "1")1
-                @Html.RadioButtonFor(m => m.Semester, "2")2
+                @Html.DropDownListFor(model => model.Semester, new SelectList(
+                  new List<Object>{
+                       new { value ="1" , text = "1"  },
+                       new { value = "2" , text = "2" },
+                       new { value = "Beiden" , text = "Beiden"}                 
+                    },
+                  "value",
+                  "text",
+                   3))
             </li>
             <li>
                 @Html.LabelFor(m => m.Aantal)
                 @Html.TextBoxFor(m => m.Aantal)
             </li>
             <li>
+                @Html.LabelFor(m => m.Academiejaar) <p>(bv. "2013-2014")</p>
+                @Html.DropDownListFor(m => m.Academiejaar, items)
+            </li>
+            <li>
                 @Html.LabelFor(m => m.StageMentor)
                 @Html.DropDownListFor(m => m.StageMentor, selectItems)
             </li>
         </ol>
-        <input type="submit" value="Wijzig" />
+        <input class="linkbutton" type="submit" value="Wijzig" />
     </fieldset>
 }
 @section Scripts {

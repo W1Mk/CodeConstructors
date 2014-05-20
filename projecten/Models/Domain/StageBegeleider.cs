@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace projecten.Models.Domain
 {
@@ -17,7 +15,6 @@ namespace projecten.Models.Domain
         public string Wachtwoord { get; set; }
         public byte[] Foto { get; set; }
         public string FotoString { get; set; }
-        public int EersteAanmelding { get; set; }
         public virtual ICollection<StageOpdracht> Stages { get; set; }
         public virtual ICollection<StageOpdracht> Voorkeurstages { get; set; }
         public virtual ICollection<StageOpdracht> VoorkeurDefinitief { get; set; } 
@@ -53,7 +50,7 @@ namespace projecten.Models.Domain
             ICollection<StageOpdracht> lijst = new List<StageOpdracht>();
             for (int i = 0; i < Stages.Count(); i++)
             {
-                if (Stages.ElementAt(i).studenten.Any() && Stages.ElementAt(i).Status == "Goedgekeurd")
+                if (Stages.ElementAt(i).Studenten.Any() && Stages.ElementAt(i).Status == "goedgekeurd")
                 {
                     lijst.Add(Stages.ElementAt(i));
                 }

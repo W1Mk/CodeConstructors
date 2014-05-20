@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity.ModelConfiguration;
-using System.Linq;
-using System.Web;
+﻿using System.Data.Entity.ModelConfiguration;
 using projecten.Models.Domain;
 
 namespace projecten.Models.DAL.Mapper
@@ -17,7 +12,6 @@ namespace projecten.Models.DAL.Mapper
             ToTable("StageBegeleider");
             HasKey(t => t.Id);
             //properties
-            //Property(t => t.Bedrijf_idBedrijf).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             Property(t => t.Naam).IsOptional().HasMaxLength(50);
             Property(t => t.VoorNaam).IsRequired().HasMaxLength(50);
             Property(t => t.Email).IsRequired().HasMaxLength(50);
@@ -25,7 +19,6 @@ namespace projecten.Models.DAL.Mapper
             Property(t => t.Wachtwoord).IsRequired().HasMaxLength(100);
             Property(t => t.Telefoon).IsOptional().HasMaxLength(12);
             Property(t => t.Gsm).IsOptional().HasMaxLength(50);
-            Property(t => t.EersteAanmelding).IsRequired();
             Property(t => t.Foto).IsOptional().HasColumnType("LONGBLOB");
           
             //Relationships
@@ -36,7 +29,7 @@ namespace projecten.Models.DAL.Mapper
               .WillCascadeOnDelete(true);
 
             this.HasMany(t => t.Stages)
-                .WithMany(t => t.begeleiders)
+                .WithMany(t => t.Begeleiders)
                 .Map(m =>
                 {
                     m.MapLeftKey("begeleidersid");
@@ -44,17 +37,12 @@ namespace projecten.Models.DAL.Mapper
                 });
 
             this.HasMany(t => t.Voorkeurstages)
-               .WithMany(t => t.voorkeurbegeleiders)
+               .WithMany(t => t.Voorkeurbegeleiders)
                .Map(m =>
                {
-                   m.MapLeftKey("begeleidersid");
-                   m.MapRightKey("stageopdrachtid");
+                   m.MapLeftKey("begeleidersidV");
+                   m.MapRightKey("stageopdrachtidV");
                });
-
-            /* this.HasOptional(t => t.tweedeEmail)
-                .WithMany()
-                .Map(m => m.MapKey("Studentid"))
-                .WillCascadeOnDelete(true);*/
         }
     }
 }

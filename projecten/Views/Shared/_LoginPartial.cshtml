@@ -18,7 +18,7 @@
 else if (Request.IsAuthenticated && User.Identity.Name.Contains("hogent.be") &&  repository.FindBy(User.Identity.Name) != null)
 {
     <text>
-        Hallo, @Html.ActionLink(User.Identity.Name, "")
+        Hallo, @Html.ActionLink(User.Identity.Name,"")
         @Html.ActionLink("Profiel", "Profiel", "Begeleider", routeValues: null, htmlAttributes: new {})
         @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" })) {
             @Html.AntiForgeryToken()
@@ -30,8 +30,6 @@ else if (Request.IsAuthenticated && !User.Identity.Name.Contains("hogent.be"))
 {
          <text>
          Hallo, @Html.ActionLink(User.Identity.Name, "Manage", "Account", routeValues: null, htmlAttributes: new { @class = "username", title = "Manage" })!
-@Html.ActionLink("Mijn stageopdrachten", "StageOpdrachten", "Bedrijf", routeValues: null, htmlAttributes: new { })
-@Html.ActionLink("Mijn stagementoren", "StageMentoren", "Bedrijf", routeValues: null, htmlAttributes: new { })
 @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
 {
     @Html.AntiForgeryToken()

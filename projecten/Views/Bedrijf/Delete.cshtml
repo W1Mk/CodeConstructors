@@ -11,7 +11,7 @@
 @using (Html.BeginForm())
 {
     <p>
-        <input type="submit" value="Verwijder" /> |
-        @Html.ActionLink("Terug naar lijst", "StageOpdrachten")
+        <input class="linkbutton" type="submit" value="Verwijder" /> |
+        @Html.ActionLink("Terug naar lijst", "StageOpdrachten", null, new {@class="linkbutton"})
     </p>
 }

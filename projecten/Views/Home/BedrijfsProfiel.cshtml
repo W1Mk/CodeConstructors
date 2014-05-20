@@ -1,7 +1,10 @@
-﻿@model projecten.Models.Domain.Bedrijf
+﻿@using projecten.Models.DAL
+@model projecten.Models.Domain.Bedrijf
 @{
     ViewBag.Title = "BedrijfsProfiel";
-    var selectItems = new SelectList(Model.mentors, "Mentoren", "Mentore");
+    var selectItems = new SelectList(Model.mentors, "Aanspreektitel", "Aanspreektitel");
+    var context = new BedrijfContext();
+    var rep = new StageBegeleiderRepository(context);
 }
 
 <hgroup class="subtitle">
@@ -74,9 +77,15 @@
                 <li>
                     @Html.DisplayFor(model => model.Bereikbaarheid)
                 </li>
-                <li>
-                    @Html.DropDownListFor(model => model.mentors, selectItems)
-                </li>
+@if (rep.FindBy(User.Identity.Name) != null)
+{
+    <li class="h3">
+        @Html.DisplayName("Mentoren")
+    </li>
+    <li>
+        @Html.DropDownListFor(model => model.mentors, selectItems)
+    </li>
+}
             </ol>
             @Html.ActionLink("Terug naar lijst", "Bedrijven", null, new {@class = "linkbutton"})
         </fieldset>

@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
-using Ninject.Infrastructure.Language;
 using projecten.Models.Domain;
 
 namespace projecten.Models.DAL
@@ -51,49 +49,7 @@ namespace projecten.Models.DAL
         {
             context.Entry(begeleider).State = EntityState.Modified;
         }
-        public IEnumerable<StageBegeleider> FindAllByAdres(string adres)
-        {
-            begeleiders.ToList<StageBegeleider>();
-            begeleider.AddRange(begeleiders);
-            List<StageBegeleider> BegeleiderFilter = begeleider.FindAll(s => s.Adres == adres);
-
-            return BegeleiderFilter;
-        }
-        public List<StageBegeleider> lijst()
-        {
-            List<StageBegeleider> begeleiderslijst = new List<StageBegeleider>();
-            begeleiderslijst.Add(new StageBegeleider());
-            return begeleiderslijst;
-        }
-        public int FindId(string email)
-        {
-            StageBegeleider tijdelijk = FindBy(email);
-
-            return tijdelijk.Id;
-        }
-        public Boolean FindEqual(string email)
-        {
-            Boolean value = true; ;
-            StageBegeleider tijdelijk;
-            tijdelijk = FindBy(email);
-            if (tijdelijk != null)
-                value = true;
-            else
-                value = false;
-            return value;
-        }
-
-        public Boolean EersteAanmelding(string email)
-        {
-            Boolean value = true; ;
-            StageBegeleider tijdelijk = FindBy(email);
-            if (tijdelijk.EersteAanmelding == 0)
-                value = true;
-            else
-                value = false;
-            return value;
-
-        }
+        
 
         public IQueryable<StageOpdracht> FindAll(StageBegeleider begeleider)
         {

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using projecten.Models.Domain;
 
 namespace projecten.Models.DAL
@@ -38,14 +37,16 @@ namespace projecten.Models.DAL
         public IQueryable<Student> FindAllFilter(string zoekopdracht)
         {
             IQueryable<Student> list = null;
-            if (Student.Where(b => b.naam.ToLower() == zoekopdracht.ToLower()).Any())
-                list = Student.Where(b => b.naam.ToLower() == zoekopdracht.ToLower());
-            else if (Student.Where(b => b.adres.ToLower() == zoekopdracht.ToLower()).Any())
-                list = Student.Where(b => b.adres.ToLower() == zoekopdracht.ToLower());
-            else if (Student.Where(b => b.keuzevak.ToLower() == zoekopdracht.ToLower()).Any())
-                list = Student.Where(b => b.keuzevak.ToLower() == zoekopdracht.ToLower());
+            if (Student.Where(b => b.Naam.ToLower() == zoekopdracht.ToLower()).Any())
+                list = Student.Where(b => b.Naam.ToLower() == zoekopdracht.ToLower());
+            else if (Student.Where(b => b.Adres.ToLower() == zoekopdracht.ToLower()).Any())
+                list = Student.Where(b => b.Adres.ToLower() == zoekopdracht.ToLower());
+            else if (Student.Where(b => b.Keuzevak.ToLower() == zoekopdracht.ToLower()).Any())
+                list = Student.Where(b => b.Keuzevak.ToLower() == zoekopdracht.ToLower());
             else if (Student.Where(b => b.Email.ToLower() == zoekopdracht.ToLower()).Any())
                 list = Student.Where(b => b.Email.ToLower() == zoekopdracht.ToLower());
+            else if (Student.Where(b => b.TweedeEmail.ToLower() == zoekopdracht.ToLower()).Any())
+                list = Student.Where(b => b.TweedeEmail.ToLower() == zoekopdracht.ToLower());
             else
             {
                 list = new List<Student>().AsQueryable();
@@ -61,7 +62,7 @@ namespace projecten.Models.DAL
         }
         public IQueryable<Student> FindAll()
         {
-            return Student.OrderBy(b => b.naam);
+            return Student.OrderBy(b => b.Naam);
         }
 
         public IQueryable<StageOpdracht> FindAllStudentOpdrachten(ICollection<StageOpdracht> lijst)

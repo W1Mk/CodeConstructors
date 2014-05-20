@@ -1,7 +1,7 @@
 ﻿@model projecten.Models.Domain.StageMentor
 
 @{
-    ViewBag.Title = "Verwijderen StageOpdracht";
+    ViewBag.Title = "Verwijderen Stagementor";
 }
 
 <h2>@ViewBag.Title</h2>
@@ -11,7 +11,7 @@
 @using (Html.BeginForm())
 {
     <p>
-        <input type="submit" value="Verwijder" /> |
-        @Html.ActionLink("Terug naar lijst", "StageMentoren")
+        <input class="linkbutton" type="submit" value="Verwijder" /> |
+        @Html.ActionLink("Terug naar lijst", "StageMentoren", null, new {@class="linkbutton"})
     </p>
 }

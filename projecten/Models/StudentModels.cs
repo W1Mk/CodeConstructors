@@ -18,41 +18,41 @@ namespace projecten.Models
          public ProfielModel(Student student)
          {
              Email = student.Email;
-             tweedeEmail = student.tweedeEmail;
-             naam = student.naam;
-             keuzevak = student.keuzevak;
-             adres = student.adres;
-             gsm = student.gsm;
-             if(student.foto != null)
-             foto = student.foto.ToString();
+             TweedeEmail = student.TweedeEmail;
+             Naam = student.Naam;
+             Keuzevak = student.Keuzevak;
+             Adres = student.Adres;
+             Gsm = student.Gsm;
+             if(student.Foto != null)
+             Foto = student.Foto.ToString();
              else
              {
-                 foto = "geen foto";
+                 Foto = "geen foto";
              }
          }
          [Display(Name = "Email")]
          public string Email { get; set; }
 
          [Display(Name = "adres")]
-         public string tweedeEmail { get; set; }
+         public string TweedeEmail { get; set; }
 
          [Display(Name = "naam")]
-         public string naam { get; set; }
+         public string Naam { get; set; }
         
 
          [Display(Name = "keuzevak")]
-         public string keuzevak { get; set; }
+         public string Keuzevak { get; set; }
 
           [Display(Name = "adres")]
-        public string adres { get; set; }
+        public string Adres { get; set; }
 
        
         [Display(Name = "foto")]
-        public string foto { get; set; }
+        public string Foto { get; set; }
 
         [DataType(DataType.PhoneNumber)]
         [Display(Name = "gsm")]
-        public string gsm { get; set; }
+        public string Gsm { get; set; }
 
         [DataType(DataType.Password)]
         [Display(Name = "NieuwWachtwoord")]

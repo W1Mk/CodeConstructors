@@ -61,17 +61,18 @@ mark {
 .linkbutton {
     margin: auto;
     border: solid 1px;
-    background-color: rgb(189, 216, 224);
+    background: linear-gradient(to top, #2989d8, #6bb0e5);
     text-align: center;
-    
+    border-radius: 10px;
     text-decoration: none;
+    margin-left: 10px;
 }
-.omschrijving {
+/*.omschrijving {
     table-layout: fixed;
     width: 20px; 
     
 
-}
+}*/
 
 nav ul ul {
 	display: none;
@@ -157,6 +158,15 @@ nav ul ul {
     text-overflow: ellipsis;
     max-width: 20px;
     overflow: hidden;
+}
+.info {
+    background: rgb(212, 219, 238);
+    border-radius: 20px;
+    padding-left: 10px;
+    padding-bottom: 5px;
+    padding-right: 12px;
+    font-family: Tahoma, Geneva, sans-serif;
+    font-style: italic;
 }
 #footer {
     clear: both;
@@ -359,6 +369,10 @@ ul#menu {
 /* page titles */
 hgroup.title {
     text-align: center;
+    font-size: large;
+
+}
+hgroup.subtitle {
     font-size: large;
 
 }
@@ -718,6 +732,9 @@ td {
 .firsttd {
     padding: 0.25em 2em 0.25em 0em;
     border: 0 none;
+    text-overflow: ellipsis;
+    max-width: 50px;
+    overflow: hidden;
     
 }
 

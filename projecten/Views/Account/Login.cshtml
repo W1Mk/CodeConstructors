@@ -1,16 +1,14 @@
 ﻿@model projecten.Models.LoginModel
-
 @{
     ViewBag.Title = "Login";
 }
 
-<hgroup class="title">
+<hgroup class="subtitle">
     <h1>@ViewBag.Title</h1>
 </hgroup>
 
-<section id="loginForm">
-<h2>log in als bedrijf</h2>
-@using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl })) {
+
+@using (Html.BeginForm(new {ViewBag.ReturnUrl })) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
@@ -28,25 +26,19 @@
                 @Html.ValidationMessageFor(m => m.Wachtwoord)
             </li>
             <li>
-                @Html.CheckBoxFor(m => m.RememberMe)
-                @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })
-            </li>
-            <li>
-                <p>Is dit de eerste keer dat u zich aanmeld? Klik @Html.ActionLink("hier", "EersteAanmelding") om je wachtwoord in te stellen.</p>
+                <p>Is dit de eerste keer dat u zich aanmeldt of wilt u uw wachtwoord veranderen? 
+                   Klik @Html.ActionLink("hier", "EersteAanmelding") om je wachtwoord in te stellen.</p>
             </li>
         </ol>
-        <input type="submit" value="Log in" />
+        <input class="linkbutton" type="submit" value="Log in" />
     </fieldset>
     <p>
-        @Html.ActionLink("Register", "Register") als je geen account hebt.
+        @Html.ActionLink("Registreer", "Register") als je geen account hebt.
     </p>
 }
-</section>
 
-<section class="social" id="socialLoginForm">
-    <h2>Use another service to log in.</h2>
-    @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
-</section>
+
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

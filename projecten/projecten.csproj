@@ -233,8 +233,10 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\DAL\AcademieJaarRepository.cs" />
     <Compile Include="Models\DAL\BedrijfContext.cs" />
     <Compile Include="Models\DAL\BedrijfInitializer.cs" />
+    <Compile Include="Models\DAL\Mapper\AcademieJaarMapper.cs" />
     <Compile Include="Models\DAL\Mapper\StageBegeleiderMapper.cs" />
     <Compile Include="Models\DAL\StageBegeleiderRepository.cs" />
     <Compile Include="Models\DAL\Mapper\StageMentorMapper.cs" />
@@ -245,6 +247,7 @@
     <Compile Include="Models\DAL\Mapper\StageOpdrachtMapper.cs" />
     <Compile Include="Models\DAL\StageOpdrachtRepository.cs" />
     <Compile Include="Models\DAL\StudentRepository.cs" />
+    <Compile Include="Models\Domain\AcademieJaar.cs" />
     <Compile Include="Models\Domain\Bedrijf.cs" />
     <Compile Include="Models\Domain\PasswordHash.cs" />
     <Compile Include="Models\Domain\StageBegeleider.cs" />
@@ -323,8 +326,10 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Images\anonymous.gif" />
+    <Content Include="Images\hogent.png" />
     <Content Include="Images\index.png" />
     <Content Include="Images\logo.png" />
+    <Content Include="Images\nieuw klein logo.png" />
     <Content Include="Images\refresh-button.png" />
     <Content Include="Models\Domain\Domain.cd" />
     <None Include="Properties\PublishProfiles\PublishGeneral.pubxml" />
@@ -394,25 +399,14 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\Bedrijf\Index.cshtml" />
-    <Content Include="Views\Account\StageOpdrachten.cshtml" />
-    <Content Include="Views\Account\SelectAccount.cshtml" />
     <Content Include="Views\Bedrijf\StageOpdrachtToevoegen.cshtml" />
     <Content Include="Views\Bedrijf\StageOpdrachten.cshtml" />
-    <Content Include="Views\Account\LoginStudent.cshtml" />
-    <Content Include="Views\Account\RegistreerStudent.cshtml" />
-    <Content Include="Views\Account\RegistreerSelectAccount.cshtml" />
-    <Content Include="Views\Account\WachtwoordVeranderen.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Views\Student\profielWachtwoord.cshtml" />
-    <Content Include="Views\Student\Index.cshtml" />
     <Content Include="Views\Student\Profiel.cshtml" />
     <Content Include="Views\Student\Stages.cshtml" />
     <Content Include="Views\Student\IngenomenStages.cshtml" />
     <Content Include="Views\Student\StagesList.cshtml" />
     <Content Include="Views\Student\Bekijk.cshtml" />
     <Content Include="Views\Student\ListBedrijf.cshtml" />
-    <Content Include="Views\Student\BekijkBedrijf.cshtml" />
     <Content Include="Views\Bedrijf\Delete.cshtml" />
     <Content Include="Views\Bedrijf\DeleteMentor.cshtml" />
     <Content Include="Views\Bedrijf\StageMentoren.cshtml" />
@@ -420,7 +414,6 @@
     <Content Include="Views\Bedrijf\StageOpdrachtWijzigen.cshtml" />
     <Content Include="Views\StageMentor\ProfielMentor.cshtml" />
     <Content Include="Views\StageMentor\ProfielWijzigen.cshtml" />
-    <Content Include="Views\Account\LoginBegeleider.cshtml" />
     <Content Include="Views\Begeleider\Index.cshtml" />
     <Content Include="Views\Account\EersteAanmelding.cshtml" />
     <Content Include="Views\Begeleider\Profiel.cshtml" />
@@ -442,6 +435,10 @@
     <Content Include="Views\Home\Bachelorproef.cshtml" />
     <Content Include="Views\Home\Bedrijven.cshtml" />
     <Content Include="Views\Home\ContactBachelor.cshtml" />
+    <Content Include="Views\Home\ContactProjectwerking.cshtml" />
+    <Content Include="Views\Student\Solicitatie.cshtml" />
+    <Content Include="Views\Home\BedrijfsProfiel.cshtml" />
+    <Content Include="Views\Begeleider\StageOpdracht.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

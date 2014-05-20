@@ -1,13 +1,12 @@
-﻿@model projecten.Models.Domain.StageBegeleider
+﻿@model projecten.Models.Domain.StageOpdracht
 @{
-    ViewBag.Title = "Profiel";
-    var foto = Model.FotoString;
+    ViewBag.Title = "Stage opdracht";
 }
 
 <hgroup class="subtitle">
     <h1>@ViewBag.Title</h1>
 </hgroup>
-@using (Html.BeginForm("Profiel", "Begeleider", FormMethod.Post, new {enctype="multipart/form-data"}))
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary()
@@ -27,56 +26,56 @@
 
                 </li>
                 <li class="h3">
-                    @Html.DisplayNameFor(model => model.VoorNaam)
+                    @Html.DisplayNameFor(model => model.Omschrijving)
                 </li>
                 <li>
-                    @Html.DisplayFor(model => model.VoorNaam)
-                </li>
-                <li>
-
-                </li>
-                <li class="h3">
-                    @Html.DisplayNameFor(model => model.Email)
-                </li>
-                <li>
-                    @Html.DisplayFor(model => model.Email)
+                    @Html.DisplayFor(model => model.Omschrijving)
                 </li>
                 <li>
 
                 </li>
                 <li class="h3">
-                    @Html.DisplayNameFor(model => model.Adres)
+                    @Html.DisplayNameFor(model => model.Semester)
                 </li>
                 <li>
-                    @Html.DisplayFor(model => model.Adres)
-                </li>
-                <li>
-
-                </li>
-                <li class="h3">
-                    @Html.DisplayNameFor(model => model.Gsm)
-                </li>
-                <li>
-                    @Html.DisplayFor(model => model.Gsm)
+                    @Html.DisplayFor(model => model.Semester)
                 </li>
                 <li>
 
                 </li>
                 <li class="h3">
-                    @Html.DisplayNameFor(model => model.Telefoon)
+                    @Html.DisplayNameFor(model => model.Specialisatie)
                 </li>
                 <li>
-                    @Html.DisplayFor(model => model.Telefoon)
+                    @Html.DisplayFor(model => model.Specialisatie)
+                </li>
+                <li>
+
                 </li>
                 <li class="h3">
-                    @Html.DisplayNameFor(model => model.Foto)
+                    @Html.DisplayNameFor(model => model.AantalStudenten)
                 </li>
                 <li>
-                    <img alt="" width="300" height="200" src="data:image/jpeg;base64,@foto" />
-                </li>   
-                    
+                    @Html.DisplayFor(model => model.AantalStudenten)
+                </li>
+                <li>
+
+                </li>
+                <li class="h3">
+                    @Html.DisplayNameFor(model => model.StageMentor)
+                </li>
+                <li>
+                    @Html.DisplayFor(model => model.StageMentor)
+                </li>
+                <li class="h3">
+                    @Html.DisplayNameFor(model => model.Academiejaar)
+                </li>
+                <li>
+                    @Html.DisplayFor(model => model.Academiejaar)
+                </li>
+
             </ol>
-            @Html.ActionLink("Wijzig", "ProfielWijzigen", new{id = Model.Id}, new {@class = "linkbutton"}) 
+ @Html.ActionLink("Terug naar lijst", "StageOpdrachten", "Begeleider", null, new {@class ="linkbutton"})
         </fieldset>
     </div>
 }

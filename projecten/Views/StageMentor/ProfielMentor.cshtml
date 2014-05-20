@@ -1,19 +1,9 @@
-﻿@using System.Collections
-@using System.Collections.ObjectModel
-@using System.Configuration
-@using Microsoft.Ajax.Utilities
-@using MySql.Data.MySqlClient
-@using projecten.Models.DAL
-@model projecten.Models.StageMentorModel
+﻿@model projecten.Models.StageMentorModel
 @{
     ViewBag.Title = "Stage Mentor";
-    
-    
-    
-
 }
 
-<hgroup class="title">
+<hgroup class="subtitle">
     <h1>@ViewBag.Title</h1>
 </hgroup>
 @using (Html.BeginForm())
@@ -79,7 +69,7 @@
                 </li>
 
             </ol>
-            <input type="submit" value="Wijzig" /> @Html.ActionLink("Terug naar lijst", "Stagementoren", "Bedrijf")
+            <input class="linkbutton" type="submit" value="Wijzig" /> @Html.ActionLink("Terug naar lijst", "Stagementoren", "Bedrijf",null,new {@class="linkbutton"})
         </fieldset>
     </div>
 }
